@@ -1,0 +1,153 @@
+"""Blur Model Tools: Blur (2010) .model files in Blender.
+
+File > Import > Blur Model (.model) brings in a model with its part hierarchy,
+materials (Blur effects as node groups) and the textures stored in it.
+Material Properties > Blur Material picks a Blur effect for any material, like
+Sollumz's shader presets, and wires up its texture slots.
+"""
+
+import bpy
+from bpy.props import BoolProperty, EnumProperty, StringProperty
+from bpy_extras.io_utils import ImportHelper
+
+from . import importer, materials
+from .blur import model as blurmodel
+
+
+class BLUR_OT_import_model(bpy.types.Operator, ImportHelper):
+    """Import a Blur .model file (parts, materials and textures)"""
+
+    bl_idname = "import_scene.blur_model"
+    bl_label = "Import Blur Model"
+    bl_options = {"REGISTER", "UNDO", "PRESET"}
+
+    filename_ext = ".model"
+    filter_glob: StringProperty(default="*.model", options={"HIDDEN"})
+    all_lods: BoolProperty(name="All Detail Levels", default=False,
+                           description="Also import the lower detail levels (each in its own hidden collection)")
+    shadows: BoolProperty(name="Shadow Hulls", default=True,
+                          description="Import the shadow hulls (hidden collection)")
+
+    def execute(self, context):
+        try:
+            model, made = importer.import_model(context, self.filepath, self.all_lods, self.shadows)
+        except (blurmodel.ModelError, OSError) as e:
+            self.report({"ERROR"}, f"Can't import {self.filepath}: {e}")
+            return {"CANCELLED"}
+        note = f"; {'; '.join(model.notes)}" if model.notes else ""
+        self.report({"INFO"}, f"Imported {made} object(s), {len(model.textures)} texture(s){note}")
+        return {"FINISHED"}
+
+
+def _effect_items(self, context):
+    items = []
+    by_cat = {}
+    for effect in sorted(materials.presets(), key=str.lower):
+        by_cat.setdefault(materials.category(effect), []).append(effect)
+    for cat in ("Vehicle", "World", "Characters", "Effects"):
+        for effect in by_cat.get(cat, []):
+            p = materials.presets()[effect]
+            desc = f"{cat}: used on {p['parts']} part(s) in {p['models']} model(s)"
+            items.append((effect, effect.rsplit(".", 1)[0], desc))
+    return items or [("NONE", "No presets", "presets/effects.json is missing")]
+
+
+class BLUR_OT_set_effect(bpy.types.Operator):
+    """Make the active material a Blur material drawn with the chosen effect"""
+
+    bl_idname = "material.blur_set_effect"
+    bl_label = "Set Blur Effect"
+    bl_property = "effect"
+    bl_options = {"REGISTER", "UNDO"}
+
+    effect: EnumProperty(name="Effect", items=_effect_items)
+
+    @classmethod
+    def poll(cls, context):
+        return context.object is not None and context.object.type == "MESH"
+
+    def invoke(self, context, event):
+        context.window_manager.invoke_search_popup(self)
+        return {"RUNNING_MODAL"}
+
+    def execute(self, context):
+        if self.effect == "NONE":
+            return {"CANCELLED"}
+        obj = context.object
+        mat = obj.active_material
+        if mat is None:
+            mat = materials.new_material(self.effect)
+            if obj.material_slots:
+                obj.material_slots[obj.active_material_index].material = mat
+            else:
+                obj.data.materials.append(mat)
+        else:
+            materials.setup_material(mat, self.effect)
+        self.report({"INFO"}, f"{mat.name}: {self.effect}")
+        return {"FINISHED"}
+
+
+class BLUR_PT_material(bpy.types.Panel):
+    bl_label = "Blur Material"
+    bl_space_type = "PROPERTIES"
+    bl_region_type = "WINDOW"
+    bl_context = "material"
+
+    @classmethod
+    def poll(cls, context):
+        return context.object is not None and context.object.type == "MESH"
+
+    def draw(self, context):
+        layout = self.layout
+        mat = context.object.active_material
+        effect = materials.material_effect(mat) if mat else ""
+        row = layout.row()
+        row.operator(BLUR_OT_set_effect.bl_idname, text=effect.rsplit(".", 1)[0] if effect else "Choose Blur Effect…",
+                     icon="MATERIAL")
+        if not mat or not effect:
+            layout.label(text="Pick a Blur effect to set this material up for export.")
+            return
+        node = materials.group_node(mat)
+        if node is None:
+            layout.label(text="The Blur Shader node is missing: choose the effect again.", icon="ERROR")
+            return
+        preset = materials.presets().get(effect)
+        if preset is None:
+            layout.label(text="Not a known effect (kept as imported).", icon="INFO")
+        box = layout.box()
+        box.label(text="Textures", icon="TEXTURE")
+        for input_name in materials.texture_inputs(effect):
+            tex = mat.node_tree.nodes.get(input_name)
+            col = box.column(align=True)
+            col.label(text=input_name)
+            if tex is not None and tex.type == "TEX_IMAGE":
+                col.template_ID(tex, "image", open="image.open")
+            if preset:
+                usual = preset.get("textures", {}).get(input_name)
+                if usual:
+                    col.label(text="Game uses: " + ", ".join(usual[:3]), icon="INFO")
+        numbers = [s for s in node.inputs if not s.is_linked and s.type in ("VALUE", "INT")]
+        if numbers:
+            box = layout.box()
+            box.label(text="Parameters", icon="PROPERTIES")
+            for sock in numbers:
+                box.prop(sock, "default_value", text=sock.name)
+
+
+def menu_import(self, context):
+    self.layout.operator(BLUR_OT_import_model.bl_idname, text="Blur Model (.model)")
+
+
+classes = (BLUR_OT_import_model, BLUR_OT_set_effect, BLUR_PT_material)
+
+
+def register():
+    for cls in classes:
+        bpy.utils.register_class(cls)
+    bpy.types.TOPBAR_MT_file_import.append(menu_import)
+
+
+def unregister():
+    bpy.types.TOPBAR_MT_file_import.remove(menu_import)
+    for cls in reversed(classes):
+        bpy.utils.unregister_class(cls)

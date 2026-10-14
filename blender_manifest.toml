@@ -1,0 +1,27 @@
+schema_version = "1.0.0"
+
+id = "blur_model_tools"
+version = "0.1.0"
+name = "Blur Model Tools"
+tagline = "Import Blur (2010) .model files with their parts, materials and textures"
+maintainer = "Wamburu G."
+type = "add-on"
+
+blender_version_min = "5.0.0"
+
+license = ["SPDX:MIT"]
+copyright = ["2026 Wamburu G."]
+
+tags = ["Import-Export"]
+
+[permissions]
+files = "Read Blur .model files and write their textures next to the .blend"
+
+[build]
+paths_exclude_pattern = [
+  "__pycache__/",
+  "/.git/",
+  "/tools/",
+  "/docs/",
+  "*.zip",
+]

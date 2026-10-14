@@ -1,0 +1,11882 @@
+{
+ "AnimatedNeon_NL_NV.fx": {
+  "defaults": {
+   "g_fAnimatedNeonY": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_fScrollSpeedX": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_fScrollSpeedY": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_vAnimatedNeonColour": [
+    1.0,
+    1.0,
+    1.0,
+    0.0
+   ]
+  },
+  "folder": "models/objects/uk_london_hackney/lampostsandtrafficlights",
+  "models": 14,
+  "parts": 44,
+  "passes": [
+   {
+    "effect": "AnimatedNeon_NL_NV.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_tNeon",
+      "type": "texture"
+     },
+     {
+      "count": 1,
+      "name": "g_tAlbedo",
+      "type": "texture"
+     },
+     {
+      "count": 1,
+      "name": "g_tMaterial",
+      "type": "texture"
+     },
+     {
+      "count": 4,
+      "name": "g_fAnimatedNeonY",
+      "type": "f32"
+     },
+     {
+      "count": 1,
+      "name": "g_fAnimatedNeonX",
+      "type": "data"
+     },
+     {
+      "count": 4,
+      "name": "g_vAnimatedNeonColour",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_fScrollSpeedX",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_fScrollSpeedY",
+      "type": "f32"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {
+   "g_tAlbedo": [
+    "trafficlightcrop_diff",
+    "lampposta_diff",
+    "trafficcone01_light_diff",
+    "lampposte_diff",
+    "trafficcone_redlight_diff"
+   ],
+   "g_tMaterial": [
+    "DefaultColour"
+   ],
+   "g_tNeon": [
+    "trafficlightcrop_animatedneon",
+    "lampposta_neon",
+    "trafficcone01_light_neon",
+    "flashingcrossing_neon",
+    "lampposte_neon"
+   ]
+  },
+  "variants": 3,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 6,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 0,
+    "type": 8,
+    "usage": 5
+   },
+   {
+    "index": 3,
+    "type": 8,
+    "usage": 5
+   }
+  ]
+ },
+ "CarLightFlare.fx": {
+  "defaults": {},
+  "folder": "models/system",
+  "models": 1,
+  "parts": 1,
+  "passes": [
+   {
+    "effect": "CarLightFlare.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_tColour",
+      "type": "texture"
+     },
+     {
+      "count": 1,
+      "name": "g_vLightFlareColour",
+      "type": "data"
+     },
+     {
+      "count": 1,
+      "name": "g_fLightFlareIntensity",
+      "type": "data"
+     },
+     {
+      "count": 1,
+      "name": "g_fLightFlareSize",
+      "type": "data"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {
+   "g_tColour": [
+    "lightflare_diff"
+   ]
+  },
+  "variants": 1,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 7,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 5
+   }
+  ]
+ },
+ "FlashingLightFlare.fx": {
+  "defaults": {
+   "g_fFrequency": [
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_fLightFlareIntensity": [
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_fLightFlareSize": [
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_fThresholdOff": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_fThresholdOn": [
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_vLightFlareColour": [
+    0.91,
+    0.1118,
+    0.00364,
+    0.0
+   ]
+  },
+  "folder": "models/objects/usa_la_longbeachdocks/cranes",
+  "models": 2,
+  "parts": 2,
+  "passes": [
+   {
+    "effect": "FlashingLightFlare.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_tColour",
+      "type": "texture"
+     },
+     {
+      "count": 4,
+      "name": "g_vLightFlareColour",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_fLightFlareIntensity",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_fLightFlareSize",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_fFrequency",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_fThresholdOn",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_fThresholdOff",
+      "type": "f32"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {
+   "g_tColour": [
+    "lightflare_diff"
+   ]
+  },
+  "variants": 1,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 7,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 5
+   }
+  ]
+ },
+ "HighVisBarrier_NL_NV.fx": {
+  "defaults": {
+   "g_fNeonFarIntensity": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_fNeonNearIntensity": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_fNeonRange": [
+    100.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_fReflectorIntensity": [
+    20.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_fTint": [
+    1.0,
+    1.0,
+    1.0,
+    0.0
+   ]
+  },
+  "folder": "models/objects/shared/construction",
+  "models": 3,
+  "parts": 12,
+  "passes": [
+   {
+    "effect": "HighVisBarrier_NL_NV.fx",
+    "inputs": [
+     {
+      "count": 4,
+      "name": "g_fNeonRange",
+      "type": "f32"
+     },
+     {
+      "count": 1,
+      "name": "g_tAlbedo",
+      "type": "texture"
+     },
+     {
+      "count": 1,
+      "name": "g_tMaterial",
+      "type": "texture"
+     },
+     {
+      "count": 1,
+      "name": "g_tNormal",
+      "type": "texture"
+     },
+     {
+      "count": 4,
+      "name": "g_fTint",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_fReflectorIntensity",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_fNeonFarIntensity",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_fNeonNearIntensity",
+      "type": "f32"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {
+   "g_tAlbedo": [
+    "road_barrier01_diff",
+    "highway_barrell_diff",
+    "trafficcone01_light_diff"
+   ],
+   "g_tMaterial": [
+    "road_barrier01_ipr0",
+    "highway_barrell_ipr0",
+    "DefaultColour"
+   ],
+   "g_tNormal": [
+    "DefaultColour"
+   ]
+  },
+  "variants": 1,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 6,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 0,
+    "type": 8,
+    "usage": 5
+   },
+   {
+    "index": 1,
+    "type": 11,
+    "usage": 5
+   }
+  ]
+ },
+ "HighVis_NB_NL_NV.fx": {
+  "defaults": {
+   "g_fEmissiveIntensity": [
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_fReflectorIntensity": [
+    20.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "folder": "models/objects/shared/construction",
+  "models": 19,
+  "parts": 43,
+  "passes": [
+   {
+    "effect": "HighVis_NB_NL_NV.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_tAlbedo",
+      "type": "texture"
+     },
+     {
+      "count": 1,
+      "name": "g_tMaterial",
+      "type": "texture"
+     },
+     {
+      "count": 4,
+      "name": "g_fReflectorIntensity",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_fEmissiveIntensity",
+      "type": "f32"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {
+   "g_tAlbedo": [
+    "highvis_barrier2_diff",
+    "smallcarebarrier_diff",
+    "trafficcone01_diff",
+    "ambient_smallsign_diff",
+    "hvis_diff"
+   ],
+   "g_tMaterial": [
+    "highvis_barrier2_ipr0",
+    "smallcarebarrier_ipr0",
+    "DefaultColour",
+    "trafficcone01_ipr0",
+    "mcrdw_hivisjacket_var1_mat_ipr0"
+   ]
+  },
+  "variants": 1,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 6,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 0,
+    "type": 8,
+    "usage": 5
+   }
+  ]
+ },
+ "LightFlare.fx": {
+  "defaults": {
+   "g_fLightFlareIntensity": [
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_fLightFlareSize": [
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_vLightFlareColour": [
+    1.0,
+    1.0,
+    1.0,
+    0.0
+   ]
+  },
+  "folder": "models/specialfx",
+  "models": 59,
+  "parts": 75,
+  "passes": [
+   {
+    "effect": "LightFlare.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_tColour",
+      "type": "texture"
+     },
+     {
+      "count": 4,
+      "name": "g_vLightFlareColour",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_fLightFlareIntensity",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_fLightFlareSize",
+      "type": "f32"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {
+   "g_tColour": [
+    "lightflare_diff",
+    "light_flare_red",
+    "light_flare_white",
+    "light_flare_blue",
+    "light_flare_organe"
+   ]
+  },
+  "variants": 3,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 7,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 5
+   }
+  ]
+ },
+ "MeshEffect.fx": {
+  "defaults": {
+   "g_vColour": [
+    -1.0,
+    -1.0,
+    -1.0,
+    0.5
+   ],
+   "g_vColourFresnel": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_vFresnelPower": [
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_vScrollTextureX": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_vScrollTextureY": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_vSpeedScrollTextureX": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_vSpeedScrollTextureY": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "folder": "models/perks",
+  "models": 114,
+  "parts": 267,
+  "passes": [
+   {
+    "effect": "MeshEffect.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_tTexture",
+      "type": "texture"
+     },
+     {
+      "count": 4,
+      "name": "g_vColour",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_vColourFresnel",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_vFresnelPower",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_vScrollTextureX",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_vScrollTextureY",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_vSpeedScrollTextureX",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_vSpeedScrollTextureY",
+      "type": "f32"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {
+   "g_tTexture": [
+    "revolvingbeam",
+    "light_lines_03",
+    "cloud_03",
+    "cloud_01",
+    "light_lines_13"
+   ]
+  },
+  "variants": 18,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 6,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 0,
+    "type": 8,
+    "usage": 5
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 9
+   }
+  ]
+ },
+ "MeshEffectCull.fx": {
+  "defaults": {
+   "g_vColourFresnel": [
+    1.0,
+    0.19767,
+    0.0,
+    0.0
+   ],
+   "g_vFresnelPower": [
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_vScrollTextureX": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_vScrollTextureY": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_vSpeedScrollTextureX": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_vSpeedScrollTextureY": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "folder": "models/perks",
+  "models": 5,
+  "parts": 14,
+  "passes": [
+   {
+    "effect": "MeshEffectCull.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_tTexture",
+      "type": "texture"
+     },
+     {
+      "count": 1,
+      "name": "g_vColour",
+      "type": "data"
+     },
+     {
+      "count": 4,
+      "name": "g_vColourFresnel",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_vFresnelPower",
+      "type": "f32"
+     },
+     {
+      "count": 1,
+      "name": "g_vScrollTextureX",
+      "type": "data"
+     },
+     {
+      "count": 4,
+      "name": "g_vScrollTextureY",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_vSpeedScrollTextureX",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_vSpeedScrollTextureY",
+      "type": "f32"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {
+   "g_tTexture": [
+    "light_lines_04",
+    "mine_pulse_03",
+    "light_lines_15",
+    "light_paint_interfere_03"
+   ]
+  },
+  "variants": 3,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 6,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 0,
+    "type": 8,
+    "usage": 5
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 9
+   }
+  ]
+ },
+ "MeshEffectCullNoDepth.fx": {
+  "defaults": {
+   "g_vColour": [
+    1.0,
+    1.0,
+    1.0,
+    2.0
+   ],
+   "g_vColourFresnel": [
+    1.0,
+    1.0,
+    1.0,
+    4.0
+   ],
+   "g_vFresnelPower": [
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_vScrollTextureX": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_vScrollTextureY": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_vSpeedScrollTextureX": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_vSpeedScrollTextureY": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "folder": "models/perks",
+  "models": 13,
+  "parts": 32,
+  "passes": [
+   {
+    "effect": "MeshEffectCullNoDepth.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_tTexture",
+      "type": "texture"
+     },
+     {
+      "count": 1,
+      "name": "g_vColour",
+      "type": "data"
+     },
+     {
+      "count": 1,
+      "name": "g_vColourFresnel",
+      "type": "data"
+     },
+     {
+      "count": 4,
+      "name": "g_vFresnelPower",
+      "type": "f32"
+     },
+     {
+      "count": 1,
+      "name": "g_vScrollTextureX",
+      "type": "data"
+     },
+     {
+      "count": 4,
+      "name": "g_vScrollTextureY",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_vSpeedScrollTextureX",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_vSpeedScrollTextureY",
+      "type": "f32"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {
+   "g_tTexture": [
+    "light_lines_08",
+    "light_lines_10",
+    "light_lines_09",
+    "light_lines_06",
+    "light_lines_04"
+   ]
+  },
+  "variants": 3,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 6,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 0,
+    "type": 8,
+    "usage": 5
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 9
+   }
+  ]
+ },
+ "MeshEffectDLayer.fx": {
+  "defaults": {
+   "g_2L_vColour": [
+    1.0,
+    0.8,
+    0.6,
+    1.0
+   ],
+   "g_2L_vColourFresnel": [
+    1.0,
+    0.8,
+    0.6,
+    0.5
+   ],
+   "g_2L_vScrollTextureX": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_2L_vScrollTextureY": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_2L_vSpeedScrollTextureX": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_2L_vSpeedScrollTextureY": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_vColour": [
+    1.0,
+    1.0,
+    0.3,
+    1.0
+   ],
+   "g_vColourFresnel": [
+    0.5,
+    0.38333,
+    0.15,
+    0.25
+   ],
+   "g_vFresnelPower": [
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_vScrollTextureX": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_vScrollTextureY": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_vSpeedScrollTextureX": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_vSpeedScrollTextureY": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "folder": "models/specialfx",
+  "models": 40,
+  "parts": 57,
+  "passes": [
+   {
+    "effect": "MeshEffectDLayer.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_tTexture",
+      "type": "texture"
+     },
+     {
+      "count": 4,
+      "name": "g_vColour",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_vColourFresnel",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_vFresnelPower",
+      "type": "f32"
+     },
+     {
+      "count": 1,
+      "name": "g_vScrollTextureX",
+      "type": "data"
+     },
+     {
+      "count": 4,
+      "name": "g_vScrollTextureY",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_vSpeedScrollTextureX",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_vSpeedScrollTextureY",
+      "type": "f32"
+     },
+     {
+      "count": 1,
+      "name": "g_2L_tTexture",
+      "type": "texture"
+     },
+     {
+      "count": 4,
+      "name": "g_2L_vColour",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_2L_vColourFresnel",
+      "type": "f32"
+     },
+     {
+      "count": 1,
+      "name": "g_2L_vScrollTextureX",
+      "type": "data"
+     },
+     {
+      "count": 4,
+      "name": "g_2L_vScrollTextureY",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_2L_vSpeedScrollTextureX",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_2L_vSpeedScrollTextureY",
+      "type": "f32"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {
+   "g_2L_tTexture": [
+    "light_lines_13",
+    "cloud_05",
+    "mine_pulse_06",
+    "DefaultColour"
+   ],
+   "g_tTexture": [
+    "light_lines_02",
+    "light_lines_13",
+    "mine_pulse_02",
+    "mine_pulse_06",
+    "light_lines_04"
+   ]
+  },
+  "variants": 5,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 6,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 5
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 9
+   }
+  ]
+ },
+ "MeshEffectDLayerCull.fx": {
+  "defaults": {
+   "g_2L_vColour": [
+    1.0,
+    0.625,
+    0.25,
+    0.3
+   ],
+   "g_2L_vColourFresnel": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_2L_vSpeedScrollTextureX": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_2L_vSpeedScrollTextureY": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_DistanteFadeParams": [
+    100.0,
+    60.0,
+    0.0,
+    0.0
+   ],
+   "g_vColour": [
+    1.0,
+    0.625,
+    0.25,
+    0.3
+   ],
+   "g_vColourFresnel": [
+    0.5,
+    0.3125,
+    0.125,
+    0.0
+   ],
+   "g_vFresnelPower": [
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_vSpeedScrollTextureX": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_vSpeedScrollTextureY": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "folder": "models/specialfx",
+  "models": 10,
+  "parts": 20,
+  "passes": [
+   {
+    "effect": "MeshEffectDLayerCull.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_tTexture",
+      "type": "texture"
+     },
+     {
+      "count": 4,
+      "name": "g_vColour",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_vColourFresnel",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_vFresnelPower",
+      "type": "f32"
+     },
+     {
+      "count": 1,
+      "name": "g_vScrollTextureX",
+      "type": "data"
+     },
+     {
+      "count": 1,
+      "name": "g_vScrollTextureY",
+      "type": "data"
+     },
+     {
+      "count": 4,
+      "name": "g_vSpeedScrollTextureX",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_vSpeedScrollTextureY",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_DistanteFadeParams",
+      "type": "f32"
+     },
+     {
+      "count": 1,
+      "name": "g_2L_tTexture",
+      "type": "texture"
+     },
+     {
+      "count": 4,
+      "name": "g_2L_vColour",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_2L_vColourFresnel",
+      "type": "f32"
+     },
+     {
+      "count": 1,
+      "name": "g_2L_vScrollTextureX",
+      "type": "data"
+     },
+     {
+      "count": 1,
+      "name": "g_2L_vScrollTextureY",
+      "type": "data"
+     },
+     {
+      "count": 4,
+      "name": "g_2L_vSpeedScrollTextureX",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_2L_vSpeedScrollTextureY",
+      "type": "f32"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {
+   "g_2L_tTexture": [
+    "mine_pulse_06"
+   ],
+   "g_tTexture": [
+    "mine_pulse_06"
+   ]
+  },
+  "variants": 1,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 6,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 5
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 9
+   }
+  ]
+ },
+ "MeshEffectDLayerCullNDepth.fx": {
+  "defaults": {
+   "g_2L_vColourFresnel": [
+    0.20252,
+    0.323,
+    0.21055,
+    0.0
+   ],
+   "g_2L_vScrollTextureY": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_2L_vSpeedScrollTextureX": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_2L_vSpeedScrollTextureY": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_vColourFresnel": [
+    0.20252,
+    0.323,
+    0.21055,
+    0.0
+   ],
+   "g_vFresnelPower": [
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_vScrollTextureY": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_vSpeedScrollTextureX": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_vSpeedScrollTextureY": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "folder": "models/perks",
+  "models": 3,
+  "parts": 6,
+  "passes": [
+   {
+    "effect": "MeshEffectDLayerCullNDepth.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_tTexture",
+      "type": "texture"
+     },
+     {
+      "count": 1,
+      "name": "g_vColour",
+      "type": "data"
+     },
+     {
+      "count": 4,
+      "name": "g_vColourFresnel",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_vFresnelPower",
+      "type": "f32"
+     },
+     {
+      "count": 1,
+      "name": "g_vScrollTextureX",
+      "type": "data"
+     },
+     {
+      "count": 4,
+      "name": "g_vScrollTextureY",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_vSpeedScrollTextureX",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_vSpeedScrollTextureY",
+      "type": "f32"
+     },
+     {
+      "count": 1,
+      "name": "g_2L_tTexture",
+      "type": "texture"
+     },
+     {
+      "count": 1,
+      "name": "g_2L_vColour",
+      "type": "data"
+     },
+     {
+      "count": 4,
+      "name": "g_2L_vColourFresnel",
+      "type": "f32"
+     },
+     {
+      "count": 1,
+      "name": "g_2L_vScrollTextureX",
+      "type": "data"
+     },
+     {
+      "count": 4,
+      "name": "g_2L_vScrollTextureY",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_2L_vSpeedScrollTextureX",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_2L_vSpeedScrollTextureY",
+      "type": "f32"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {
+   "g_2L_tTexture": [
+    "light_lines_04",
+    "light_paint_05"
+   ],
+   "g_tTexture": [
+    "light_lines_02",
+    "light_paint_07"
+   ]
+  },
+  "variants": 1,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 6,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 5
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 9
+   }
+  ]
+ },
+ "MeshEffectDLayerUVDist.fx": {
+  "defaults": {
+   "gUvDistort": [
+    0.5,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "gUvScrollDistortOffsetX": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "gUvScrollDistortOffsetY": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "gUvScrollDistortScale": [
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_2L_UvDistort": [
+    0.5,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_2L_UvScrollDistortOffsetX": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_2L_UvScrollDistortOffsetY": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_2L_UvScrollDistortScale": [
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_2L_vColourFresnel": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_2L_vScrollTextureX": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_vColourFresnel": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_vFresnelPower": [
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_vScrollTextureX": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "folder": "models/perks",
+  "models": 1,
+  "parts": 1,
+  "passes": [
+   {
+    "effect": "MeshEffectDLayerUVDist.fx",
+    "inputs": [
+     {
+      "count": 4,
+      "name": "g_2L_UvDistort",
+      "type": "f32"
+     },
+     {
+      "count": 1,
+      "name": "g_tTexture",
+      "type": "texture"
+     },
+     {
+      "count": 1,
+      "name": "g_vColour",
+      "type": "data"
+     },
+     {
+      "count": 4,
+      "name": "g_vColourFresnel",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_vFresnelPower",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_vScrollTextureX",
+      "type": "f32"
+     },
+     {
+      "count": 1,
+      "name": "g_vScrollTextureY",
+      "type": "data"
+     },
+     {
+      "count": 1,
+      "name": "g_2L_tUVDistortTexture",
+      "type": "texture"
+     },
+     {
+      "count": 4,
+      "name": "gUvScrollDistortScale",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "gUvScrollDistortOffsetX",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "gUvScrollDistortOffsetY",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "gUvDistort",
+      "type": "f32"
+     },
+     {
+      "count": 1,
+      "name": "g_tUVDistortTexture",
+      "type": "texture"
+     },
+     {
+      "count": 1,
+      "name": "g_2L_tTexture",
+      "type": "texture"
+     },
+     {
+      "count": 1,
+      "name": "g_2L_vColour",
+      "type": "data"
+     },
+     {
+      "count": 4,
+      "name": "g_2L_vColourFresnel",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_2L_vScrollTextureX",
+      "type": "f32"
+     },
+     {
+      "count": 1,
+      "name": "g_2L_vScrollTextureY",
+      "type": "data"
+     },
+     {
+      "count": 4,
+      "name": "g_2L_UvScrollDistortScale",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_2L_UvScrollDistortOffsetX",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_2L_UvScrollDistortOffsetY",
+      "type": "f32"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {
+   "g_2L_tTexture": [
+    "lightning_01"
+   ],
+   "g_2L_tUVDistortTexture": [
+    "uv_distort_faint"
+   ],
+   "g_tTexture": [
+    "lightning_01"
+   ],
+   "g_tUVDistortTexture": [
+    "uv_distort_faint"
+   ]
+  },
+  "variants": 1,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 6,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 5
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 9
+   }
+  ]
+ },
+ "MeshEffectDLayerUVDistCull.fx": {
+  "defaults": {
+   "gUvDistort": [
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "gUvScrollDistortOffsetX": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "gUvScrollDistortOffsetY": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "gUvScrollDistortScale": [
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_2L_UvDistort": [
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_2L_UvScrollDistortOffsetX": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_2L_UvScrollDistortOffsetY": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_2L_UvScrollDistortScale": [
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_2L_vColour": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_2L_vColourFresnel": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_2L_vScrollTextureX": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_2L_vScrollTextureY": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_vColour": [
+    1.0,
+    0.58286,
+    0.417,
+    4.0
+   ],
+   "g_vColourFresnel": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_vFresnelPower": [
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_vScrollTextureX": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_vScrollTextureY": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_vSpeedScrollTextureX": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_vSpeedScrollTextureY": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "folder": "models/perks",
+  "models": 37,
+  "parts": 70,
+  "passes": [
+   {
+    "effect": "MeshEffectDLayerUVDistCull.fx",
+    "inputs": [
+     {
+      "count": 4,
+      "name": "g_2L_UvDistort",
+      "type": "f32"
+     },
+     {
+      "count": 1,
+      "name": "g_tTexture",
+      "type": "texture"
+     },
+     {
+      "count": 1,
+      "name": "g_vColour",
+      "type": "data"
+     },
+     {
+      "count": 4,
+      "name": "g_vColourFresnel",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_vFresnelPower",
+      "type": "f32"
+     },
+     {
+      "count": 1,
+      "name": "g_vScrollTextureX",
+      "type": "data"
+     },
+     {
+      "count": 1,
+      "name": "g_vScrollTextureY",
+      "type": "data"
+     },
+     {
+      "count": 4,
+      "name": "g_vSpeedScrollTextureX",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_vSpeedScrollTextureY",
+      "type": "f32"
+     },
+     {
+      "count": 1,
+      "name": "g_2L_tUVDistortTexture",
+      "type": "texture"
+     },
+     {
+      "count": 4,
+      "name": "gUvScrollDistortScale",
+      "type": "f32"
+     },
+     {
+      "count": 1,
+      "name": "gUvScrollDistortOffsetX",
+      "type": "data"
+     },
+     {
+      "count": 1,
+      "name": "gUvScrollDistortOffsetY",
+      "type": "data"
+     },
+     {
+      "count": 4,
+      "name": "gUvDistort",
+      "type": "f32"
+     },
+     {
+      "count": 1,
+      "name": "g_tUVDistortTexture",
+      "type": "texture"
+     },
+     {
+      "count": 1,
+      "name": "g_2L_tTexture",
+      "type": "texture"
+     },
+     {
+      "count": 1,
+      "name": "g_2L_vColour",
+      "type": "data"
+     },
+     {
+      "count": 4,
+      "name": "g_2L_vColourFresnel",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_2L_vScrollTextureX",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_2L_vScrollTextureY",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_2L_UvScrollDistortScale",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_2L_UvScrollDistortOffsetX",
+      "type": "f32"
+     },
+     {
+      "count": 1,
+      "name": "g_2L_UvScrollDistortOffsetY",
+      "type": "data"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {
+   "g_2L_tTexture": [
+    "lightning_01",
+    "DefaultColour",
+    "uv_distort_04",
+    "lightning_03",
+    "lightning_04"
+   ],
+   "g_2L_tUVDistortTexture": [
+    "uv_distort_faint",
+    "DefaultColour",
+    "uv_distort"
+   ],
+   "g_tTexture": [
+    "lightning_04",
+    "mine_pulse_03",
+    "lightning_02",
+    "lightning_01",
+    "mine_pulse_02"
+   ],
+   "g_tUVDistortTexture": [
+    "uv_distort_faint",
+    "uv_distort"
+   ]
+  },
+  "variants": 7,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 6,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 5
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 9
+   }
+  ]
+ },
+ "MeshEffectDLayerUVDistCullNDepth.fx": {
+  "defaults": {
+   "gUvDistort": [
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "gUvScrollDistortOffsetX": [
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "gUvScrollDistortOffsetY": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "gUvScrollDistortScale": [
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_2L_UvDistort": [
+    0.5,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_2L_UvScrollDistortOffsetX": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_2L_UvScrollDistortOffsetY": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_2L_UvScrollDistortScale": [
+    0.5,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_2L_vColour": [
+    1.0,
+    0.53699,
+    0.311,
+    4.0
+   ],
+   "g_2L_vColourFresnel": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_2L_vScrollTextureX": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_2L_vScrollTextureY": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_vColour": [
+    -1.0,
+    -1.0,
+    -1.0,
+    0.5
+   ],
+   "g_vColourFresnel": [
+    0.11901,
+    0.17851,
+    0.29752,
+    0.0
+   ],
+   "g_vFresnelPower": [
+    0.5,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_vScrollTextureY": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_vSpeedScrollTextureX": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_vSpeedScrollTextureY": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "folder": "models/perks",
+  "models": 3,
+  "parts": 8,
+  "passes": [
+   {
+    "effect": "MeshEffectDLayerUVDistCullNDepth.fx",
+    "inputs": [
+     {
+      "count": 4,
+      "name": "g_2L_UvDistort",
+      "type": "f32"
+     },
+     {
+      "count": 1,
+      "name": "g_tTexture",
+      "type": "texture"
+     },
+     {
+      "count": 1,
+      "name": "g_vColour",
+      "type": "data"
+     },
+     {
+      "count": 4,
+      "name": "g_vColourFresnel",
+      "type": "f32"
+     },
+     {
+      "count": 1,
+      "name": "g_vFresnelPower",
+      "type": "data"
+     },
+     {
+      "count": 1,
+      "name": "g_vScrollTextureX",
+      "type": "data"
+     },
+     {
+      "count": 4,
+      "name": "g_vScrollTextureY",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_vSpeedScrollTextureX",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_vSpeedScrollTextureY",
+      "type": "f32"
+     },
+     {
+      "count": 1,
+      "name": "g_2L_tUVDistortTexture",
+      "type": "texture"
+     },
+     {
+      "count": 4,
+      "name": "gUvScrollDistortScale",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "gUvScrollDistortOffsetX",
+      "type": "f32"
+     },
+     {
+      "count": 1,
+      "name": "gUvScrollDistortOffsetY",
+      "type": "data"
+     },
+     {
+      "count": 4,
+      "name": "gUvDistort",
+      "type": "f32"
+     },
+     {
+      "count": 1,
+      "name": "g_tUVDistortTexture",
+      "type": "texture"
+     },
+     {
+      "count": 1,
+      "name": "g_2L_tTexture",
+      "type": "texture"
+     },
+     {
+      "count": 1,
+      "name": "g_2L_vColour",
+      "type": "data"
+     },
+     {
+      "count": 4,
+      "name": "g_2L_vColourFresnel",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_2L_vScrollTextureX",
+      "type": "f32"
+     },
+     {
+      "count": 1,
+      "name": "g_2L_vScrollTextureY",
+      "type": "data"
+     },
+     {
+      "count": 4,
+      "name": "g_2L_UvScrollDistortScale",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_2L_UvScrollDistortOffsetX",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_2L_UvScrollDistortOffsetY",
+      "type": "f32"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {
+   "g_2L_tTexture": [
+    "lightning_02",
+    "mine_pulse_04",
+    "lightning_01"
+   ],
+   "g_2L_tUVDistortTexture": [
+    "uv_distort",
+    "uv_distort_02"
+   ],
+   "g_tTexture": [
+    "lightning_02",
+    "mine_pulse_04",
+    "lightning_01"
+   ],
+   "g_tUVDistortTexture": [
+    "uv_distort"
+   ]
+  },
+  "variants": 3,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 6,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 5
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 9
+   }
+  ]
+ },
+ "MeshEffectDLayerUVDistNDepth.fx": {
+  "defaults": {
+   "gUvDistort": [
+    0.1,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "gUvScrollDistortScale": [
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_2L_UvDistort": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_2L_UvScrollDistortOffsetX": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_2L_UvScrollDistortOffsetY": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_2L_UvScrollDistortScale": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_2L_vColour": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_2L_vColourFresnel": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_2L_vScrollTextureX": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_2L_vScrollTextureY": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_vFresnelPower": [
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_vScrollTextureY": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_vSpeedScrollTextureX": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_vSpeedScrollTextureY": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "folder": "models/perks",
+  "models": 1,
+  "parts": 6,
+  "passes": [
+   {
+    "effect": "MeshEffectDLayerUVDistNDepth.fx",
+    "inputs": [
+     {
+      "count": 4,
+      "name": "g_2L_UvDistort",
+      "type": "f32"
+     },
+     {
+      "count": 1,
+      "name": "g_tTexture",
+      "type": "texture"
+     },
+     {
+      "count": 1,
+      "name": "g_vColour",
+      "type": "data"
+     },
+     {
+      "count": 1,
+      "name": "g_vColourFresnel",
+      "type": "data"
+     },
+     {
+      "count": 4,
+      "name": "g_vFresnelPower",
+      "type": "f32"
+     },
+     {
+      "count": 1,
+      "name": "g_vScrollTextureX",
+      "type": "data"
+     },
+     {
+      "count": 4,
+      "name": "g_vScrollTextureY",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_vSpeedScrollTextureX",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_vSpeedScrollTextureY",
+      "type": "f32"
+     },
+     {
+      "count": 1,
+      "name": "g_2L_tUVDistortTexture",
+      "type": "texture"
+     },
+     {
+      "count": 4,
+      "name": "gUvScrollDistortScale",
+      "type": "f32"
+     },
+     {
+      "count": 1,
+      "name": "gUvScrollDistortOffsetX",
+      "type": "data"
+     },
+     {
+      "count": 1,
+      "name": "gUvScrollDistortOffsetY",
+      "type": "data"
+     },
+     {
+      "count": 4,
+      "name": "gUvDistort",
+      "type": "f32"
+     },
+     {
+      "count": 1,
+      "name": "g_tUVDistortTexture",
+      "type": "texture"
+     },
+     {
+      "count": 1,
+      "name": "g_2L_tTexture",
+      "type": "texture"
+     },
+     {
+      "count": 4,
+      "name": "g_2L_vColour",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_2L_vColourFresnel",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_2L_vScrollTextureX",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_2L_vScrollTextureY",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_2L_UvScrollDistortScale",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_2L_UvScrollDistortOffsetX",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_2L_UvScrollDistortOffsetY",
+      "type": "f32"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {
+   "g_2L_tTexture": [
+    "DefaultColour"
+   ],
+   "g_2L_tUVDistortTexture": [
+    "DefaultColour"
+   ],
+   "g_tTexture": [
+    "lightning_bolts_02"
+   ],
+   "g_tUVDistortTexture": [
+    "uv_distort"
+   ]
+  },
+  "variants": 1,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 6,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 5
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 9
+   }
+  ]
+ },
+ "MeshEffectNoDepth.fx": {
+  "defaults": {
+   "g_vColour": [
+    0.25,
+    0.36462,
+    1.0,
+    2.0
+   ],
+   "g_vColourFresnel": [
+    0.0,
+    0.26667,
+    0.8,
+    0.0
+   ],
+   "g_vFresnelPower": [
+    0.5,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_vScrollTextureY": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_vSpeedScrollTextureX": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_vSpeedScrollTextureY": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "folder": "models/perks",
+  "models": 7,
+  "parts": 65,
+  "passes": [
+   {
+    "effect": "MeshEffectNoDepth.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_tTexture",
+      "type": "texture"
+     },
+     {
+      "count": 1,
+      "name": "g_vColour",
+      "type": "data"
+     },
+     {
+      "count": 1,
+      "name": "g_vColourFresnel",
+      "type": "data"
+     },
+     {
+      "count": 4,
+      "name": "g_vFresnelPower",
+      "type": "f32"
+     },
+     {
+      "count": 1,
+      "name": "g_vScrollTextureX",
+      "type": "data"
+     },
+     {
+      "count": 4,
+      "name": "g_vScrollTextureY",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_vSpeedScrollTextureX",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_vSpeedScrollTextureY",
+      "type": "f32"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {
+   "g_tTexture": [
+    "lightning_bolts_06",
+    "lightning_bolts_02",
+    "lightning_bolts_04",
+    "mine_pulse_04"
+   ]
+  },
+  "variants": 4,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 6,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 0,
+    "type": 8,
+    "usage": 5
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 9
+   }
+  ]
+ },
+ "MeshEffectRefract.fx": {
+  "defaults": {
+   "g_vColour": [
+    1.0,
+    1.0,
+    1.0,
+    0.0
+   ],
+   "g_vColourFresnel": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_vFresnelPower": [
+    10.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_vRefractColour": [
+    1.0,
+    1.0,
+    1.0,
+    1.0
+   ],
+   "g_vRefractColourFresnel": [
+    1.0,
+    1.0,
+    1.0,
+    0.0
+   ],
+   "g_vScrollTextureX": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_vScrollTextureY": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_vSpeedScrollTextureX": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_vSpeedScrollTextureY": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "folder": "models/perks",
+  "models": 21,
+  "parts": 40,
+  "passes": [
+   {
+    "effect": "MeshEffectRefract.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_tTexture",
+      "type": "texture"
+     },
+     {
+      "count": 1,
+      "name": "g_vColour",
+      "type": "data"
+     },
+     {
+      "count": 1,
+      "name": "g_vColourFresnel",
+      "type": "data"
+     },
+     {
+      "count": 1,
+      "name": "g_vFresnelPower",
+      "type": "data"
+     },
+     {
+      "count": 4,
+      "name": "g_vScrollTextureX",
+      "type": "f32"
+     },
+     {
+      "count": 1,
+      "name": "g_vScrollTextureY",
+      "type": "data"
+     },
+     {
+      "count": 4,
+      "name": "g_vSpeedScrollTextureX",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_vSpeedScrollTextureY",
+      "type": "f32"
+     },
+     {
+      "count": 1,
+      "name": "g_pRefractionIntensity",
+      "type": "data"
+     },
+     {
+      "count": 1,
+      "name": "g_vRefractColour",
+      "type": "data"
+     },
+     {
+      "count": 1,
+      "name": "g_vRefractColourFresnel",
+      "type": "data"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {
+   "g_tTexture": [
+    "lightning_03",
+    "lightning_grid_01",
+    "uv_distort",
+    "light_paint_02",
+    "light_lines_11"
+   ]
+  },
+  "variants": 8,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 6,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 0,
+    "type": 8,
+    "usage": 5
+   },
+   {
+    "index": 2,
+    "type": 11,
+    "usage": 5
+   },
+   {
+    "index": 3,
+    "type": 11,
+    "usage": 5
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 9
+   }
+  ]
+ },
+ "MeshEffectUVDistort.fx": {
+  "defaults": {
+   "gUvDistort": [
+    0.1,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "gUvScrollDistortOffsetX": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "gUvScrollDistortOffsetY": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "gUvScrollDistortScale": [
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_vColour": [
+    1.0,
+    1.0,
+    0.3,
+    0.2
+   ],
+   "g_vColourFresnel": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_vFresnelPower": [
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_vScrollTextureX": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_vScrollTextureY": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_vSpeedScrollTextureX": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_vSpeedScrollTextureY": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "folder": "models/perks",
+  "models": 88,
+  "parts": 188,
+  "passes": [
+   {
+    "effect": "MeshEffectUVDistort.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_tTexture",
+      "type": "texture"
+     },
+     {
+      "count": 4,
+      "name": "g_vColour",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_vColourFresnel",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_vFresnelPower",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_vScrollTextureX",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_vScrollTextureY",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_vSpeedScrollTextureX",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_vSpeedScrollTextureY",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "gUvScrollDistortScale",
+      "type": "f32"
+     },
+     {
+      "count": 1,
+      "name": "gUvScrollDistortOffsetX",
+      "type": "data"
+     },
+     {
+      "count": 1,
+      "name": "gUvScrollDistortOffsetY",
+      "type": "data"
+     },
+     {
+      "count": 4,
+      "name": "gUvDistort",
+      "type": "f32"
+     },
+     {
+      "count": 1,
+      "name": "g_tUVDistortTexture",
+      "type": "texture"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {
+   "g_tTexture": [
+    "lightning_01",
+    "lightning_bolts_04",
+    "mine_pulse_02",
+    "lightning_02",
+    "mine_pulse_03"
+   ],
+   "g_tUVDistortTexture": [
+    "uv_distort",
+    "uv_distort_03",
+    "uv_distort_faint",
+    "uv_distort_05",
+    "uv_distort_02"
+   ]
+  },
+  "variants": 30,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 6,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 0,
+    "type": 8,
+    "usage": 5
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 9
+   }
+  ]
+ },
+ "MeshEffectUVDistortCull.fx": {
+  "defaults": {
+   "gUvDistort": [
+    0.25,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "gUvScrollDistortOffsetX": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "gUvScrollDistortOffsetY": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "gUvScrollDistortScale": [
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_vColourFresnel": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_vFresnelPower": [
+    0.47934,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_vScrollTextureX": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_vScrollTextureY": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_vSpeedScrollTextureX": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_vSpeedScrollTextureY": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "folder": "models/perks",
+  "models": 21,
+  "parts": 48,
+  "passes": [
+   {
+    "effect": "MeshEffectUVDistortCull.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_tTexture",
+      "type": "texture"
+     },
+     {
+      "count": 1,
+      "name": "g_vColour",
+      "type": "data"
+     },
+     {
+      "count": 4,
+      "name": "g_vColourFresnel",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_vFresnelPower",
+      "type": "f32"
+     },
+     {
+      "count": 1,
+      "name": "g_vScrollTextureX",
+      "type": "data"
+     },
+     {
+      "count": 4,
+      "name": "g_vScrollTextureY",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_vSpeedScrollTextureX",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_vSpeedScrollTextureY",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "gUvScrollDistortScale",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "gUvScrollDistortOffsetX",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "gUvScrollDistortOffsetY",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "gUvDistort",
+      "type": "f32"
+     },
+     {
+      "count": 1,
+      "name": "g_tUVDistortTexture",
+      "type": "texture"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {
+   "g_tTexture": [
+    "mine_pulse_03",
+    "lightning_01",
+    "lightning_03",
+    "mine_pulse_01"
+   ],
+   "g_tUVDistortTexture": [
+    "uv_distort_faint",
+    "uv_distort_04"
+   ]
+  },
+  "variants": 5,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 6,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 0,
+    "type": 8,
+    "usage": 5
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 9
+   }
+  ]
+ },
+ "MeshEffectUVDistortCullNoDepth.fx": {
+  "defaults": {
+   "gUvDistort": [
+    0.25,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "gUvScrollDistortOffsetX": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "gUvScrollDistortOffsetY": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "gUvScrollDistortScale": [
+    0.5,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_vColour": [
+    -0.7,
+    -0.7,
+    -0.7,
+    4.0
+   ],
+   "g_vColourFresnel": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_vFresnelPower": [
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_vScrollTextureX": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_vScrollTextureY": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_vSpeedScrollTextureX": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_vSpeedScrollTextureY": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "folder": "models/perks/pickups",
+  "models": 38,
+  "parts": 215,
+  "passes": [
+   {
+    "effect": "MeshEffectUVDistortCullNoDepth.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_tTexture",
+      "type": "texture"
+     },
+     {
+      "count": 1,
+      "name": "g_vColour",
+      "type": "data"
+     },
+     {
+      "count": 1,
+      "name": "g_vColourFresnel",
+      "type": "data"
+     },
+     {
+      "count": 4,
+      "name": "g_vFresnelPower",
+      "type": "f32"
+     },
+     {
+      "count": 1,
+      "name": "g_vScrollTextureX",
+      "type": "data"
+     },
+     {
+      "count": 4,
+      "name": "g_vScrollTextureY",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_vSpeedScrollTextureX",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_vSpeedScrollTextureY",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "gUvScrollDistortScale",
+      "type": "f32"
+     },
+     {
+      "count": 1,
+      "name": "gUvScrollDistortOffsetX",
+      "type": "data"
+     },
+     {
+      "count": 1,
+      "name": "gUvScrollDistortOffsetY",
+      "type": "data"
+     },
+     {
+      "count": 4,
+      "name": "gUvDistort",
+      "type": "f32"
+     },
+     {
+      "count": 1,
+      "name": "g_tUVDistortTexture",
+      "type": "texture"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {
+   "g_tTexture": [
+    "lightning_bolts_08",
+    "lightning_03",
+    "mine_pulse_06",
+    "light_lines_08",
+    "lightning_01"
+   ],
+   "g_tUVDistortTexture": [
+    "uv_distort",
+    "uv_distort_faint",
+    "mine_pulse_distort_01",
+    "mine_pulse_02"
+   ]
+  },
+  "variants": 13,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 6,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 0,
+    "type": 8,
+    "usage": 5
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 9
+   }
+  ]
+ },
+ "MeshEffectUVDistortNoDepth.fx": {
+  "defaults": {
+   "gUvDistort": [
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "gUvScrollDistortOffsetX": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "gUvScrollDistortOffsetY": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "gUvScrollDistortScale": [
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_vColour": [
+    0.25,
+    0.36462,
+    1.0,
+    2.0
+   ],
+   "g_vColourFresnel": [
+    1.0,
+    0.26667,
+    0.0,
+    2.0
+   ],
+   "g_vFresnelPower": [
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_vScrollTextureX": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_vScrollTextureY": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_vSpeedScrollTextureX": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_vSpeedScrollTextureY": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "folder": "models/perks",
+  "models": 16,
+  "parts": 73,
+  "passes": [
+   {
+    "effect": "MeshEffectUVDistortNoDepth.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_tTexture",
+      "type": "texture"
+     },
+     {
+      "count": 1,
+      "name": "g_vColour",
+      "type": "data"
+     },
+     {
+      "count": 4,
+      "name": "g_vColourFresnel",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_vFresnelPower",
+      "type": "f32"
+     },
+     {
+      "count": 1,
+      "name": "g_vScrollTextureX",
+      "type": "data"
+     },
+     {
+      "count": 4,
+      "name": "g_vScrollTextureY",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_vSpeedScrollTextureX",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_vSpeedScrollTextureY",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "gUvScrollDistortScale",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "gUvScrollDistortOffsetX",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "gUvScrollDistortOffsetY",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "gUvDistort",
+      "type": "f32"
+     },
+     {
+      "count": 1,
+      "name": "g_tUVDistortTexture",
+      "type": "texture"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {
+   "g_tTexture": [
+    "light_lines_08",
+    "lightning_bolts_04",
+    "lightning_bolts_08",
+    "shunt_pulse_01",
+    "lightning_05"
+   ],
+   "g_tUVDistortTexture": [
+    "uv_distort_faint",
+    "uv_distort",
+    "uv_distort_03",
+    "uv_mine_pulse_01"
+   ]
+  },
+  "variants": 11,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 6,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 0,
+    "type": 8,
+    "usage": 5
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 9
+   }
+  ]
+ },
+ "Ocean_NL.fx": {
+  "defaults": {
+   "g_fWaterSpecularIntensity": [
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_vNormalScale0": [
+    1.0,
+    1.0,
+    0.0,
+    0.0
+   ],
+   "g_vNormalScale1": [
+    1.0,
+    1.0,
+    0.0,
+    0.0
+   ],
+   "g_vNormalVelocity0": [
+    0.01,
+    0.01,
+    0.0,
+    0.0
+   ],
+   "g_vNormalVelocity1": [
+    0.01,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_vWaterColour": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "folder": "models/specialfx",
+  "models": 1,
+  "parts": 1,
+  "passes": [
+   {
+    "effect": "Ocean_NL.fx",
+    "inputs": [
+     {
+      "count": 4,
+      "name": "g_fWaterSpecularIntensity",
+      "type": "f32"
+     },
+     {
+      "count": 1,
+      "name": "g_tNormal",
+      "type": "texture"
+     },
+     {
+      "count": 4,
+      "name": "g_vWaterColour",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_vNormalScale0",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_vNormalScale1",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_vNormalVelocity0",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_vNormalVelocity1",
+      "type": "f32"
+     },
+     {
+      "count": 1,
+      "name": "g_tBlendNormal",
+      "type": "texture"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {
+   "g_tBlendNormal": [
+    "DefaultColour"
+   ],
+   "g_tNormal": [
+    "water_jet_norm"
+   ]
+  },
+  "variants": 1,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 6,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 0,
+    "type": 8,
+    "usage": 5
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 9
+   }
+  ]
+ },
+ "Puddle_NL_NV.fx": {
+  "defaults": {
+   "g_fRippleIntensity": [
+    0.1,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_vNormalScale0": [
+    2.0,
+    1.0,
+    0.0,
+    0.0
+   ],
+   "g_vNormalScale1": [
+    2.0,
+    1.0,
+    0.0,
+    0.0
+   ],
+   "g_vNormalVelocity0": [
+    0.01,
+    0.001,
+    0.0,
+    0.0
+   ],
+   "g_vNormalVelocity1": [
+    0.001,
+    0.01,
+    0.0,
+    0.0
+   ],
+   "g_vWaterColour": [
+    0.275,
+    0.263,
+    0.08993,
+    0.7
+   ]
+  },
+  "folder": "models/objects/usa_la_river/misc",
+  "models": 1,
+  "parts": 1,
+  "passes": [
+   {
+    "effect": "Puddle_NL_NV.fx",
+    "inputs": [
+     {
+      "count": 4,
+      "name": "g_vNormalVelocity1",
+      "type": "f32"
+     },
+     {
+      "count": 1,
+      "name": "g_tAlbedo",
+      "type": "texture"
+     },
+     {
+      "count": 1,
+      "name": "g_tBlendNormal",
+      "type": "texture"
+     },
+     {
+      "count": 1,
+      "name": "g_tMaterial",
+      "type": "texture"
+     },
+     {
+      "count": 1,
+      "name": "g_tNormal",
+      "type": "texture"
+     },
+     {
+      "count": 4,
+      "name": "g_vWaterColour",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_fRippleIntensity",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_vNormalScale0",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_vNormalScale1",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_vNormalVelocity0",
+      "type": "f32"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {
+   "g_tAlbedo": [
+    "puddle_alpha_diff"
+   ],
+   "g_tBlendNormal": [
+    "puddle_alpha_norm"
+   ],
+   "g_tMaterial": [
+    "puddle_alpha_ipr0"
+   ],
+   "g_tNormal": [
+    "puddle_alpha_norm"
+   ]
+  },
+  "variants": 1,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 6,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 0,
+    "type": 8,
+    "usage": 5
+   }
+  ]
+ },
+ "ScreenFacingSprite.fx": {
+  "defaults": {},
+  "folder": "models/specialfx",
+  "models": 2,
+  "parts": 3,
+  "passes": [
+   {
+    "effect": "ScreenFacingSprite.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_tAlbedo",
+      "type": "texture"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {
+   "g_tAlbedo": [
+    "lantern01_diff",
+    "sprig_diff"
+   ]
+  },
+  "variants": 1,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 7,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 8,
+    "usage": 5
+   },
+   {
+    "index": 3,
+    "type": 8,
+    "usage": 5
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 9
+   }
+  ]
+ },
+ "ScrollFade_NL.fx": {
+  "defaults": {
+   "g_fScrollSpeedX": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_fScrollSpeedY": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_fScrollX": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_fScrollY": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "folder": "models/specialfx",
+  "models": 5,
+  "parts": 98,
+  "passes": [
+   {
+    "effect": "ScrollFade_NL.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_tAlbedo",
+      "type": "texture"
+     },
+     {
+      "count": 1,
+      "name": "g_tMaterial",
+      "type": "texture"
+     },
+     {
+      "count": 1,
+      "name": "g_fScrollX",
+      "type": "data"
+     },
+     {
+      "count": 4,
+      "name": "g_fScrollY",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_fScrollSpeedX",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_fScrollSpeedY",
+      "type": "f32"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {
+   "g_tAlbedo": [
+    "tide_02",
+    "tide_01",
+    "hydrantspray",
+    "jettrail"
+   ],
+   "g_tMaterial": [
+    "DefaultColour"
+   ]
+  },
+  "variants": 3,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 6,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 0,
+    "type": 8,
+    "usage": 5
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 9
+   }
+  ]
+ },
+ "ScrollFade_skin_NL.fx": {
+  "defaults": {
+   "g_fScrollSpeedX": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_fScrollSpeedY": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_fScrollX": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "folder": "models/specialfx",
+  "models": 1,
+  "parts": 1,
+  "passes": [
+   {
+    "effect": "ScrollFade_skin_NL.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_tAlbedo",
+      "type": "texture"
+     },
+     {
+      "count": 1,
+      "name": "g_tMaterial",
+      "type": "texture"
+     },
+     {
+      "count": 4,
+      "name": "g_fScrollSpeedY",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_fScrollX",
+      "type": "f32"
+     },
+     {
+      "count": 1,
+      "name": "g_fScrollY",
+      "type": "data"
+     },
+     {
+      "count": 4,
+      "name": "g_fScrollSpeedX",
+      "type": "f32"
+     }
+    ]
+   },
+   {
+    "effect": "ScrollFade_skin_NL.fx",
+    "inputs": [
+     {
+      "count": 3,
+      "name": "g_mPalette",
+      "type": "data"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": true,
+  "textures": {
+   "g_tAlbedo": [
+    "electricity_diff"
+   ],
+   "g_tMaterial": [
+    "electricity_ipr0"
+   ]
+  },
+  "variants": 1,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 6,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 0,
+    "type": 8,
+    "usage": 5
+   },
+   {
+    "index": 3,
+    "type": 10,
+    "usage": 5
+   },
+   {
+    "index": 4,
+    "type": 11,
+    "usage": 5
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 9
+   }
+  ]
+ },
+ "ScrollUVNeon_NV.fx": {
+  "defaults": {
+   "g_vScrollSpeedX": [
+    5.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_vScrollSpeedY": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_vScrollTextureX": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_vScrollTextureY": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "folder": "models/objects/usa_amboy/misc",
+  "models": 1,
+  "parts": 1,
+  "passes": [
+   {
+    "effect": "ScrollUVNeon_NV.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_tNeon",
+      "type": "texture"
+     },
+     {
+      "count": 1,
+      "name": "g_tAlbedo",
+      "type": "texture"
+     },
+     {
+      "count": 1,
+      "name": "g_tMaterial",
+      "type": "texture"
+     },
+     {
+      "count": 4,
+      "name": "g_vScrollTextureX",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_vScrollTextureY",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_vScrollSpeedX",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_vScrollSpeedY",
+      "type": "f32"
+     }
+    ]
+   },
+   {
+    "effect": "ScrollUVNeon_NV.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_tLightmap",
+      "type": "texture"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {
+   "g_tAlbedo": [
+    "propeller_diff"
+   ],
+   "g_tLightmap": [
+    "DefaultColour"
+   ],
+   "g_tMaterial": [
+    "DefaultColour"
+   ],
+   "g_tNeon": [
+    "DefaultColour"
+   ]
+  },
+  "variants": 1,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 6,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 5
+   }
+  ]
+ },
+ "SoftLightFlare.fx": {
+  "defaults": {
+   "g_fLightFlareIntensity": [
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_fLightFlareSize": [
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_vLightFlareColour": [
+    1.0,
+    1.0,
+    1.0,
+    0.0
+   ]
+  },
+  "folder": "models/specialfx",
+  "models": 3,
+  "parts": 5,
+  "passes": [
+   {
+    "effect": "SoftLightFlare.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_tColour",
+      "type": "texture"
+     },
+     {
+      "count": 4,
+      "name": "g_vLightFlareColour",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_fLightFlareIntensity",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_fLightFlareSize",
+      "type": "f32"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {
+   "g_tColour": [
+    "lightflare_ring_diff",
+    "lightflare_diff"
+   ]
+  },
+  "variants": 2,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 7,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 5
+   }
+  ]
+ },
+ "Water_NL_NV.fx": {
+  "defaults": {
+   "g_fWaterExtinctionScale": [
+    0.008,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_fWaterRefractAmount": [
+    0.1,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_fWaterSpecularIntensity": [
+    0.25,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_vNormalScale0": [
+    560.0,
+    560.0,
+    0.0,
+    0.0
+   ],
+   "g_vNormalScale1": [
+    340.0,
+    340.0,
+    0.0,
+    0.0
+   ],
+   "g_vNormalVelocity0": [
+    -0.003,
+    0.41,
+    0.0,
+    0.0
+   ],
+   "g_vNormalVelocity1": [
+    0.06,
+    0.43,
+    0.0,
+    0.0
+   ],
+   "g_vWaterColour": [
+    0.58,
+    0.503,
+    0.341,
+    0.0
+   ]
+  },
+  "folder": "models/objects/usa_la_river/misc",
+  "models": 1,
+  "parts": 3,
+  "passes": [
+   {
+    "effect": "Water_NL_NV.fx",
+    "inputs": [
+     {
+      "count": 4,
+      "name": "g_fWaterRefractAmount",
+      "type": "f32"
+     },
+     {
+      "count": 1,
+      "name": "g_tNormal",
+      "type": "texture"
+     },
+     {
+      "count": 4,
+      "name": "g_fWaterExtinctionScale",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_vNormalVelocity1",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_vNormalScale0",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_vNormalScale1",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_vNormalVelocity0",
+      "type": "f32"
+     },
+     {
+      "count": 1,
+      "name": "g_tBlendNormal",
+      "type": "texture"
+     },
+     {
+      "count": 4,
+      "name": "g_fWaterSpecularIntensity",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_vWaterColour",
+      "type": "f32"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {
+   "g_tBlendNormal": [
+    "waterripples_norm"
+   ],
+   "g_tNormal": [
+    "waterripples_norm"
+   ]
+  },
+  "variants": 1,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 6,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 0,
+    "type": 8,
+    "usage": 5
+   }
+  ]
+ },
+ "default_NB_NL.fx": {
+  "defaults": {},
+  "folder": "models/objects/usa_sanfran_sausalito/instance_references",
+  "models": 3,
+  "parts": 25,
+  "passes": [
+   {
+    "effect": "default_NB_NL.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_tAlbedo",
+      "type": "texture"
+     },
+     {
+      "count": 1,
+      "name": "g_tMaterial",
+      "type": "texture"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {
+   "g_tAlbedo": [
+    "DirectionSignA_DIFF",
+    "DirectionSignB_DIFF",
+    "DirectionSignC_DIFF"
+   ],
+   "g_tMaterial": [
+    "DirectionSignA_IPR0",
+    "DirectionSignB_IPR0",
+    "DirectionSignC_IPR0"
+   ]
+  },
+  "variants": 1,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 6,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 0,
+    "type": 8,
+    "usage": 5
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 9
+   }
+  ]
+ },
+ "default_NB_NL_NM_NV.fx": {
+  "defaults": {},
+  "folder": "models/objects/shared/us",
+  "models": 378,
+  "parts": 1628,
+  "passes": [
+   {
+    "effect": "default_NB_NL_NM_NV.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_tAlbedo",
+      "type": "texture"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {
+   "g_tAlbedo": [
+    "DefaultColour",
+    "dynamicobjects01_diff",
+    "dove_diff",
+    "black",
+    "trafficlights_diff"
+   ]
+  },
+  "variants": 1,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 6,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 0,
+    "type": 8,
+    "usage": 5
+   }
+  ]
+ },
+ "default_NB_NL_NV.fx": {
+  "defaults": {},
+  "folder": "models/objects/shared/us",
+  "models": 674,
+  "parts": 2585,
+  "passes": [
+   {
+    "effect": "default_NB_NL_NV.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_tAlbedo",
+      "type": "texture"
+     },
+     {
+      "count": 1,
+      "name": "g_tMaterial",
+      "type": "texture"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {
+   "g_tAlbedo": [
+    "dynamicwoodenpallet_diff",
+    "cab01alphas_diff",
+    "streetlamp09_diff",
+    "lampostabcd_diff",
+    "truck1_lit_diff"
+   ],
+   "g_tMaterial": [
+    "dynamicwoodenpallet_ipr0",
+    "cab01alphas_ipr0",
+    "streetlamp09_ipr0",
+    "lampostabcd_ipr0",
+    "scaffold1_ipr0"
+   ]
+  },
+  "variants": 1,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 6,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 0,
+    "type": 8,
+    "usage": 5
+   }
+  ]
+ },
+ "default_NL_NV.fx": {
+  "defaults": {},
+  "folder": "models/objects/uk_brighton/objects",
+  "models": 4,
+  "parts": 21,
+  "passes": [
+   {
+    "effect": "default_NL_NV.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_tAlbedo",
+      "type": "texture"
+     },
+     {
+      "count": 1,
+      "name": "g_tMaterial",
+      "type": "texture"
+     },
+     {
+      "count": 1,
+      "name": "g_tNormal",
+      "type": "texture"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {
+   "g_tAlbedo": [
+    "sunlounger_pt_diff",
+    "rowingboat01_diff",
+    "ships_surface2_diff",
+    "grey_diff"
+   ],
+   "g_tMaterial": [
+    "sunlounger_pt_ipr0",
+    "rowingboat01_ipr0",
+    "ships_surface2_ipr0",
+    "grey_ipr0"
+   ],
+   "g_tNormal": [
+    "sunlounger_pt_norm",
+    "rowingboat01_norm",
+    "ships_surface2_norm",
+    "grey_norm"
+   ]
+  },
+  "variants": 1,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 6,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 0,
+    "type": 8,
+    "usage": 5
+   },
+   {
+    "index": 1,
+    "type": 11,
+    "usage": 5
+   }
+  ]
+ },
+ "default_skin_NB_NL_NM_NV.fx": {
+  "defaults": {},
+  "folder": "models/characters/male/la",
+  "models": 96,
+  "parts": 1874,
+  "passes": [
+   {
+    "effect": "default_skin_NB_NL_NM_NV.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_tAlbedo",
+      "type": "texture"
+     }
+    ]
+   },
+   {
+    "effect": "default_skin_NB_NL_NM_NV.fx",
+    "inputs": [
+     {
+      "count": 6,
+      "name": "g_mPalette",
+      "type": "data"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": true,
+  "textures": {
+   "g_tAlbedo": [
+    "mcrd_arms1_skin",
+    "fcrd_arm2_skin",
+    "mcrd_arms3_skin",
+    "fcrd_arm10_skin",
+    "fcrd_torso2_skin"
+   ]
+  },
+  "variants": 24,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 6,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 0,
+    "type": 8,
+    "usage": 5
+   },
+   {
+    "index": 3,
+    "type": 10,
+    "usage": 5
+   },
+   {
+    "index": 4,
+    "type": 11,
+    "usage": 5
+   }
+  ]
+ },
+ "default_skin_NV.fx": {
+  "defaults": {},
+  "folder": "models/characters/male",
+  "models": 1,
+  "parts": 2,
+  "passes": [
+   {
+    "effect": "default_skin_NV.fx",
+    "inputs": [
+     {
+      "count": 23,
+      "name": "g_mPalette",
+      "type": "data"
+     },
+     {
+      "count": 1,
+      "name": "g_tAlbedo",
+      "type": "texture"
+     },
+     {
+      "count": 1,
+      "name": "g_tMaterial",
+      "type": "texture"
+     },
+     {
+      "count": 1,
+      "name": "g_tNormal",
+      "type": "texture"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {
+   "g_tAlbedo": [
+    "LOW_No1_Cropsheet_DIFF"
+   ],
+   "g_tMaterial": [
+    "LOW_No1_Cropsheet_IPR0"
+   ],
+   "g_tNormal": [
+    "LOW_No1_Cropsheet_NORM"
+   ]
+  },
+  "variants": 2,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 6,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 0,
+    "type": 8,
+    "usage": 5
+   },
+   {
+    "index": 1,
+    "type": 11,
+    "usage": 5
+   },
+   {
+    "index": 2,
+    "type": 11,
+    "usage": 5
+   },
+   {
+    "index": 3,
+    "type": 7,
+    "usage": 5
+   },
+   {
+    "index": 4,
+    "type": 7,
+    "usage": 5
+   }
+  ]
+ },
+ "veh_Alloy_a_b_f.fx": {
+  "defaults": {
+   "g_MattParams": [
+    1.0,
+    1.0,
+    1.0,
+    1.0
+   ],
+   "g_vMtlParameters": [
+    0.1,
+    0.01,
+    1.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "folder": "models/vehicles",
+  "models": 127,
+  "parts": 364,
+  "passes": [
+   {
+    "effect": "veh_Alloy_a_b_f.fx",
+    "inputs": [
+     {
+      "count": 8,
+      "name": "g_vMtlParameters",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_MattParams",
+      "type": "f32"
+     }
+    ]
+   },
+   {
+    "effect": "veh_Alloy_a_b_f.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_LocalSpaceSHNode",
+      "type": "data"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {},
+  "variants": 1,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 9
+   }
+  ]
+ },
+ "veh_Alloy_a_f.fx": {
+  "defaults": {
+   "g_MattParams": [
+    1.0,
+    1.0,
+    1.0,
+    1.0
+   ],
+   "g_vMtlParameters": [
+    0.1,
+    0.01,
+    1.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "folder": "models/vehicles/wheels",
+  "models": 3,
+  "parts": 3,
+  "passes": [
+   {
+    "effect": "veh_Alloy_a_f.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_BumpTexture",
+      "type": "texture"
+     },
+     {
+      "count": 8,
+      "name": "g_vMtlParameters",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_MattParams",
+      "type": "f32"
+     }
+    ]
+   },
+   {
+    "effect": "veh_Alloy_a_f.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_LocalSpaceSHNode",
+      "type": "data"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {
+   "g_BumpTexture": [
+    "alloy_cap",
+    "wheelbadge",
+    "bump"
+   ]
+  },
+  "variants": 1,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 1,
+    "type": 8,
+    "usage": 5
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 9
+   }
+  ]
+ },
+ "veh_Alloy_b_f.fx": {
+  "defaults": {
+   "g_MattParams": [
+    1.0,
+    1.0,
+    1.0,
+    1.0
+   ],
+   "g_vMtlParameters": [
+    0.1,
+    0.01,
+    1.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "folder": "models/vehicles/wheels",
+  "models": 63,
+  "parts": 107,
+  "passes": [
+   {
+    "effect": "veh_Alloy_b_f.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_MeshTexture",
+      "type": "texture"
+     },
+     {
+      "count": 8,
+      "name": "g_vMtlParameters",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_MattParams",
+      "type": "f32"
+     }
+    ]
+   },
+   {
+    "effect": "veh_Alloy_b_f.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_LocalSpaceSHNode",
+      "type": "data"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {
+   "g_MeshTexture": [
+    "blur",
+    "nismo_1",
+    "navara_offroad_2",
+    "fordgt_general_texture_a",
+    "supervan_general_texture_a"
+   ]
+  },
+  "variants": 1,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 5
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 9
+   }
+  ]
+ },
+ "veh_Alloy_f.fx": {
+  "defaults": {
+   "g_MattParams": [
+    0.0,
+    0.0,
+    0.0,
+    1.0
+   ],
+   "g_vMtlParameters": [
+    0.1,
+    0.01,
+    1.0,
+    1.0,
+    0.497,
+    0.497,
+    0.497,
+    0.0
+   ]
+  },
+  "folder": "models/vehicles/wheels",
+  "models": 4,
+  "parts": 5,
+  "passes": [
+   {
+    "effect": "veh_Alloy_f.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_BumpTexture",
+      "type": "texture"
+     },
+     {
+      "count": 8,
+      "name": "g_vMtlParameters",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_MattParams",
+      "type": "f32"
+     },
+     {
+      "count": 1,
+      "name": "g_MeshTexture",
+      "type": "texture"
+     }
+    ]
+   },
+   {
+    "effect": "veh_Alloy_f.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_LocalSpaceSHNode",
+      "type": "data"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {
+   "g_BumpTexture": [
+    "texture 2",
+    "dodge_viper_wheel",
+    "gt500_wheel",
+    "dodge_viper_h_wheel"
+   ],
+   "g_MeshTexture": [
+    "corvette_zr1_wheel",
+    "dodge_viper_wheel",
+    "blur",
+    "dodge_viper_h_wheel"
+   ]
+  },
+  "variants": 1,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 5
+   },
+   {
+    "index": 1,
+    "type": 8,
+    "usage": 5
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 9
+   }
+  ]
+ },
+ "veh_Alpha.fx": {
+  "defaults": {
+   "g_vMtlParameters": [
+    0.11,
+    0.626,
+    1.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "folder": "models/vehicles",
+  "models": 16,
+  "parts": 29,
+  "passes": [
+   {
+    "effect": "veh_Alpha.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_MeshTexture",
+      "type": "texture"
+     },
+     {
+      "count": 8,
+      "name": "g_vMtlParameters",
+      "type": "f32"
+     }
+    ]
+   },
+   {
+    "effect": "",
+    "inputs": []
+   },
+   {
+    "effect": "veh_Alpha.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_LocalSpaceSHNode",
+      "type": "data"
+     },
+     {
+      "count": 1,
+      "name": "g_vCodeDamageScale",
+      "type": "data"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {
+   "g_MeshTexture": [
+    "dodge_decals",
+    "ford_mustang_gtr_alpha",
+    "corvette_zr1_lights",
+    "dodge_viper_decals",
+    "dodge_viper_h_alpha"
+   ]
+  },
+  "variants": 1,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 5
+   },
+   {
+    "index": 2,
+    "type": 11,
+    "usage": 5
+   },
+   {
+    "index": 3,
+    "type": 11,
+    "usage": 5
+   },
+   {
+    "index": 4,
+    "type": 10,
+    "usage": 5
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 9
+   }
+  ]
+ },
+ "veh_Alpha_c.fx": {
+  "defaults": {
+   "g_vMtlParameters": [
+    0.11,
+    0.626,
+    1.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "folder": "models/vehicles",
+  "models": 25,
+  "parts": 38,
+  "passes": [
+   {
+    "effect": "veh_Alpha_c.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_MeshTexture",
+      "type": "texture"
+     },
+     {
+      "count": 8,
+      "name": "g_vMtlParameters",
+      "type": "f32"
+     }
+    ]
+   },
+   {
+    "effect": "",
+    "inputs": []
+   },
+   {
+    "effect": "veh_Alpha_c.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_LocalSpaceSHNode",
+      "type": "data"
+     },
+     {
+      "count": 1,
+      "name": "g_vCodeDamageScale",
+      "type": "data"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {
+   "g_MeshTexture": [
+    "dodge_decals",
+    "ford_mustang_gtr_alpha",
+    "svx_alpha",
+    "trophy_alpha",
+    "r26-lights"
+   ]
+  },
+  "variants": 1,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 5
+   },
+   {
+    "index": 2,
+    "type": 11,
+    "usage": 5
+   },
+   {
+    "index": 3,
+    "type": 11,
+    "usage": 5
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 9
+   }
+  ]
+ },
+ "veh_Alpha_c_h.fx": {
+  "defaults": {
+   "g_vMtlParameters": [
+    0.11,
+    0.626,
+    1.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "folder": "models/vehicles",
+  "models": 16,
+  "parts": 23,
+  "passes": [
+   {
+    "effect": "veh_Alpha_c_h.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_MeshTexture",
+      "type": "texture"
+     },
+     {
+      "count": 8,
+      "name": "g_vMtlParameters",
+      "type": "f32"
+     }
+    ]
+   },
+   {
+    "effect": "",
+    "inputs": []
+   },
+   {
+    "effect": "veh_Alpha_c_h.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_LocalSpaceSHNode",
+      "type": "data"
+     },
+     {
+      "count": 1,
+      "name": "g_vCodeDamageScale",
+      "type": "data"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {
+   "g_MeshTexture": [
+    "ford_mustang_gtr_alpha",
+    "camaro_alpha",
+    "dodge_decals",
+    "fordf100_alpha",
+    "w12_alpha"
+   ]
+  },
+  "variants": 1,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 5
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 9
+   }
+  ]
+ },
+ "veh_Default_a_b.fx": {
+  "defaults": {
+   "g_vMtlParameters": [
+    0.0,
+    0.0,
+    1.0,
+    1.0,
+    0.032,
+    0.032,
+    0.032,
+    0.0
+   ]
+  },
+  "folder": "models/vehicles",
+  "models": 7,
+  "parts": 20,
+  "passes": [
+   {
+    "effect": "veh_Default_a_b.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_ScratchTexture",
+      "type": "texture"
+     },
+     {
+      "count": 8,
+      "name": "g_vMtlParameters",
+      "type": "f32"
+     }
+    ]
+   },
+   {
+    "effect": "",
+    "inputs": []
+   },
+   {
+    "effect": "veh_Default_a_b.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_LocalSpaceSHNode",
+      "type": "data"
+     },
+     {
+      "count": 1,
+      "name": "g_vCodeDamageScale",
+      "type": "data"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {
+   "g_ScratchTexture": [
+    "r26-scratch",
+    "hummer_scratch",
+    "dodge_racer_scratch",
+    "broncoscratch_1",
+    "bmw_tii_scratch"
+   ]
+  },
+  "variants": 1,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 5
+   },
+   {
+    "index": 2,
+    "type": 11,
+    "usage": 5
+   },
+   {
+    "index": 3,
+    "type": 11,
+    "usage": 5
+   },
+   {
+    "index": 4,
+    "type": 10,
+    "usage": 5
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 9
+   }
+  ]
+ },
+ "veh_Default_a_b_c.fx": {
+  "defaults": {
+   "g_vMtlParameters": [
+    0.0,
+    0.0,
+    1.0,
+    1.0,
+    0.032,
+    0.032,
+    0.032,
+    0.0
+   ]
+  },
+  "folder": "models/vehicles",
+  "models": 16,
+  "parts": 53,
+  "passes": [
+   {
+    "effect": "veh_Default_a_b_c.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_ScratchTexture",
+      "type": "texture"
+     },
+     {
+      "count": 8,
+      "name": "g_vMtlParameters",
+      "type": "f32"
+     }
+    ]
+   },
+   {
+    "effect": "",
+    "inputs": []
+   },
+   {
+    "effect": "veh_Default_a_b_c.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_LocalSpaceSHNode",
+      "type": "data"
+     },
+     {
+      "count": 1,
+      "name": "g_vCodeDamageScale",
+      "type": "data"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {
+   "g_ScratchTexture": [
+    "r26-scratch",
+    "camaro_foose_scratch",
+    "gt500_scratch",
+    "lotus_260_scratch",
+    "dodge_racer_scratch"
+   ]
+  },
+  "variants": 1,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 5
+   },
+   {
+    "index": 2,
+    "type": 11,
+    "usage": 5
+   },
+   {
+    "index": 3,
+    "type": 11,
+    "usage": 5
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 9
+   }
+  ]
+ },
+ "veh_Default_a_b_c_f.fx": {
+  "defaults": {
+   "g_vMtlParameters": [
+    0.05,
+    0.35,
+    1.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "folder": "models/vehicles",
+  "models": 76,
+  "parts": 590,
+  "passes": [
+   {
+    "effect": "veh_Default_a_b_c_f.fx",
+    "inputs": [
+     {
+      "count": 8,
+      "name": "g_vMtlParameters",
+      "type": "f32"
+     }
+    ]
+   },
+   {
+    "effect": "",
+    "inputs": []
+   },
+   {
+    "effect": "veh_Default_a_b_c_f.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_vCodeDamageScale",
+      "type": "data"
+     },
+     {
+      "count": 1,
+      "name": "g_LocalSpaceSHNode",
+      "type": "data"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {},
+  "variants": 2,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 2,
+    "type": 11,
+    "usage": 5
+   },
+   {
+    "index": 3,
+    "type": 11,
+    "usage": 5
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 9
+   }
+  ]
+ },
+ "veh_Default_a_b_c_f_h.fx": {
+  "defaults": {
+   "g_vCodeDamageScale": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_vMtlParameters": [
+    0.05,
+    0.35,
+    1.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "folder": "models/vehicles",
+  "models": 75,
+  "parts": 912,
+  "passes": [
+   {
+    "effect": "veh_Default_a_b_c_f_h.fx",
+    "inputs": [
+     {
+      "count": 8,
+      "name": "g_vMtlParameters",
+      "type": "f32"
+     }
+    ]
+   },
+   {
+    "effect": "",
+    "inputs": []
+   },
+   {
+    "effect": "veh_Default_a_b_c_f_h.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_vCodeDamageScale",
+      "type": "data"
+     },
+     {
+      "count": 1,
+      "name": "g_LocalSpaceSHNode",
+      "type": "data"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {
+   "g_DentTexture": [
+    "paintdent"
+   ],
+   "g_MeshTexture": [
+    "conceptrat_grill"
+   ],
+   "g_ScratchTexture": [
+    "DefaultColour"
+   ]
+  },
+  "variants": 5,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 9
+   }
+  ]
+ },
+ "veh_Default_a_b_c_h.fx": {
+  "defaults": {
+   "g_vCodeDamageScale": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_vMtlParameters": [
+    0.05,
+    0.35,
+    1.0,
+    1.0,
+    0.103,
+    0.103,
+    0.103,
+    0.0
+   ]
+  },
+  "folder": "models/vehicles",
+  "models": 13,
+  "parts": 77,
+  "passes": [
+   {
+    "effect": "veh_Default_a_b_c_h.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_ScratchTexture",
+      "type": "texture"
+     },
+     {
+      "count": 8,
+      "name": "g_vMtlParameters",
+      "type": "f32"
+     }
+    ]
+   },
+   {
+    "effect": "",
+    "inputs": []
+   },
+   {
+    "effect": "veh_Default_a_b_c_h.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_LocalSpaceSHNode",
+      "type": "data"
+     },
+     {
+      "count": 1,
+      "name": "g_vCodeDamageScale",
+      "type": "data"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {
+   "g_ScratchTexture": [
+    "r26-scratch",
+    "camaro_foose_scratch",
+    "camaro_scratch",
+    "dodge_racer_scratch",
+    "corvetterace_scratch"
+   ]
+  },
+  "variants": 2,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 5
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 9
+   }
+  ]
+ },
+ "veh_Default_a_b_f.fx": {
+  "defaults": {
+   "g_vMtlParameters": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "folder": "models/vehicles",
+  "models": 52,
+  "parts": 217,
+  "passes": [
+   {
+    "effect": "veh_Default_a_b_f.fx",
+    "inputs": [
+     {
+      "count": 8,
+      "name": "g_vMtlParameters",
+      "type": "f32"
+     }
+    ]
+   },
+   {
+    "effect": "",
+    "inputs": []
+   },
+   {
+    "effect": "veh_Default_a_b_f.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_vCodeDamageScale",
+      "type": "data"
+     },
+     {
+      "count": 1,
+      "name": "g_LocalSpaceSHNode",
+      "type": "data"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {},
+  "variants": 2,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 2,
+    "type": 11,
+    "usage": 5
+   },
+   {
+    "index": 3,
+    "type": 11,
+    "usage": 5
+   },
+   {
+    "index": 4,
+    "type": 10,
+    "usage": 5
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 9
+   }
+  ]
+ },
+ "veh_Default_a_b_f_h.fx": {
+  "defaults": {
+   "g_vMtlParameters": [
+    0.032,
+    0.065,
+    1.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "folder": "models/vehicles",
+  "models": 2,
+  "parts": 4,
+  "passes": [
+   {
+    "effect": "veh_Default_a_b_f_h.fx",
+    "inputs": [
+     {
+      "count": 8,
+      "name": "g_vMtlParameters",
+      "type": "f32"
+     }
+    ]
+   },
+   {
+    "effect": "",
+    "inputs": []
+   },
+   {
+    "effect": "veh_Default_a_b_f_h.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_vCodeDamageScale",
+      "type": "data"
+     },
+     {
+      "count": 1,
+      "name": "g_LocalSpaceSHNode",
+      "type": "data"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {},
+  "variants": 1,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 4,
+    "type": 10,
+    "usage": 5
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 9
+   }
+  ]
+ },
+ "veh_Default_a_b_h.fx": {
+  "defaults": {
+   "g_vMtlParameters": [
+    0.032,
+    0.065,
+    1.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "folder": "models/vehicles",
+  "models": 1,
+  "parts": 3,
+  "passes": [
+   {
+    "effect": "veh_Default_a_b_h.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_ScratchTexture",
+      "type": "texture"
+     },
+     {
+      "count": 8,
+      "name": "g_vMtlParameters",
+      "type": "f32"
+     }
+    ]
+   },
+   {
+    "effect": "",
+    "inputs": []
+   },
+   {
+    "effect": "veh_Default_a_b_h.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_LocalSpaceSHNode",
+      "type": "data"
+     },
+     {
+      "count": 1,
+      "name": "g_vCodeDamageScale",
+      "type": "data"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {
+   "g_ScratchTexture": [
+    "hummer_rat_scratch"
+   ]
+  },
+  "variants": 1,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 5
+   },
+   {
+    "index": 4,
+    "type": 10,
+    "usage": 5
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 9
+   }
+  ]
+ },
+ "veh_Default_a_c.fx": {
+  "defaults": {
+   "g_vMtlParameters": [
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "folder": "models/vehicles",
+  "models": 2,
+  "parts": 4,
+  "passes": [
+   {
+    "effect": "veh_Default_a_c.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_ScratchTexture",
+      "type": "texture"
+     },
+     {
+      "count": 8,
+      "name": "g_vMtlParameters",
+      "type": "f32"
+     },
+     {
+      "count": 1,
+      "name": "g_BumpTexture",
+      "type": "texture"
+     }
+    ]
+   },
+   {
+    "effect": "",
+    "inputs": []
+   },
+   {
+    "effect": "veh_Default_a_c.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_LocalSpaceSHNode",
+      "type": "data"
+     },
+     {
+      "count": 1,
+      "name": "g_vCodeDamageScale",
+      "type": "data"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {
+   "g_BumpTexture": [
+    "r26-bump"
+   ],
+   "g_ScratchTexture": [
+    "r26-scratch"
+   ]
+  },
+  "variants": 1,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 5
+   },
+   {
+    "index": 1,
+    "type": 8,
+    "usage": 5
+   },
+   {
+    "index": 2,
+    "type": 11,
+    "usage": 5
+   },
+   {
+    "index": 3,
+    "type": 11,
+    "usage": 5
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 9
+   }
+  ]
+ },
+ "veh_Default_a_c_f.fx": {
+  "defaults": {
+   "g_vMtlParameters": [
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "folder": "models/vehicles",
+  "models": 5,
+  "parts": 5,
+  "passes": [
+   {
+    "effect": "veh_Default_a_c_f.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_BumpTexture",
+      "type": "texture"
+     },
+     {
+      "count": 8,
+      "name": "g_vMtlParameters",
+      "type": "f32"
+     }
+    ]
+   },
+   {
+    "effect": "",
+    "inputs": []
+   },
+   {
+    "effect": "veh_Default_a_c_f.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_LocalSpaceSHNode",
+      "type": "data"
+     },
+     {
+      "count": 1,
+      "name": "g_vCodeDamageScale",
+      "type": "data"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {
+   "g_BumpTexture": [
+    "nismo_bump",
+    "audir8_1",
+    "texture_beetle_51"
+   ]
+  },
+  "variants": 1,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 1,
+    "type": 8,
+    "usage": 5
+   },
+   {
+    "index": 2,
+    "type": 11,
+    "usage": 5
+   },
+   {
+    "index": 3,
+    "type": 11,
+    "usage": 5
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 9
+   }
+  ]
+ },
+ "veh_Default_a_c_f_h.fx": {
+  "defaults": {
+   "g_vMtlParameters": [
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "folder": "models/vehicles",
+  "models": 6,
+  "parts": 9,
+  "passes": [
+   {
+    "effect": "veh_Default_a_c_f_h.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_BumpTexture",
+      "type": "texture"
+     },
+     {
+      "count": 8,
+      "name": "g_vMtlParameters",
+      "type": "f32"
+     }
+    ]
+   },
+   {
+    "effect": "",
+    "inputs": []
+   },
+   {
+    "effect": "veh_Default_a_c_f_h.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_LocalSpaceSHNode",
+      "type": "data"
+     },
+     {
+      "count": 1,
+      "name": "g_vCodeDamageScale",
+      "type": "data"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {
+   "g_BumpTexture": [
+    "nismo_bump",
+    "texture_beetle_51",
+    "focusrs-text01",
+    "focusrsrace-text01"
+   ]
+  },
+  "variants": 1,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 1,
+    "type": 8,
+    "usage": 5
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 9
+   }
+  ]
+ },
+ "veh_Default_a_c_h.fx": {
+  "defaults": {
+   "g_vMtlParameters": [
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "folder": "models/vehicles",
+  "models": 2,
+  "parts": 6,
+  "passes": [
+   {
+    "effect": "veh_Default_a_c_h.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_ScratchTexture",
+      "type": "texture"
+     },
+     {
+      "count": 8,
+      "name": "g_vMtlParameters",
+      "type": "f32"
+     },
+     {
+      "count": 1,
+      "name": "g_BumpTexture",
+      "type": "texture"
+     }
+    ]
+   },
+   {
+    "effect": "",
+    "inputs": []
+   },
+   {
+    "effect": "veh_Default_a_c_h.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_LocalSpaceSHNode",
+      "type": "data"
+     },
+     {
+      "count": 1,
+      "name": "g_vCodeDamageScale",
+      "type": "data"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {
+   "g_BumpTexture": [
+    "r26-bump"
+   ],
+   "g_ScratchTexture": [
+    "r26-scratch"
+   ]
+  },
+  "variants": 1,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 5
+   },
+   {
+    "index": 1,
+    "type": 8,
+    "usage": 5
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 9
+   }
+  ]
+ },
+ "veh_Default_b.fx": {
+  "defaults": {
+   "g_vMtlParameters": [
+    0.05,
+    0.35,
+    1.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "folder": "models/vehicles",
+  "models": 7,
+  "parts": 8,
+  "passes": [
+   {
+    "effect": "veh_Default_b.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_ScratchTexture",
+      "type": "texture"
+     },
+     {
+      "count": 8,
+      "name": "g_vMtlParameters",
+      "type": "f32"
+     },
+     {
+      "count": 1,
+      "name": "g_MeshTexture",
+      "type": "texture"
+     }
+    ]
+   },
+   {
+    "effect": "",
+    "inputs": []
+   },
+   {
+    "effect": "veh_Default_b.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_LocalSpaceSHNode",
+      "type": "data"
+     },
+     {
+      "count": 1,
+      "name": "g_vCodeDamageScale",
+      "type": "data"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {
+   "g_MeshTexture": [
+    "bmw_tii_race_text1",
+    "w12_interior",
+    "hummer_1",
+    "audis3_alpha",
+    "bmw_tii_diffuse1"
+   ],
+   "g_ScratchTexture": [
+    "bmw_tii_race_scratch",
+    "w12_interior",
+    "hummer_scratch",
+    "smashedglass",
+    "bmw_tii_scratch"
+   ]
+  },
+  "variants": 1,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 5
+   },
+   {
+    "index": 2,
+    "type": 11,
+    "usage": 5
+   },
+   {
+    "index": 3,
+    "type": 11,
+    "usage": 5
+   },
+   {
+    "index": 4,
+    "type": 10,
+    "usage": 5
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 9
+   }
+  ]
+ },
+ "veh_Default_b_c.fx": {
+  "defaults": {
+   "g_vMtlParameters": [
+    0.0,
+    0.0,
+    1.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "folder": "models/vehicles",
+  "models": 4,
+  "parts": 12,
+  "passes": [
+   {
+    "effect": "veh_Default_b_c.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_ScratchTexture",
+      "type": "texture"
+     },
+     {
+      "count": 8,
+      "name": "g_vMtlParameters",
+      "type": "f32"
+     },
+     {
+      "count": 1,
+      "name": "g_MeshTexture",
+      "type": "texture"
+     }
+    ]
+   },
+   {
+    "effect": "",
+    "inputs": []
+   },
+   {
+    "effect": "veh_Default_b_c.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_LocalSpaceSHNode",
+      "type": "data"
+     },
+     {
+      "count": 1,
+      "name": "g_vCodeDamageScale",
+      "type": "data"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {
+   "g_MeshTexture": [
+    "w12_interior",
+    "lotus_260_interior",
+    "broncotex_1",
+    "svx_2"
+   ],
+   "g_ScratchTexture": [
+    "w12_interior",
+    "lotus_260_scratch",
+    "broncoscratch_1",
+    "svx_scratches"
+   ]
+  },
+  "variants": 1,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 5
+   },
+   {
+    "index": 2,
+    "type": 11,
+    "usage": 5
+   },
+   {
+    "index": 3,
+    "type": 11,
+    "usage": 5
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 9
+   }
+  ]
+ },
+ "veh_Default_b_c_f.fx": {
+  "defaults": {
+   "g_vMtlParameters": [
+    0.05,
+    0.35,
+    1.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "folder": "models/vehicles",
+  "models": 74,
+  "parts": 483,
+  "passes": [
+   {
+    "effect": "veh_Default_b_c_f.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_MeshTexture",
+      "type": "texture"
+     },
+     {
+      "count": 8,
+      "name": "g_vMtlParameters",
+      "type": "f32"
+     }
+    ]
+   },
+   {
+    "effect": "",
+    "inputs": []
+   },
+   {
+    "effect": "veh_Default_b_c_f.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_LocalSpaceSHNode",
+      "type": "data"
+     },
+     {
+      "count": 1,
+      "name": "g_vCodeDamageScale",
+      "type": "data"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {
+   "g_MeshTexture": [
+    "nismo_1",
+    "carbonfibre",
+    "opelastraextreme_1",
+    "opelastraextreme_2",
+    "bowler_1"
+   ]
+  },
+  "variants": 2,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 5
+   },
+   {
+    "index": 2,
+    "type": 11,
+    "usage": 5
+   },
+   {
+    "index": 3,
+    "type": 11,
+    "usage": 5
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 9
+   }
+  ]
+ },
+ "veh_Default_b_c_f_h.fx": {
+  "defaults": {
+   "g_vCodeDamageScale": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_vMtlParameters": [
+    0.05,
+    0.35,
+    1.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "folder": "models/vehicles",
+  "models": 80,
+  "parts": 1119,
+  "passes": [
+   {
+    "effect": "veh_Default_b_c_f_h.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_MeshTexture",
+      "type": "texture"
+     },
+     {
+      "count": 8,
+      "name": "g_vMtlParameters",
+      "type": "f32"
+     }
+    ]
+   },
+   {
+    "effect": "",
+    "inputs": []
+   },
+   {
+    "effect": "veh_Default_b_c_f_h.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_LocalSpaceSHNode",
+      "type": "data"
+     },
+     {
+      "count": 1,
+      "name": "g_vCodeDamageScale",
+      "type": "data"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {
+   "g_MeshTexture": [
+    "breakdisc",
+    "auditt-s_1",
+    "r26-detail",
+    "ford_mustang_gtr_interior",
+    "dodge_viper_lights"
+   ]
+  },
+  "variants": 4,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 5
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 9
+   }
+  ]
+ },
+ "veh_Default_b_c_h.fx": {
+  "defaults": {
+   "g_vCodeDamageScale": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_vMtlParameters": [
+    0.05,
+    0.35,
+    1.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "folder": "models/vehicles",
+  "models": 2,
+  "parts": 19,
+  "passes": [
+   {
+    "effect": "veh_Default_b_c_h.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_ScratchTexture",
+      "type": "texture"
+     },
+     {
+      "count": 8,
+      "name": "g_vMtlParameters",
+      "type": "f32"
+     },
+     {
+      "count": 1,
+      "name": "g_MeshTexture",
+      "type": "texture"
+     }
+    ]
+   },
+   {
+    "effect": "",
+    "inputs": []
+   },
+   {
+    "effect": "veh_Default_b_c_h.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_LocalSpaceSHNode",
+      "type": "data"
+     },
+     {
+      "count": 1,
+      "name": "g_vCodeDamageScale",
+      "type": "data"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {
+   "g_MeshTexture": [
+    "lotus_260_interior",
+    "w12_interior",
+    "lotus_260_decals"
+   ],
+   "g_ScratchTexture": [
+    "lotus_260_scratch",
+    "w12_interior"
+   ]
+  },
+  "variants": 2,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 5
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 9
+   }
+  ]
+ },
+ "veh_Default_b_f.fx": {
+  "defaults": {
+   "g_vMtlParameters": [
+    0.05,
+    0.35,
+    1.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "folder": "models/vehicles",
+  "models": 68,
+  "parts": 247,
+  "passes": [
+   {
+    "effect": "veh_Default_b_f.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_MeshTexture",
+      "type": "texture"
+     },
+     {
+      "count": 8,
+      "name": "g_vMtlParameters",
+      "type": "f32"
+     }
+    ]
+   },
+   {
+    "effect": "",
+    "inputs": []
+   },
+   {
+    "effect": "veh_Default_b_f.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_LocalSpaceSHNode",
+      "type": "data"
+     },
+     {
+      "count": 1,
+      "name": "g_vCodeDamageScale",
+      "type": "data"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {
+   "g_MeshTexture": [
+    "dodge_viper_lights",
+    "opelastraextreme_2",
+    "gt500_2",
+    "dodge_viper_gts-r_lights",
+    "auditt-s_1"
+   ]
+  },
+  "variants": 1,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 5
+   },
+   {
+    "index": 2,
+    "type": 11,
+    "usage": 5
+   },
+   {
+    "index": 3,
+    "type": 11,
+    "usage": 5
+   },
+   {
+    "index": 4,
+    "type": 10,
+    "usage": 5
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 9
+   }
+  ]
+ },
+ "veh_Default_b_f_h.fx": {
+  "defaults": {
+   "g_vMtlParameters": [
+    0.1,
+    0.01,
+    1.0,
+    1.0,
+    0.247,
+    0.231,
+    0.176,
+    0.0
+   ]
+  },
+  "folder": "models/vehicles",
+  "models": 1,
+  "parts": 2,
+  "passes": [
+   {
+    "effect": "veh_Default_b_f_h.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_MeshTexture",
+      "type": "texture"
+     },
+     {
+      "count": 8,
+      "name": "g_vMtlParameters",
+      "type": "f32"
+     }
+    ]
+   },
+   {
+    "effect": "",
+    "inputs": []
+   },
+   {
+    "effect": "veh_Default_b_f_h.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_LocalSpaceSHNode",
+      "type": "data"
+     },
+     {
+      "count": 1,
+      "name": "g_vCodeDamageScale",
+      "type": "data"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {
+   "g_MeshTexture": [
+    "f150offroad-text2",
+    "f150offroad-alpha"
+   ]
+  },
+  "variants": 1,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 5
+   },
+   {
+    "index": 4,
+    "type": 10,
+    "usage": 5
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 9
+   }
+  ]
+ },
+ "veh_Default_c.fx": {
+  "defaults": {
+   "g_vMtlParameters": [
+    0.004,
+    0.0,
+    4.0,
+    1.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "folder": "models/vehicles",
+  "models": 1,
+  "parts": 1,
+  "passes": [
+   {
+    "effect": "veh_Default_c.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_ScratchTexture",
+      "type": "texture"
+     },
+     {
+      "count": 8,
+      "name": "g_vMtlParameters",
+      "type": "f32"
+     },
+     {
+      "count": 1,
+      "name": "g_BumpTexture",
+      "type": "texture"
+     },
+     {
+      "count": 1,
+      "name": "g_MeshTexture",
+      "type": "texture"
+     }
+    ]
+   },
+   {
+    "effect": "",
+    "inputs": []
+   },
+   {
+    "effect": "veh_Default_c.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_LocalSpaceSHNode",
+      "type": "data"
+     },
+     {
+      "count": 1,
+      "name": "g_vCodeDamageScale",
+      "type": "data"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {
+   "g_BumpTexture": [
+    "texture 9"
+   ],
+   "g_MeshTexture": [
+    "w12_interior"
+   ],
+   "g_ScratchTexture": [
+    "w12_interior"
+   ]
+  },
+  "variants": 1,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 5
+   },
+   {
+    "index": 1,
+    "type": 8,
+    "usage": 5
+   },
+   {
+    "index": 2,
+    "type": 11,
+    "usage": 5
+   },
+   {
+    "index": 3,
+    "type": 11,
+    "usage": 5
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 9
+   }
+  ]
+ },
+ "veh_Default_c_f.fx": {
+  "defaults": {
+   "g_vMtlParameters": [
+    0.0,
+    0.0,
+    4.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "folder": "models/vehicles",
+  "models": 25,
+  "parts": 25,
+  "passes": [
+   {
+    "effect": "veh_Default_c_f.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_BumpTexture",
+      "type": "texture"
+     },
+     {
+      "count": 8,
+      "name": "g_vMtlParameters",
+      "type": "f32"
+     },
+     {
+      "count": 1,
+      "name": "g_MeshTexture",
+      "type": "texture"
+     }
+    ]
+   },
+   {
+    "effect": "",
+    "inputs": []
+   },
+   {
+    "effect": "veh_Default_c_f.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_LocalSpaceSHNode",
+      "type": "data"
+     },
+     {
+      "count": 1,
+      "name": "g_vCodeDamageScale",
+      "type": "data"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {
+   "g_BumpTexture": [
+    "texture 8",
+    "underside_nrm",
+    "texture 7",
+    "underside_smallnmr",
+    "texture 10"
+   ],
+   "g_MeshTexture": [
+    "chevrolet_camaro_2",
+    "nismo_1",
+    "bmw_tii_race_text1",
+    "dodge_viper_gts-r_decals",
+    "dodge_interior"
+   ]
+  },
+  "variants": 2,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 5
+   },
+   {
+    "index": 1,
+    "type": 8,
+    "usage": 5
+   },
+   {
+    "index": 2,
+    "type": 11,
+    "usage": 5
+   },
+   {
+    "index": 3,
+    "type": 11,
+    "usage": 5
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 9
+   }
+  ]
+ },
+ "veh_Default_c_f_h.fx": {
+  "defaults": {
+   "g_vCodeDamageScale": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_vMtlParameters": [
+    0.0,
+    0.0,
+    5.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "folder": "models/vehicles",
+  "models": 22,
+  "parts": 76,
+  "passes": [
+   {
+    "effect": "veh_Default_c_f_h.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_BumpTexture",
+      "type": "texture"
+     },
+     {
+      "count": 8,
+      "name": "g_vMtlParameters",
+      "type": "f32"
+     },
+     {
+      "count": 1,
+      "name": "g_MeshTexture",
+      "type": "texture"
+     }
+    ]
+   },
+   {
+    "effect": "",
+    "inputs": []
+   },
+   {
+    "effect": "veh_Default_c_f_h.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_LocalSpaceSHNode",
+      "type": "data"
+     },
+     {
+      "count": 4,
+      "name": "g_vCodeDamageScale",
+      "type": "f32"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {
+   "g_BumpTexture": [
+    "tyretred_bump_nrm",
+    "tyrewall_nrm",
+    "dodge_nrm",
+    "gt500_2",
+    "dodge_viper_gts-r_nrm"
+   ],
+   "g_MeshTexture": [
+    "tyretred",
+    "tyrewall",
+    "dodge_interior",
+    "gt500_2",
+    "dodge_viper_gts-r_decals"
+   ]
+  },
+  "variants": 3,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 5
+   },
+   {
+    "index": 1,
+    "type": 8,
+    "usage": 5
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 9
+   }
+  ]
+ },
+ "veh_Default_f.fx": {
+  "defaults": {
+   "g_vMtlParameters": [
+    0.004,
+    0.067,
+    1.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "folder": "models/vehicles",
+  "models": 7,
+  "parts": 7,
+  "passes": [
+   {
+    "effect": "veh_Default_f.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_BumpTexture",
+      "type": "texture"
+     },
+     {
+      "count": 8,
+      "name": "g_vMtlParameters",
+      "type": "f32"
+     },
+     {
+      "count": 1,
+      "name": "g_MeshTexture",
+      "type": "texture"
+     }
+    ]
+   },
+   {
+    "effect": "",
+    "inputs": []
+   },
+   {
+    "effect": "veh_Default_f.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_LocalSpaceSHNode",
+      "type": "data"
+     },
+     {
+      "count": 1,
+      "name": "g_vCodeDamageScale",
+      "type": "data"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {
+   "g_BumpTexture": [
+    "texture 10",
+    "dodge_lights",
+    "gt500_1",
+    "texture_beetle_51",
+    "texture 9"
+   ],
+   "g_MeshTexture": [
+    "chevrolet_camaro_2",
+    "dodge_lights",
+    "gt500_2",
+    "texture_beetle_51"
+   ]
+  },
+  "variants": 2,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 5
+   },
+   {
+    "index": 1,
+    "type": 8,
+    "usage": 5
+   },
+   {
+    "index": 2,
+    "type": 11,
+    "usage": 5
+   },
+   {
+    "index": 3,
+    "type": 11,
+    "usage": 5
+   },
+   {
+    "index": 4,
+    "type": 10,
+    "usage": 5
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 9
+   }
+  ]
+ },
+ "veh_Glass_a_c.fx": {
+  "defaults": {
+   "g_vMtlParameters": [
+    0.5,
+    1.0,
+    1.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "folder": "models/vehicles",
+  "models": 13,
+  "parts": 21,
+  "passes": [
+   {
+    "effect": "veh_Glass_a_c.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_DentTexture",
+      "type": "texture"
+     },
+     {
+      "count": 8,
+      "name": "g_vMtlParameters",
+      "type": "f32"
+     },
+     {
+      "count": 1,
+      "name": "g_ScratchTexture",
+      "type": "texture"
+     }
+    ]
+   },
+   {
+    "effect": "",
+    "inputs": []
+   },
+   {
+    "effect": "veh_Glass_a_c.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_LocalSpaceSHNode",
+      "type": "data"
+     },
+     {
+      "count": 1,
+      "name": "g_vCodeDamageScale",
+      "type": "data"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {
+   "g_DentTexture": [
+    "smashedglass_nrm"
+   ],
+   "g_ScratchTexture": [
+    "smashedglass"
+   ]
+  },
+  "variants": 1,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 5
+   },
+   {
+    "index": 2,
+    "type": 11,
+    "usage": 5
+   },
+   {
+    "index": 3,
+    "type": 11,
+    "usage": 5
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 9
+   }
+  ]
+ },
+ "veh_Glass_a_c_d.fx": {
+  "defaults": {
+   "g_vMtlParameters": [
+    0.5,
+    1.0,
+    1.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "folder": "models/vehicles",
+  "models": 19,
+  "parts": 50,
+  "passes": [
+   {
+    "effect": "veh_Glass_a_c_d.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_ScratchTexture",
+      "type": "texture"
+     },
+     {
+      "count": 8,
+      "name": "g_vMtlParameters",
+      "type": "f32"
+     }
+    ]
+   },
+   {
+    "effect": "",
+    "inputs": []
+   },
+   {
+    "effect": "veh_Glass_a_c_d.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_LocalSpaceSHNode",
+      "type": "data"
+     },
+     {
+      "count": 1,
+      "name": "g_vCodeDamageScale",
+      "type": "data"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {
+   "g_ScratchTexture": [
+    "smashedglass"
+   ]
+  },
+  "variants": 1,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 5
+   },
+   {
+    "index": 2,
+    "type": 11,
+    "usage": 5
+   },
+   {
+    "index": 3,
+    "type": 11,
+    "usage": 5
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 9
+   }
+  ]
+ },
+ "veh_Glass_a_c_d_h.fx": {
+  "defaults": {
+   "g_vMtlParameters": [
+    0.5,
+    1.0,
+    1.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "folder": "models/vehicles",
+  "models": 48,
+  "parts": 196,
+  "passes": [
+   {
+    "effect": "veh_Glass_a_c_d_h.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_ScratchTexture",
+      "type": "texture"
+     },
+     {
+      "count": 8,
+      "name": "g_vMtlParameters",
+      "type": "f32"
+     }
+    ]
+   },
+   {
+    "effect": "",
+    "inputs": []
+   },
+   {
+    "effect": "veh_Glass_a_c_d_h.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_LocalSpaceSHNode",
+      "type": "data"
+     },
+     {
+      "count": 1,
+      "name": "g_vCodeDamageScale",
+      "type": "data"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {
+   "g_ScratchTexture": [
+    "smashedglass",
+    "DefaultColour"
+   ]
+  },
+  "variants": 1,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 5
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 9
+   }
+  ]
+ },
+ "veh_Glass_a_c_h.fx": {
+  "defaults": {
+   "g_vMtlParameters": [
+    0.5,
+    1.0,
+    1.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "folder": "models/vehicles",
+  "models": 40,
+  "parts": 123,
+  "passes": [
+   {
+    "effect": "veh_Glass_a_c_h.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_DentTexture",
+      "type": "texture"
+     },
+     {
+      "count": 8,
+      "name": "g_vMtlParameters",
+      "type": "f32"
+     },
+     {
+      "count": 1,
+      "name": "g_ScratchTexture",
+      "type": "texture"
+     }
+    ]
+   },
+   {
+    "effect": "",
+    "inputs": []
+   },
+   {
+    "effect": "veh_Glass_a_c_h.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_LocalSpaceSHNode",
+      "type": "data"
+     },
+     {
+      "count": 1,
+      "name": "g_vCodeDamageScale",
+      "type": "data"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {
+   "g_DentTexture": [
+    "smashedglass_nrm"
+   ],
+   "g_ScratchTexture": [
+    "smashedglass"
+   ]
+  },
+  "variants": 1,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 5
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 9
+   }
+  ]
+ },
+ "veh_Glass_c.fx": {
+  "defaults": {
+   "g_vMtlParameters": [
+    0.5,
+    1.0,
+    1.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "folder": "models/vehicles",
+  "models": 6,
+  "parts": 17,
+  "passes": [
+   {
+    "effect": "veh_Glass_c.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_DentTexture",
+      "type": "texture"
+     },
+     {
+      "count": 8,
+      "name": "g_vMtlParameters",
+      "type": "f32"
+     },
+     {
+      "count": 1,
+      "name": "g_ScratchTexture",
+      "type": "texture"
+     },
+     {
+      "count": 1,
+      "name": "g_MeshTexture",
+      "type": "texture"
+     }
+    ]
+   },
+   {
+    "effect": "",
+    "inputs": []
+   },
+   {
+    "effect": "veh_Glass_c.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_LocalSpaceSHNode",
+      "type": "data"
+     },
+     {
+      "count": 1,
+      "name": "g_vCodeDamageScale",
+      "type": "data"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {
+   "g_DentTexture": [
+    "smashedglass_nrm"
+   ],
+   "g_MeshTexture": [
+    "toy_supra_alpha",
+    "supervan_glass_plus",
+    "chevrolet_camaro_drag_alpha",
+    "fordgt_glass_plus",
+    "nissan_350z_nismo_alpha"
+   ],
+   "g_ScratchTexture": [
+    "smashedglass"
+   ]
+  },
+  "variants": 1,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 5
+   },
+   {
+    "index": 2,
+    "type": 11,
+    "usage": 5
+   },
+   {
+    "index": 3,
+    "type": 11,
+    "usage": 5
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 9
+   }
+  ]
+ },
+ "veh_Glass_c_d.fx": {
+  "defaults": {
+   "g_vMtlParameters": [
+    0.5,
+    1.0,
+    1.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "folder": "models/vehicles",
+  "models": 10,
+  "parts": 30,
+  "passes": [
+   {
+    "effect": "veh_Glass_c_d.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_ScratchTexture",
+      "type": "texture"
+     },
+     {
+      "count": 8,
+      "name": "g_vMtlParameters",
+      "type": "f32"
+     },
+     {
+      "count": 1,
+      "name": "g_MeshTexture",
+      "type": "texture"
+     }
+    ]
+   },
+   {
+    "effect": "",
+    "inputs": []
+   },
+   {
+    "effect": "veh_Glass_c_d.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_LocalSpaceSHNode",
+      "type": "data"
+     },
+     {
+      "count": 1,
+      "name": "g_vCodeDamageScale",
+      "type": "data"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {
+   "g_MeshTexture": [
+    "chevrolet_camaro_alpha",
+    "opelastraextreme_alpha",
+    "fordgt_glass_plus",
+    "bmw_ac_alpha",
+    "vwscirrocco24_alpha"
+   ],
+   "g_ScratchTexture": [
+    "smashedglass",
+    "DefaultColour"
+   ]
+  },
+  "variants": 1,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 5
+   },
+   {
+    "index": 2,
+    "type": 11,
+    "usage": 5
+   },
+   {
+    "index": 3,
+    "type": 11,
+    "usage": 5
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 9
+   }
+  ]
+ },
+ "veh_Glass_c_d_h.fx": {
+  "defaults": {
+   "g_vMtlParameters": [
+    0.5,
+    1.0,
+    1.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "folder": "models/vehicles",
+  "models": 23,
+  "parts": 86,
+  "passes": [
+   {
+    "effect": "veh_Glass_c_d_h.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_ScratchTexture",
+      "type": "texture"
+     },
+     {
+      "count": 8,
+      "name": "g_vMtlParameters",
+      "type": "f32"
+     },
+     {
+      "count": 1,
+      "name": "g_MeshTexture",
+      "type": "texture"
+     }
+    ]
+   },
+   {
+    "effect": "",
+    "inputs": []
+   },
+   {
+    "effect": "veh_Glass_c_d_h.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_LocalSpaceSHNode",
+      "type": "data"
+     },
+     {
+      "count": 1,
+      "name": "g_vCodeDamageScale",
+      "type": "data"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {
+   "g_MeshTexture": [
+    "opelastraextreme_alpha",
+    "dodge_viper_gts-r_decals",
+    "bmw_ac_alpha",
+    "dodge_viper_decals",
+    "manaro_alpha"
+   ],
+   "g_ScratchTexture": [
+    "smashedglass",
+    "DefaultColour"
+   ]
+  },
+  "variants": 1,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 5
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 9
+   }
+  ]
+ },
+ "veh_Glass_c_h.fx": {
+  "defaults": {
+   "g_vMtlParameters": [
+    0.5,
+    1.0,
+    1.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "folder": "models/vehicles",
+  "models": 39,
+  "parts": 106,
+  "passes": [
+   {
+    "effect": "veh_Glass_c_h.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_DentTexture",
+      "type": "texture"
+     },
+     {
+      "count": 8,
+      "name": "g_vMtlParameters",
+      "type": "f32"
+     },
+     {
+      "count": 1,
+      "name": "g_ScratchTexture",
+      "type": "texture"
+     },
+     {
+      "count": 1,
+      "name": "g_MeshTexture",
+      "type": "texture"
+     }
+    ]
+   },
+   {
+    "effect": "",
+    "inputs": []
+   },
+   {
+    "effect": "veh_Glass_c_h.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_LocalSpaceSHNode",
+      "type": "data"
+     },
+     {
+      "count": 1,
+      "name": "g_vCodeDamageScale",
+      "type": "data"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {
+   "g_DentTexture": [
+    "smashedglass_nrm"
+   ],
+   "g_MeshTexture": [
+    "nismo_alpha",
+    "toyota_supra_smooth_alpha",
+    "ccxr_glass_areas",
+    "land_rover_lrx_alpha",
+    "nissan_350z_nismo_alpha"
+   ],
+   "g_ScratchTexture": [
+    "smashedglass"
+   ]
+  },
+  "variants": 1,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 5
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 9
+   }
+  ]
+ },
+ "veh_Glass_d.fx": {
+  "defaults": {
+   "g_vMtlParameters": [
+    0.5,
+    1.0,
+    1.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "folder": "models/vehicles",
+  "models": 1,
+  "parts": 1,
+  "passes": [
+   {
+    "effect": "veh_Glass_d.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_ScratchTexture",
+      "type": "texture"
+     },
+     {
+      "count": 8,
+      "name": "g_vMtlParameters",
+      "type": "f32"
+     },
+     {
+      "count": 1,
+      "name": "g_MeshTexture",
+      "type": "texture"
+     }
+    ]
+   },
+   {
+    "effect": "",
+    "inputs": []
+   },
+   {
+    "effect": "veh_Glass_d.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_LocalSpaceSHNode",
+      "type": "data"
+     },
+     {
+      "count": 1,
+      "name": "g_vCodeDamageScale",
+      "type": "data"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {
+   "g_MeshTexture": [
+    "vwscirrocco24_alpha"
+   ],
+   "g_ScratchTexture": [
+    "DefaultColour"
+   ]
+  },
+  "variants": 1,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 5
+   },
+   {
+    "index": 2,
+    "type": 11,
+    "usage": 5
+   },
+   {
+    "index": 3,
+    "type": 11,
+    "usage": 5
+   },
+   {
+    "index": 4,
+    "type": 10,
+    "usage": 5
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 9
+   }
+  ]
+ },
+ "veh_Light_c.fx": {
+  "defaults": {
+   "g_vMtlParameters": [
+    0.194,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "folder": "models/vehicles",
+  "models": 51,
+  "parts": 288,
+  "passes": [
+   {
+    "effect": "veh_Light_c.fx",
+    "inputs": [
+     {
+      "count": 8,
+      "name": "g_vMtlParameters",
+      "type": "f32"
+     },
+     {
+      "count": 1,
+      "name": "g_sOffTexture",
+      "type": "texture"
+     },
+     {
+      "count": 1,
+      "name": "g_sOnTexture",
+      "type": "texture"
+     },
+     {
+      "count": 1,
+      "name": "g_sOffTextureDamage",
+      "type": "texture"
+     },
+     {
+      "count": 1,
+      "name": "g_sOnTextureDamage",
+      "type": "texture"
+     }
+    ]
+   },
+   {
+    "effect": "",
+    "inputs": []
+   },
+   {
+    "effect": "veh_Light_c.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_LocalSpaceSHNode",
+      "type": "data"
+     },
+     {
+      "count": 1,
+      "name": "g_vCodeDamageScale",
+      "type": "data"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {
+   "g_sOffTexture": [
+    "chevrolet_camaro_2",
+    "dodge_lights",
+    "dodge_racer_lights_b",
+    "fordf100_2",
+    "bmw_ac_alpha"
+   ],
+   "g_sOffTextureDamage": [
+    "chevrolet_camaro_2",
+    "dodge_lights",
+    "dodge_racer_lights_b",
+    "fordf100_2",
+    "bmw_ac_alpha"
+   ],
+   "g_sOnTexture": [
+    "chevrolet_camaro_2",
+    "dodge_lights",
+    "dodge_racer_lights_b",
+    "fordf100_2",
+    "bmw_ac_alpha"
+   ],
+   "g_sOnTextureDamage": [
+    "chevrolet_camaro_2",
+    "dodge_lights",
+    "dodge_racer_lights_b",
+    "fordf100_2",
+    "bmw_ac_alpha"
+   ]
+  },
+  "variants": 1,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 5
+   },
+   {
+    "index": 1,
+    "type": 9,
+    "usage": 5
+   },
+   {
+    "index": 2,
+    "type": 11,
+    "usage": 5
+   },
+   {
+    "index": 3,
+    "type": 11,
+    "usage": 5
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 9
+   }
+  ]
+ },
+ "veh_Light_c_h.fx": {
+  "defaults": {
+   "g_vMtlParameters": [
+    0.194,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "folder": "models/vehicles",
+  "models": 71,
+  "parts": 636,
+  "passes": [
+   {
+    "effect": "veh_Light_c_h.fx",
+    "inputs": [
+     {
+      "count": 8,
+      "name": "g_vMtlParameters",
+      "type": "f32"
+     },
+     {
+      "count": 1,
+      "name": "g_sOffTexture",
+      "type": "texture"
+     },
+     {
+      "count": 1,
+      "name": "g_sOnTexture",
+      "type": "texture"
+     },
+     {
+      "count": 1,
+      "name": "g_sOffTextureDamage",
+      "type": "texture"
+     },
+     {
+      "count": 1,
+      "name": "g_sOnTextureDamage",
+      "type": "texture"
+     }
+    ]
+   },
+   {
+    "effect": "",
+    "inputs": []
+   },
+   {
+    "effect": "veh_Light_c_h.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_LocalSpaceSHNode",
+      "type": "data"
+     },
+     {
+      "count": 1,
+      "name": "g_vCodeDamageScale",
+      "type": "data"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {
+   "g_sOffTexture": [
+    "dodge_viper_lights",
+    "corvette_zr1_lights",
+    "r26-detail",
+    "nismo_1",
+    "opelastraextreme_2"
+   ],
+   "g_sOffTextureDamage": [
+    "dodge_viper_lights",
+    "corvette_zr1_lights",
+    "r26-bump",
+    "nismo_1",
+    "opelastraextreme_2"
+   ],
+   "g_sOnTexture": [
+    "dodge_viper_lights",
+    "corvette_zr1_lights",
+    "r26-bump",
+    "nismo_1",
+    "opelastraextreme_2"
+   ],
+   "g_sOnTextureDamage": [
+    "dodge_viper_lights",
+    "corvette_zr1_lights",
+    "r26-bump",
+    "nismo_1",
+    "opelastraextreme_2"
+   ]
+  },
+  "variants": 1,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 5
+   },
+   {
+    "index": 1,
+    "type": 9,
+    "usage": 5
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 9
+   }
+  ]
+ },
+ "veh_Matt_a_b_c_f.fx": {
+  "defaults": {
+   "g_MattParams": [
+    0.01,
+    0.01,
+    0.01,
+    1.0
+   ],
+   "g_vMtlParameters": [
+    0.0,
+    0.0,
+    1.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "folder": "models/vehicles",
+  "models": 3,
+  "parts": 25,
+  "passes": [
+   {
+    "effect": "veh_Matt_a_b_c_f.fx",
+    "inputs": [
+     {
+      "count": 4,
+      "name": "g_MattParams",
+      "type": "f32"
+     },
+     {
+      "count": 8,
+      "name": "g_vMtlParameters",
+      "type": "f32"
+     }
+    ]
+   },
+   {
+    "effect": "",
+    "inputs": []
+   },
+   {
+    "effect": "veh_Matt_a_b_c_f.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_vCodeDamageScale",
+      "type": "data"
+     },
+     {
+      "count": 1,
+      "name": "g_LocalSpaceSHNode",
+      "type": "data"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {},
+  "variants": 1,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 2,
+    "type": 11,
+    "usage": 5
+   },
+   {
+    "index": 3,
+    "type": 11,
+    "usage": 5
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 9
+   }
+  ]
+ },
+ "veh_Matt_a_b_c_f_h.fx": {
+  "defaults": {
+   "g_MattParams": [
+    0.01,
+    0.01,
+    0.01,
+    1.0
+   ],
+   "g_vCodeDamageScale": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_vMtlParameters": [
+    0.0,
+    0.0,
+    1.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "folder": "models/vehicles",
+  "models": 4,
+  "parts": 29,
+  "passes": [
+   {
+    "effect": "veh_Matt_a_b_c_f_h.fx",
+    "inputs": [
+     {
+      "count": 4,
+      "name": "g_MattParams",
+      "type": "f32"
+     },
+     {
+      "count": 8,
+      "name": "g_vMtlParameters",
+      "type": "f32"
+     }
+    ]
+   },
+   {
+    "effect": "",
+    "inputs": []
+   },
+   {
+    "effect": "veh_Matt_a_b_c_f_h.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_vCodeDamageScale",
+      "type": "data"
+     },
+     {
+      "count": 1,
+      "name": "g_LocalSpaceSHNode",
+      "type": "data"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {},
+  "variants": 2,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 9
+   }
+  ]
+ },
+ "veh_Matt_a_b_f.fx": {
+  "defaults": {
+   "g_MattParams": [
+    0.01,
+    0.01,
+    0.01,
+    1.0
+   ],
+   "g_vMtlParameters": [
+    0.0,
+    0.0,
+    1.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "folder": "models/vehicles",
+  "models": 8,
+  "parts": 19,
+  "passes": [
+   {
+    "effect": "veh_Matt_a_b_f.fx",
+    "inputs": [
+     {
+      "count": 4,
+      "name": "g_MattParams",
+      "type": "f32"
+     },
+     {
+      "count": 8,
+      "name": "g_vMtlParameters",
+      "type": "f32"
+     }
+    ]
+   },
+   {
+    "effect": "",
+    "inputs": []
+   },
+   {
+    "effect": "veh_Matt_a_b_f.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_vCodeDamageScale",
+      "type": "data"
+     },
+     {
+      "count": 1,
+      "name": "g_LocalSpaceSHNode",
+      "type": "data"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {},
+  "variants": 1,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 2,
+    "type": 11,
+    "usage": 5
+   },
+   {
+    "index": 3,
+    "type": 11,
+    "usage": 5
+   },
+   {
+    "index": 4,
+    "type": 10,
+    "usage": 5
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 9
+   }
+  ]
+ },
+ "veh_Matt_a_b_f_h.fx": {
+  "defaults": {
+   "g_MattParams": [
+    0.01,
+    0.01,
+    0.01,
+    1.0
+   ],
+   "g_vMtlParameters": [
+    0.1,
+    0.01,
+    1.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "folder": "models/vehicles",
+  "models": 1,
+  "parts": 3,
+  "passes": [
+   {
+    "effect": "veh_Matt_a_b_f_h.fx",
+    "inputs": [
+     {
+      "count": 4,
+      "name": "g_MattParams",
+      "type": "f32"
+     },
+     {
+      "count": 8,
+      "name": "g_vMtlParameters",
+      "type": "f32"
+     }
+    ]
+   },
+   {
+    "effect": "",
+    "inputs": []
+   },
+   {
+    "effect": "veh_Matt_a_b_f_h.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_vCodeDamageScale",
+      "type": "data"
+     },
+     {
+      "count": 1,
+      "name": "g_LocalSpaceSHNode",
+      "type": "data"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {},
+  "variants": 1,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 4,
+    "type": 10,
+    "usage": 5
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 9
+   }
+  ]
+ },
+ "veh_Matt_b.fx": {
+  "defaults": {
+   "g_MattParams": [
+    0.01,
+    0.01,
+    0.01,
+    1.0
+   ],
+   "g_vMtlParameters": [
+    0.1,
+    0.01,
+    1.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "folder": "models/vehicles",
+  "models": 1,
+  "parts": 1,
+  "passes": [
+   {
+    "effect": "veh_Matt_b.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_MeshTexture",
+      "type": "texture"
+     },
+     {
+      "count": 1,
+      "name": "g_ScratchTexture",
+      "type": "texture"
+     },
+     {
+      "count": 8,
+      "name": "g_vMtlParameters",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_MattParams",
+      "type": "f32"
+     }
+    ]
+   },
+   {
+    "effect": "",
+    "inputs": []
+   },
+   {
+    "effect": "veh_Matt_b.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_LocalSpaceSHNode",
+      "type": "data"
+     },
+     {
+      "count": 1,
+      "name": "g_vCodeDamageScale",
+      "type": "data"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {
+   "g_MeshTexture": [
+    "bmw_tii_bonnet"
+   ],
+   "g_ScratchTexture": [
+    "bmw_tii_scratch"
+   ]
+  },
+  "variants": 1,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 5
+   },
+   {
+    "index": 2,
+    "type": 11,
+    "usage": 5
+   },
+   {
+    "index": 3,
+    "type": 11,
+    "usage": 5
+   },
+   {
+    "index": 4,
+    "type": 10,
+    "usage": 5
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 9
+   }
+  ]
+ },
+ "veh_Matt_b_c_f.fx": {
+  "defaults": {
+   "g_MattParams": [
+    0.01,
+    0.01,
+    0.01,
+    1.0
+   ],
+   "g_vMtlParameters": [
+    0.0,
+    0.0,
+    1.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "folder": "models/vehicles",
+  "models": 4,
+  "parts": 11,
+  "passes": [
+   {
+    "effect": "veh_Matt_b_c_f.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_MeshTexture",
+      "type": "texture"
+     },
+     {
+      "count": 8,
+      "name": "g_vMtlParameters",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_MattParams",
+      "type": "f32"
+     }
+    ]
+   },
+   {
+    "effect": "",
+    "inputs": []
+   },
+   {
+    "effect": "veh_Matt_b_c_f.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_vCodeDamageScale",
+      "type": "data"
+     },
+     {
+      "count": 1,
+      "name": "g_LocalSpaceSHNode",
+      "type": "data"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {
+   "g_MeshTexture": [
+    "f150offroad-text1",
+    "lotus_260_lights",
+    "gt500_2",
+    "corvettedrag_dials",
+    "f150offroad-text2"
+   ]
+  },
+  "variants": 1,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 5
+   },
+   {
+    "index": 2,
+    "type": 11,
+    "usage": 5
+   },
+   {
+    "index": 3,
+    "type": 11,
+    "usage": 5
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 9
+   }
+  ]
+ },
+ "veh_Matt_b_c_f_h.fx": {
+  "defaults": {
+   "g_MattParams": [
+    0.01,
+    0.01,
+    0.01,
+    1.0
+   ],
+   "g_vMtlParameters": [
+    0.0,
+    0.0,
+    1.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "folder": "models/vehicles",
+  "models": 7,
+  "parts": 12,
+  "passes": [
+   {
+    "effect": "veh_Matt_b_c_f_h.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_MeshTexture",
+      "type": "texture"
+     },
+     {
+      "count": 8,
+      "name": "g_vMtlParameters",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_MattParams",
+      "type": "f32"
+     }
+    ]
+   },
+   {
+    "effect": "",
+    "inputs": []
+   },
+   {
+    "effect": "veh_Matt_b_c_f_h.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_vCodeDamageScale",
+      "type": "data"
+     },
+     {
+      "count": 1,
+      "name": "g_LocalSpaceSHNode",
+      "type": "data"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {
+   "g_MeshTexture": [
+    "f150offroad-text1",
+    "corvette_zr1_interior",
+    "gt500_2",
+    "corvettedrag_dials",
+    "lotus_260_lights"
+   ]
+  },
+  "variants": 1,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 5
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 9
+   }
+  ]
+ },
+ "veh_Matt_b_f.fx": {
+  "defaults": {
+   "g_MattParams": [
+    0.01,
+    0.01,
+    0.01,
+    1.0
+   ],
+   "g_vMtlParameters": [
+    0.0,
+    0.0,
+    1.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "folder": "models/vehicles",
+  "models": 3,
+  "parts": 4,
+  "passes": [
+   {
+    "effect": "veh_Matt_b_f.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_MeshTexture",
+      "type": "texture"
+     },
+     {
+      "count": 8,
+      "name": "g_vMtlParameters",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_MattParams",
+      "type": "f32"
+     }
+    ]
+   },
+   {
+    "effect": "",
+    "inputs": []
+   },
+   {
+    "effect": "veh_Matt_b_f.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_vCodeDamageScale",
+      "type": "data"
+     },
+     {
+      "count": 1,
+      "name": "g_LocalSpaceSHNode",
+      "type": "data"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {
+   "g_MeshTexture": [
+    "trophy_2",
+    "corvettedrag_dials",
+    "focusrsrace-text01"
+   ]
+  },
+  "variants": 1,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 5
+   },
+   {
+    "index": 2,
+    "type": 11,
+    "usage": 5
+   },
+   {
+    "index": 3,
+    "type": 11,
+    "usage": 5
+   },
+   {
+    "index": 4,
+    "type": 10,
+    "usage": 5
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 9
+   }
+  ]
+ },
+ "veh_Matt_b_f_h.fx": {
+  "defaults": {
+   "g_MattParams": [
+    0.01,
+    0.01,
+    0.01,
+    1.0
+   ],
+   "g_vMtlParameters": [
+    0.0,
+    0.0,
+    1.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "folder": "models/vehicles",
+  "models": 1,
+  "parts": 1,
+  "passes": [
+   {
+    "effect": "veh_Matt_b_f_h.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_MeshTexture",
+      "type": "texture"
+     },
+     {
+      "count": 8,
+      "name": "g_vMtlParameters",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_MattParams",
+      "type": "f32"
+     }
+    ]
+   },
+   {
+    "effect": "",
+    "inputs": []
+   },
+   {
+    "effect": "veh_Matt_b_f_h.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_vCodeDamageScale",
+      "type": "data"
+     },
+     {
+      "count": 1,
+      "name": "g_LocalSpaceSHNode",
+      "type": "data"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {
+   "g_MeshTexture": [
+    "f150offroad-text1"
+   ]
+  },
+  "variants": 1,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 5
+   },
+   {
+    "index": 4,
+    "type": 10,
+    "usage": 5
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 9
+   }
+  ]
+ },
+ "veh_Matt_c_f.fx": {
+  "defaults": {
+   "g_MattParams": [
+    0.01,
+    0.01,
+    0.01,
+    1.0
+   ],
+   "g_vMtlParameters": [
+    0.0,
+    0.0,
+    4.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "folder": "models/vehicles",
+  "models": 33,
+  "parts": 45,
+  "passes": [
+   {
+    "effect": "veh_Matt_c_f.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_MeshTexture",
+      "type": "texture"
+     },
+     {
+      "count": 1,
+      "name": "g_BumpTexture",
+      "type": "texture"
+     },
+     {
+      "count": 8,
+      "name": "g_vMtlParameters",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_MattParams",
+      "type": "f32"
+     }
+    ]
+   },
+   {
+    "effect": "",
+    "inputs": []
+   },
+   {
+    "effect": "veh_Matt_c_f.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_LocalSpaceSHNode",
+      "type": "data"
+     },
+     {
+      "count": 1,
+      "name": "g_vCodeDamageScale",
+      "type": "data"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {
+   "g_BumpTexture": [
+    "underside_nrm",
+    "tyrewall_nrm",
+    "tyretred_bump_nrm",
+    "undersidenrm",
+    "underside_small_nrm"
+   ],
+   "g_MeshTexture": [
+    "tyrewall",
+    "underside_small",
+    "tyretred_offroad",
+    "underside",
+    "bmw_ac_diffuse1"
+   ]
+  },
+  "variants": 1,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 5
+   },
+   {
+    "index": 1,
+    "type": 8,
+    "usage": 5
+   },
+   {
+    "index": 2,
+    "type": 11,
+    "usage": 5
+   },
+   {
+    "index": 3,
+    "type": 11,
+    "usage": 5
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 9
+   }
+  ]
+ },
+ "veh_Matt_c_f_h.fx": {
+  "defaults": {
+   "g_MattParams": [
+    0.01,
+    0.01,
+    0.01,
+    1.0
+   ],
+   "g_vCodeDamageScale": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "g_vMtlParameters": [
+    0.0,
+    0.0,
+    5.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "folder": "models/vehicles",
+  "models": 78,
+  "parts": 610,
+  "passes": [
+   {
+    "effect": "veh_Matt_c_f_h.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_MeshTexture",
+      "type": "texture"
+     },
+     {
+      "count": 1,
+      "name": "g_BumpTexture",
+      "type": "texture"
+     },
+     {
+      "count": 8,
+      "name": "g_vMtlParameters",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_MattParams",
+      "type": "f32"
+     }
+    ]
+   },
+   {
+    "effect": "",
+    "inputs": []
+   },
+   {
+    "effect": "veh_Matt_c_f_h.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_LocalSpaceSHNode",
+      "type": "data"
+     },
+     {
+      "count": 4,
+      "name": "g_vCodeDamageScale",
+      "type": "f32"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {
+   "g_BumpTexture": [
+    "tyrewall_nrm",
+    "tyretred_bump_nrm",
+    "tyretred_race_nrm",
+    "tyretred_offroad_nrm",
+    "texture 9"
+   ],
+   "g_MeshTexture": [
+    "tyrewall",
+    "tyretred",
+    "tyretred_offroad",
+    "tyretred_race",
+    "camaro_rat_tyrewall"
+   ]
+  },
+  "variants": 3,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 5
+   },
+   {
+    "index": 1,
+    "type": 8,
+    "usage": 5
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 9
+   }
+  ]
+ },
+ "veh_Matt_f.fx": {
+  "defaults": {
+   "g_MattParams": [
+    0.01,
+    0.01,
+    0.01,
+    1.0
+   ],
+   "g_vMtlParameters": [
+    0.0,
+    0.0,
+    4.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "folder": "models/vehicles",
+  "models": 4,
+  "parts": 4,
+  "passes": [
+   {
+    "effect": "veh_Matt_f.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_MeshTexture",
+      "type": "texture"
+     },
+     {
+      "count": 1,
+      "name": "g_BumpTexture",
+      "type": "texture"
+     },
+     {
+      "count": 8,
+      "name": "g_vMtlParameters",
+      "type": "f32"
+     },
+     {
+      "count": 4,
+      "name": "g_MattParams",
+      "type": "f32"
+     }
+    ]
+   },
+   {
+    "effect": "",
+    "inputs": []
+   },
+   {
+    "effect": "veh_Matt_f.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_LocalSpaceSHNode",
+      "type": "data"
+     },
+     {
+      "count": 1,
+      "name": "g_vCodeDamageScale",
+      "type": "data"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {
+   "g_BumpTexture": [
+    "m3drift_underside_nrm",
+    "ccxr_underside_nrm",
+    "tyretred_bump_nrm"
+   ],
+   "g_MeshTexture": [
+    "m3drift_2",
+    "ccxr_underside",
+    "tyrewall"
+   ]
+  },
+  "variants": 1,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 5
+   },
+   {
+    "index": 1,
+    "type": 8,
+    "usage": 5
+   },
+   {
+    "index": 2,
+    "type": 11,
+    "usage": 5
+   },
+   {
+    "index": 3,
+    "type": 11,
+    "usage": 5
+   },
+   {
+    "index": 4,
+    "type": 10,
+    "usage": 5
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 9
+   }
+  ]
+ },
+ "veh_Neon_c.fx": {
+  "defaults": {
+   "g_vMtlParameters": [
+    0.194,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "folder": "models/vehicles",
+  "models": 1,
+  "parts": 2,
+  "passes": [
+   {
+    "effect": "veh_Neon_c.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_DamageTexture",
+      "type": "texture"
+     },
+     {
+      "count": 8,
+      "name": "g_vMtlParameters",
+      "type": "f32"
+     },
+     {
+      "count": 1,
+      "name": "g_MeshTexture",
+      "type": "texture"
+     }
+    ]
+   },
+   {
+    "effect": "",
+    "inputs": []
+   },
+   {
+    "effect": "veh_Neon_c.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_LocalSpaceSHNode",
+      "type": "data"
+     },
+     {
+      "count": 1,
+      "name": "g_vCodeDamageScale",
+      "type": "data"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {
+   "g_DamageTexture": [
+    "w12_interior"
+   ],
+   "g_MeshTexture": [
+    "w12_lights"
+   ]
+  },
+  "variants": 1,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 5
+   },
+   {
+    "index": 2,
+    "type": 11,
+    "usage": 5
+   },
+   {
+    "index": 3,
+    "type": 11,
+    "usage": 5
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 9
+   }
+  ]
+ },
+ "veh_Neon_c_g.fx": {
+  "defaults": {
+   "g_vMtlParameters": [
+    0.194,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "folder": "models/vehicles",
+  "models": 10,
+  "parts": 15,
+  "passes": [
+   {
+    "effect": "veh_Neon_c_g.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_MeshTexture",
+      "type": "texture"
+     },
+     {
+      "count": 8,
+      "name": "g_vMtlParameters",
+      "type": "f32"
+     }
+    ]
+   },
+   {
+    "effect": "",
+    "inputs": []
+   },
+   {
+    "effect": "veh_Neon_c_g.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_LocalSpaceSHNode",
+      "type": "data"
+     },
+     {
+      "count": 1,
+      "name": "g_vCodeDamageScale",
+      "type": "data"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {
+   "g_MeshTexture": [
+    "cali_14",
+    "nyc_04",
+    "cali_11",
+    "cali_01",
+    "nyc_05"
+   ]
+  },
+  "variants": 1,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 5
+   },
+   {
+    "index": 2,
+    "type": 11,
+    "usage": 5
+   },
+   {
+    "index": 3,
+    "type": 11,
+    "usage": 5
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 9
+   }
+  ]
+ },
+ "veh_Neon_c_g_h.fx": {
+  "defaults": {
+   "g_vMtlParameters": [
+    0.194,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "folder": "models/vehicles",
+  "models": 78,
+  "parts": 209,
+  "passes": [
+   {
+    "effect": "veh_Neon_c_g_h.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_MeshTexture",
+      "type": "texture"
+     },
+     {
+      "count": 8,
+      "name": "g_vMtlParameters",
+      "type": "f32"
+     }
+    ]
+   },
+   {
+    "effect": "",
+    "inputs": []
+   },
+   {
+    "effect": "veh_Neon_c_g_h.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_LocalSpaceSHNode",
+      "type": "data"
+     },
+     {
+      "count": 1,
+      "name": "g_vCodeDamageScale",
+      "type": "data"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {
+   "g_MeshTexture": [
+    "cali_09",
+    "cali_13",
+    "cali_06",
+    "cali_04",
+    "uk_12"
+   ]
+  },
+  "variants": 2,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 5
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 9
+   }
+  ]
+ },
+ "veh_Neon_c_h.fx": {
+  "defaults": {
+   "g_vMtlParameters": [
+    0.194,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "folder": "models/vehicles",
+  "models": 1,
+  "parts": 2,
+  "passes": [
+   {
+    "effect": "veh_Neon_c_h.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_DamageTexture",
+      "type": "texture"
+     },
+     {
+      "count": 8,
+      "name": "g_vMtlParameters",
+      "type": "f32"
+     },
+     {
+      "count": 1,
+      "name": "g_MeshTexture",
+      "type": "texture"
+     }
+    ]
+   },
+   {
+    "effect": "",
+    "inputs": []
+   },
+   {
+    "effect": "veh_Neon_c_h.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_LocalSpaceSHNode",
+      "type": "data"
+     },
+     {
+      "count": 1,
+      "name": "g_vCodeDamageScale",
+      "type": "data"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {
+   "g_DamageTexture": [
+    "w12_interior"
+   ],
+   "g_MeshTexture": [
+    "w12_lights"
+   ]
+  },
+  "variants": 1,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 5
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 9
+   }
+  ]
+ },
+ "veh_Paint_a.fx": {
+  "defaults": {
+   "g_vMtlParameters": [
+    0.09,
+    0.6,
+    1.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "folder": "models/vehicles",
+  "models": 2,
+  "parts": 2,
+  "passes": [
+   {
+    "effect": "veh_Paint_a.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_DentTexture",
+      "type": "texture"
+     },
+     {
+      "count": 8,
+      "name": "g_vMtlParameters",
+      "type": "f32"
+     },
+     {
+      "count": 1,
+      "name": "g_ScratchTexture",
+      "type": "texture"
+     },
+     {
+      "count": 1,
+      "name": "g_BumpTexture",
+      "type": "texture"
+     }
+    ]
+   },
+   {
+    "effect": "",
+    "inputs": []
+   },
+   {
+    "effect": "veh_Paint_a.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_LocalSpaceSHNode",
+      "type": "data"
+     },
+     {
+      "count": 1,
+      "name": "g_vCodeDamageScale",
+      "type": "data"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {
+   "g_BumpTexture": [
+    "petrol_bump",
+    "nismo_bump"
+   ],
+   "g_DentTexture": [
+    "paintdent"
+   ],
+   "g_ScratchTexture": [
+    "audis3_scratch",
+    "nismo_scratch"
+   ]
+  },
+  "variants": 1,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 5
+   },
+   {
+    "index": 1,
+    "type": 8,
+    "usage": 5
+   },
+   {
+    "index": 2,
+    "type": 11,
+    "usage": 5
+   },
+   {
+    "index": 3,
+    "type": 11,
+    "usage": 5
+   },
+   {
+    "index": 4,
+    "type": 10,
+    "usage": 5
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 9
+   }
+  ]
+ },
+ "veh_Paint_a_b.fx": {
+  "defaults": {},
+  "folder": "models/vehicles",
+  "models": 44,
+  "parts": 165,
+  "passes": [
+   {
+    "effect": "veh_Paint_a_b.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_DentTexture",
+      "type": "texture"
+     },
+     {
+      "count": 1,
+      "name": "g_ScratchTexture",
+      "type": "texture"
+     }
+    ]
+   },
+   {
+    "effect": "",
+    "inputs": []
+   },
+   {
+    "effect": "veh_Paint_a_b.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_LocalSpaceSHNode",
+      "type": "data"
+     },
+     {
+      "count": 1,
+      "name": "g_vCodeDamageScale",
+      "type": "data"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {
+   "g_DentTexture": [
+    "paintdent",
+    "DefaultColour"
+   ],
+   "g_ScratchTexture": [
+    "dodge_viper_h_scratch",
+    "dodge_racer_scratch",
+    "focusrsrace_scratch",
+    "dodge_viper_scratch",
+    "dodge_scratch"
+   ]
+  },
+  "variants": 2,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 5
+   },
+   {
+    "index": 2,
+    "type": 11,
+    "usage": 5
+   },
+   {
+    "index": 3,
+    "type": 11,
+    "usage": 5
+   },
+   {
+    "index": 4,
+    "type": 10,
+    "usage": 5
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 9
+   }
+  ]
+ },
+ "veh_Paint_a_b_c.fx": {
+  "defaults": {},
+  "folder": "models/vehicles",
+  "models": 47,
+  "parts": 238,
+  "passes": [
+   {
+    "effect": "veh_Paint_a_b_c.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_DentTexture",
+      "type": "texture"
+     },
+     {
+      "count": 1,
+      "name": "g_ScratchTexture",
+      "type": "texture"
+     }
+    ]
+   },
+   {
+    "effect": "",
+    "inputs": []
+   },
+   {
+    "effect": "veh_Paint_a_b_c.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_LocalSpaceSHNode",
+      "type": "data"
+     },
+     {
+      "count": 1,
+      "name": "g_vCodeDamageScale",
+      "type": "data"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {
+   "g_DentTexture": [
+    "paintdent",
+    "DefaultColour"
+   ],
+   "g_ScratchTexture": [
+    "DefaultColour",
+    "bmw_tii_race_scratch",
+    "nissan_350z_drift_scratch",
+    "w12_scratch",
+    "audir8_scratch"
+   ]
+  },
+  "variants": 2,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 5
+   },
+   {
+    "index": 2,
+    "type": 11,
+    "usage": 5
+   },
+   {
+    "index": 3,
+    "type": 11,
+    "usage": 5
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 9
+   }
+  ]
+ },
+ "veh_Paint_a_b_c_h.fx": {
+  "defaults": {
+   "g_vMtlParameters": [
+    0.194,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "folder": "models/vehicles",
+  "models": 25,
+  "parts": 42,
+  "passes": [
+   {
+    "effect": "veh_Paint_a_b_c_h.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_DentTexture",
+      "type": "texture"
+     },
+     {
+      "count": 1,
+      "name": "g_ScratchTexture",
+      "type": "texture"
+     }
+    ]
+   },
+   {
+    "effect": "",
+    "inputs": []
+   },
+   {
+    "effect": "veh_Paint_a_b_c_h.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_LocalSpaceSHNode",
+      "type": "data"
+     },
+     {
+      "count": 1,
+      "name": "g_vCodeDamageScale",
+      "type": "data"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {
+   "g_DentTexture": [
+    "paintdent",
+    "DefaultColour"
+   ],
+   "g_ScratchTexture": [
+    "DefaultColour",
+    "corvette_zr1_scratch",
+    "ccxr_rgb_scratch",
+    "fordf100_scratch",
+    "trophy_scratches"
+   ],
+   "g_sOffTexture": [
+    "baja_beetle_one"
+   ],
+   "g_sOffTextureDamage": [
+    "baja_beetle_one"
+   ],
+   "g_sOnTexture": [
+    "baja_beetle_one"
+   ],
+   "g_sOnTextureDamage": [
+    "baja_beetle_one"
+   ]
+  },
+  "variants": 3,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 5
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 9
+   }
+  ]
+ },
+ "veh_Paint_a_b_h.fx": {
+  "defaults": {},
+  "folder": "models/vehicles",
+  "models": 2,
+  "parts": 2,
+  "passes": [
+   {
+    "effect": "veh_Paint_a_b_h.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_DentTexture",
+      "type": "texture"
+     },
+     {
+      "count": 1,
+      "name": "g_ScratchTexture",
+      "type": "texture"
+     }
+    ]
+   },
+   {
+    "effect": "",
+    "inputs": []
+   },
+   {
+    "effect": "veh_Paint_a_b_h.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_LocalSpaceSHNode",
+      "type": "data"
+     },
+     {
+      "count": 1,
+      "name": "g_vCodeDamageScale",
+      "type": "data"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {
+   "g_DentTexture": [
+    "DefaultColour",
+    "paintdent"
+   ],
+   "g_ScratchTexture": [
+    "f150offroad_scratch",
+    "focusrs_scratch"
+   ]
+  },
+  "variants": 1,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 5
+   },
+   {
+    "index": 4,
+    "type": 10,
+    "usage": 5
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 9
+   }
+  ]
+ },
+ "veh_Paint_a_c.fx": {
+  "defaults": {
+   "g_vMtlParameters": [
+    0.09,
+    0.6,
+    1.0,
+    1.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "folder": "models/vehicles",
+  "models": 6,
+  "parts": 7,
+  "passes": [
+   {
+    "effect": "veh_Paint_a_c.fx",
+    "inputs": [
+     {
+      "count": 8,
+      "name": "g_vMtlParameters",
+      "type": "f32"
+     },
+     {
+      "count": 1,
+      "name": "g_DentTexture",
+      "type": "texture"
+     },
+     {
+      "count": 1,
+      "name": "g_BumpTexture",
+      "type": "texture"
+     },
+     {
+      "count": 1,
+      "name": "g_ScratchTexture",
+      "type": "texture"
+     }
+    ]
+   },
+   {
+    "effect": "",
+    "inputs": []
+   },
+   {
+    "effect": "veh_Paint_a_c.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_LocalSpaceSHNode",
+      "type": "data"
+     },
+     {
+      "count": 1,
+      "name": "g_vCodeDamageScale",
+      "type": "data"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {
+   "g_BumpTexture": [
+    "nismo_bump",
+    "petrol_cap",
+    "broncotex_2",
+    "petrol_bump",
+    "chevrolet_camaro_1"
+   ],
+   "g_DentTexture": [
+    "paintdent"
+   ],
+   "g_ScratchTexture": [
+    "nismo_scratch",
+    "rgb_scratch_test",
+    "DefaultColour",
+    "audis3_scratch",
+    "chevrolet_camaro_scratches"
+   ]
+  },
+  "variants": 2,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 5
+   },
+   {
+    "index": 1,
+    "type": 8,
+    "usage": 5
+   },
+   {
+    "index": 2,
+    "type": 11,
+    "usage": 5
+   },
+   {
+    "index": 3,
+    "type": 11,
+    "usage": 5
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 9
+   }
+  ]
+ },
+ "veh_Paint_a_c_h.fx": {
+  "defaults": {
+   "g_vMtlParameters": [
+    0.0,
+    0.0,
+    1.0,
+    1.0,
+    0.2,
+    0.2,
+    0.2,
+    1.0
+   ]
+  },
+  "folder": "models/vehicles",
+  "models": 1,
+  "parts": 1,
+  "passes": [
+   {
+    "effect": "veh_Paint_a_c_h.fx",
+    "inputs": [
+     {
+      "count": 8,
+      "name": "g_vMtlParameters",
+      "type": "f32"
+     },
+     {
+      "count": 1,
+      "name": "g_DentTexture",
+      "type": "texture"
+     },
+     {
+      "count": 1,
+      "name": "g_BumpTexture",
+      "type": "texture"
+     },
+     {
+      "count": 1,
+      "name": "g_ScratchTexture",
+      "type": "texture"
+     }
+    ]
+   },
+   {
+    "effect": "",
+    "inputs": []
+   },
+   {
+    "effect": "veh_Paint_a_c_h.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_LocalSpaceSHNode",
+      "type": "data"
+     },
+     {
+      "count": 1,
+      "name": "g_vCodeDamageScale",
+      "type": "data"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {
+   "g_BumpTexture": [
+    "texture 8"
+   ],
+   "g_DentTexture": [
+    "DefaultColour"
+   ],
+   "g_ScratchTexture": [
+    "DefaultColour"
+   ]
+  },
+  "variants": 1,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 5
+   },
+   {
+    "index": 1,
+    "type": 8,
+    "usage": 5
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 9
+   }
+  ]
+ },
+ "veh_Paint_b_c_h.fx": {
+  "defaults": {
+   "g_vCodeDamageScale": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "folder": "models/vehicles",
+  "models": 17,
+  "parts": 37,
+  "passes": [
+   {
+    "effect": "veh_Paint_b_c_h.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_DentTexture",
+      "type": "texture"
+     },
+     {
+      "count": 1,
+      "name": "g_MeshTexture",
+      "type": "texture"
+     },
+     {
+      "count": 1,
+      "name": "g_ScratchTexture",
+      "type": "texture"
+     }
+    ]
+   },
+   {
+    "effect": "",
+    "inputs": []
+   },
+   {
+    "effect": "veh_Paint_b_c_h.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_LocalSpaceSHNode",
+      "type": "data"
+     },
+     {
+      "count": 1,
+      "name": "g_vCodeDamageScale",
+      "type": "data"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {
+   "g_DentTexture": [
+    "paintdent"
+   ],
+   "g_MeshTexture": [
+    "bmw_tii_livery",
+    "nissan_350z_nismo_livery_512",
+    "breakdisc",
+    "broncotex_1",
+    "lotus_stock_livery"
+   ],
+   "g_ScratchTexture": [
+    "DefaultColour",
+    "bmw_tii_scratch",
+    "nissan_350z_nismo_scratch",
+    "lotus_260_scratch",
+    "w12_interior"
+   ]
+  },
+  "variants": 2,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 5
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 9
+   }
+  ]
+ },
+ "veh_Shadow.fx": {
+  "defaults": {
+   "g_vMtlParameters": [
+    0.09,
+    0.6,
+    1.0,
+    1.0,
+    0.71,
+    0.047,
+    0.047,
+    0.0
+   ]
+  },
+  "folder": "models/vehicles",
+  "models": 80,
+  "parts": 81,
+  "passes": [
+   {
+    "effect": "veh_Paint_a_b_c.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_DentTexture",
+      "type": "texture"
+     },
+     {
+      "count": 1,
+      "name": "g_ScratchTexture",
+      "type": "texture"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {
+   "g_BumpTexture": [
+    "chevrolet_camaro_1",
+    "bump",
+    "nismo_bump"
+   ],
+   "g_DentTexture": [
+    "paintdent",
+    "DefaultColour"
+   ],
+   "g_MeshTexture": [
+    "corvette_zr1_interior",
+    "carbonfibre",
+    "chevrolet_camaro_rhymer_liv",
+    "natalya_livery",
+    "gt500_alpha"
+   ],
+   "g_ScratchTexture": [
+    "DefaultColour",
+    "chevrolet_camaro_scratches",
+    "opelastraextreme_scratch",
+    "nismo_scratch",
+    "bmw_ac_scratch"
+   ]
+  },
+  "variants": 13,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 6,
+    "usage": 0
+   }
+  ]
+ },
+ "veh_paint.fx": {
+  "defaults": {
+   "g_vMtlParameters": [
+    0.09,
+    0.6,
+    1.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "folder": "models/vehicles",
+  "models": 5,
+  "parts": 6,
+  "passes": [
+   {
+    "effect": "veh_Paint.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_DentTexture",
+      "type": "texture"
+     },
+     {
+      "count": 8,
+      "name": "g_vMtlParameters",
+      "type": "f32"
+     },
+     {
+      "count": 1,
+      "name": "g_ScratchTexture",
+      "type": "texture"
+     },
+     {
+      "count": 1,
+      "name": "g_MeshTexture",
+      "type": "texture"
+     },
+     {
+      "count": 1,
+      "name": "g_BumpTexture",
+      "type": "texture"
+     }
+    ]
+   },
+   {
+    "effect": "",
+    "inputs": []
+   },
+   {
+    "effect": "veh_Paint.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_LocalSpaceSHNode",
+      "type": "data"
+     },
+     {
+      "count": 1,
+      "name": "g_vCodeDamageScale",
+      "type": "data"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {
+   "g_BumpTexture": [
+    "r26-bump_crop",
+    "baja_beetle_two",
+    "nismo_bump"
+   ],
+   "g_DentTexture": [
+    "paintdent"
+   ],
+   "g_MeshTexture": [
+    "layara baja_1024",
+    "r26_livery",
+    "r26_livery_team_alpha",
+    "rin_livery",
+    "rin_livery_yellow"
+   ],
+   "g_ScratchTexture": [
+    "r26-scratch",
+    "baja_scratch_1024",
+    "nismo_scratch"
+   ]
+  },
+  "variants": 2,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 5
+   },
+   {
+    "index": 1,
+    "type": 8,
+    "usage": 5
+   },
+   {
+    "index": 2,
+    "type": 11,
+    "usage": 5
+   },
+   {
+    "index": 3,
+    "type": 11,
+    "usage": 5
+   },
+   {
+    "index": 4,
+    "type": 10,
+    "usage": 5
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 9
+   }
+  ]
+ },
+ "veh_paint_b.fx": {
+  "defaults": {},
+  "folder": "models/vehicles",
+  "models": 42,
+  "parts": 154,
+  "passes": [
+   {
+    "effect": "veh_Paint_b.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_DentTexture",
+      "type": "texture"
+     },
+     {
+      "count": 1,
+      "name": "g_ScratchTexture",
+      "type": "texture"
+     },
+     {
+      "count": 1,
+      "name": "g_MeshTexture",
+      "type": "texture"
+     }
+    ]
+   },
+   {
+    "effect": "",
+    "inputs": []
+   },
+   {
+    "effect": "veh_Paint_b.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_LocalSpaceSHNode",
+      "type": "data"
+     },
+     {
+      "count": 1,
+      "name": "g_vCodeDamageScale",
+      "type": "data"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {
+   "g_DentTexture": [
+    "paintdent"
+   ],
+   "g_MeshTexture": [
+    "carbonfibre",
+    "legend03_dodge_viper_acr_stock",
+    "aotexture_blue",
+    "fordgt_livery1",
+    "hhr_livery1"
+   ],
+   "g_ScratchTexture": [
+    "opelastraextreme_scratch",
+    "manaro_scratch",
+    "chevrolet_camaro_scratches",
+    "gt500_scratch",
+    "corvette_zr1_scratch"
+   ]
+  },
+  "variants": 2,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 5
+   },
+   {
+    "index": 2,
+    "type": 11,
+    "usage": 5
+   },
+   {
+    "index": 3,
+    "type": 11,
+    "usage": 5
+   },
+   {
+    "index": 4,
+    "type": 10,
+    "usage": 5
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 9
+   }
+  ]
+ },
+ "veh_paint_b_c.fx": {
+  "defaults": {},
+  "folder": "models/vehicles",
+  "models": 43,
+  "parts": 208,
+  "passes": [
+   {
+    "effect": "veh_Paint_b_c.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_DentTexture",
+      "type": "texture"
+     },
+     {
+      "count": 1,
+      "name": "g_MeshTexture",
+      "type": "texture"
+     },
+     {
+      "count": 1,
+      "name": "g_ScratchTexture",
+      "type": "texture"
+     }
+    ]
+   },
+   {
+    "effect": "",
+    "inputs": []
+   },
+   {
+    "effect": "veh_Paint_b_c.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_LocalSpaceSHNode",
+      "type": "data"
+     },
+     {
+      "count": 1,
+      "name": "g_vCodeDamageScale",
+      "type": "data"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {
+   "g_DentTexture": [
+    "paintdent"
+   ],
+   "g_MeshTexture": [
+    "camaro_rat_base",
+    "rin_livery",
+    "rust texture",
+    "rin_livery_yellow",
+    "carbonfibre"
+   ],
+   "g_ScratchTexture": [
+    "nismo_scratch",
+    "r26-scratch",
+    "chevrolet_camaro_scratches",
+    "camaro_rat_scratch",
+    "nissan_350z_nismo_scratch"
+   ]
+  },
+  "variants": 2,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 5
+   },
+   {
+    "index": 2,
+    "type": 11,
+    "usage": 5
+   },
+   {
+    "index": 3,
+    "type": 11,
+    "usage": 5
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 9
+   }
+  ]
+ },
+ "veh_paint_c.fx": {
+  "defaults": {
+   "g_vMtlParameters": [
+    0.09,
+    0.6,
+    1.0,
+    1.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "folder": "models/vehicles",
+  "models": 6,
+  "parts": 9,
+  "passes": [
+   {
+    "effect": "veh_Paint_c.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_DentTexture",
+      "type": "texture"
+     },
+     {
+      "count": 8,
+      "name": "g_vMtlParameters",
+      "type": "f32"
+     },
+     {
+      "count": 1,
+      "name": "g_ScratchTexture",
+      "type": "texture"
+     },
+     {
+      "count": 1,
+      "name": "g_MeshTexture",
+      "type": "texture"
+     },
+     {
+      "count": 1,
+      "name": "g_BumpTexture",
+      "type": "texture"
+     }
+    ]
+   },
+   {
+    "effect": "",
+    "inputs": []
+   },
+   {
+    "effect": "veh_Paint_c.fx",
+    "inputs": [
+     {
+      "count": 1,
+      "name": "g_LocalSpaceSHNode",
+      "type": "data"
+     },
+     {
+      "count": 1,
+      "name": "g_vCodeDamageScale",
+      "type": "data"
+     }
+    ]
+   }
+  ],
+  "shadow": false,
+  "skinned": false,
+  "textures": {
+   "g_BumpTexture": [
+    "nismo_bump",
+    "chevrolet_camaro_1",
+    "baja_beetle_two",
+    "bump"
+   ],
+   "g_DentTexture": [
+    "paintdent"
+   ],
+   "g_MeshTexture": [
+    "layara baja_1024",
+    "rin_livery",
+    "rin_livery_yellow",
+    "chevrolet_camaro_rhymer_liv",
+    "nissan_350z_nismo_livery_512"
+   ],
+   "g_ScratchTexture": [
+    "nismo_scratch",
+    "chevrolet_camaro_scratches",
+    "baja_scratch_1024",
+    "nissan_350z_nismo_scratch"
+   ]
+  },
+  "variants": 2,
+  "vertex": [
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 0
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 3
+   },
+   {
+    "index": 0,
+    "type": 9,
+    "usage": 5
+   },
+   {
+    "index": 1,
+    "type": 8,
+    "usage": 5
+   },
+   {
+    "index": 2,
+    "type": 11,
+    "usage": 5
+   },
+   {
+    "index": 3,
+    "type": 11,
+    "usage": 5
+   },
+   {
+    "index": 0,
+    "type": 11,
+    "usage": 9
+   }
+  ]
+ }
+}
