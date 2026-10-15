@@ -164,3 +164,55 @@ def decompress_dxt1(data, w, h):
     bw, bh = max(1, (w + 3) // 4), max(1, (h + 3) // 4)
     img = px.reshape(bh, bw, 4, 4, 3).transpose(0, 2, 1, 3, 4).reshape(bh * 4, bw * 4, 3)
     return np.clip(np.rint(img[:h, :w]), 0, 255).astype(np.uint8)
+
+
+# ---- textures held by a model ---------------------------------------------------------------------
+
+class Stored:
+    """A texture in the model's scene: every mip level, largest first."""
+
+    def __init__(self, name, source, code, width, height, mips, pixels, streamed):
+        self.name, self.source, self.format = name, source, code
+        self.width, self.height, self.mip_count = width, height, mips
+        self.pixels, self.streamed = pixels, streamed
+
+
+def stored(scene_dict):
+    """Every texture the scene holds: the keyed table ("k:<n>"), then each package's streamed
+    ones ("p:<package>:<n>"). A streamed texture's level 0 copy holds the small sizes (a
+    whole chain from 16x16 or so down), each of levels 1-9 one larger size (its top level)."""
+    out = []
+    for i, t in enumerate(scene_dict["scene"]["keyed"]):
+        d = t["data"]
+        if len(d) < 28:
+            continue
+        w, h, depth, mips, code = struct.unpack_from("<5I", d, 0)
+        if code not in dds.FORMATS or not w or not h:
+            continue
+        size = dds.chain_size(code, w, h, mips)
+        out.append(Stored(t["name"], f"k:{i}", code, w, h, mips, bytes(d[28:28 + size]), False))
+    for pi, p in enumerate(scene_dict["packages"]):
+        levels = p["levels"]
+        for j, first in enumerate(levels[0]["textures"]):
+            copies = []
+            for lv in levels:
+                tex = lv["textures"][j] if j < len(lv["textures"]) else None
+                if tex and tex.get("copy"):
+                    copies.append(tex["copy"])
+            if not copies:
+                continue
+            copies.sort(key=lambda c: -c["head"][1] * c["head"][2])
+            _, w, h, depth, mips0, code = copies[0]["head"][:6]
+            if code not in dds.FORMATS:
+                continue
+            chain, mips = [], 0
+            for c in copies[:-1]:                 # the larger sizes: their top level
+                cw, ch = c["head"][1], c["head"][2]
+                chain.append(bytes(c["blob"]["data"][:dds.surface_size(code, cw, ch)]))
+                mips += 1
+            last = copies[-1]                     # the small sizes: a whole chain
+            lw, lh, lm = last["head"][1], last["head"][2], last["head"][4]
+            chain.append(bytes(last["blob"]["data"][:dds.chain_size(code, lw, lh, lm)]))
+            mips += lm
+            out.append(Stored(first.get("name", ""), f"p:{pi}:{j}", code, w, h, mips, b"".join(chain), True))
+    return out

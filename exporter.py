@@ -66,10 +66,23 @@ def _world(obj):
     return _world(obj.parent) @ m if obj.parent is not None else m
 
 
-def _element_space(obj, root, empties):
+def element_of(obj, root):
+    """The Blur element an object belongs to: its own "blur_element", else the nearest parent
+    element empty's, else 0 (DefaultElement)."""
+    if "blur_element" in obj and obj["blur_element"] >= 0:
+        return int(obj["blur_element"])
+    o = obj.parent
+    while o is not None and o is not root:
+        if o.type == "EMPTY" and "blur_element" in o:
+            return int(o["blur_element"])
+        o = o.parent
+    return 0
+
+
+def _element_space(obj, root, empties, element=None):
     """Matrix from the object's local space into its Blur element's space, as the file places
     that element: moving or turning an element's empty in Blender moves its part."""
-    element = obj.get("blur_element", -1)
+    element = obj.get("blur_element", -1) if element is None else element
     empty = empties.get(element)
     if empty is not None and "blur_matrix" in empty:
         m = list(empty["blur_matrix"])
@@ -174,8 +187,10 @@ def _encode_where(rows, where, e, values):
         rows[where, e.offset + 6:e.offset + 8] = 0           # w is 0 in every model
 
 
-def _encode_slot(sd, part, mesh, slot, name):
-    """(vertex rows, triangles) of the faces in `slot` of `mesh`, in the part's vertex format."""
+def _encode_slot(sd, part, mesh, slot, name, own=True):
+    """(vertex rows, triangles) of the faces in `slot` of `mesh`, in the part's vertex format.
+    `own`: the faces belong to `part` (vertices it had keep their data); else `part` is only
+    the template of a new part (its vertices lend what Blender doesn't hold)."""
     sel = mesh.tri_mat == slot
     corners = mesh.tri_loops[sel].ravel()
     vb = parts.vertex_buffer(sd.scene, part.vb)
@@ -192,7 +207,7 @@ def _encode_slot(sd, part, mesh, slot, name):
     # The vertex each corner was imported from, while it hasn't moved
     kept = np.zeros(len(corners), bool)
     source = np.zeros(len(corners), np.int64)
-    if mesh.vertex_id is not None and len(old):
+    if own and mesh.vertex_id is not None and len(old):
         vid = mesh.vertex_id[corners].astype(np.int64)
         ok = (vid >= 0) & (vid < len(old))
         source[ok] = vid[ok]
@@ -253,6 +268,13 @@ def _unchanged(sd, part, vertices, have):
     return True
 
 
+def _part_effect(part):
+    table = _values_table(part.rl)
+    if part.values >= len(table["sets"]):
+        return ""
+    return part.rl["materials"]["types"][table["sets"][part.values]["type"]]["effect"]
+
+
 def export_model(context, root, source, out_path):
     """Writes `source` with the edits under `root` to `out_path`; returns (summary, notes)."""
     with open(source, "rb") as fh:
@@ -265,37 +287,75 @@ def export_model(context, root, source, out_path):
         if obj.type == "MESH" and obj.mode == "EDIT":
             obj.update_from_editmode()          # edits still in Edit Mode
     depsgraph = context.evaluated_depsgraph_get()
+    available = parts.effects_in(sd.scene)
 
     pieces = {}            # key -> lod -> [(rows, triangles or None)]
     slot_material = {}     # key -> (material, where, level) from the most detailed level seen
     names = {}             # key -> object name, for the report
+    new_parts = {}         # (element, effect, material name) -> [template, material, where, [(rows, tris)]]
+    removed = set()        # parts drawn with another effect now (their faces become a new part)
     notes = []
+
+    def new_piece(obj, mesh, slot, element, mat, name):
+        effect = materials.material_effect(mat) if mat else ""
+        if not effect:
+            notes.append(f"{name}: no Blur material, skipped (Material Properties > Blur Material)")
+            return
+        found = parts.templates(sd.scene, effect)
+        if not found:
+            notes.append(f"{name}: {effect} isn't used anywhere in this model, so it can't be added yet; "
+                         f"this model has: {', '.join(e.rsplit('.', 1)[0] for e in available)}")
+            return
+        template = next((t for t in found if t.element == element), found[0])
+        rows, tris = _encode_slot(sd, template, mesh, slot, name, own=False)
+        if tris is None:
+            return
+        entry = new_parts.setdefault((element, effect.lower(), mat.name), [template, mat, name, []])
+        entry[3].append((rows, tris))
+
     for obj in objects:
-        if obj.type != "MESH" or "blur_parts" not in obj:
-            if obj.type == "MESH" and "blur_collision" not in obj:
-                notes.append(f"{obj.name}: not from the imported model, skipped (new parts aren't supported yet)")
+        if obj.type != "MESH" or "blur_collision" in obj:
+            continue
+        if "blur_parts" not in obj:
+            # a new object: every slot becomes a new part on the element it sits under
+            element = element_of(obj, root)
+            mesh = _Mesh(obj, depsgraph, _element_space(obj, root, empties, element))
+            for slot in sorted(set(np.unique(mesh.tri_mat).tolist())):
+                mat = obj.material_slots[slot].material if slot < len(obj.material_slots) else None
+                new_piece(obj, mesh, slot, element, mat, f"{obj.name}, slot {slot + 1}")
             continue
         keys = str(obj["blur_parts"]).split(";")
         lod = int(obj.get("blur_lod", 0))
+        element = element_of(obj, root)
         mesh = _Mesh(obj, depsgraph, _element_space(obj, root, empties))
-        extra = set(np.unique(mesh.tri_mat).tolist()) - set(range(len(keys)))
-        if extra:
-            notes.append(f"{obj.name}: faces in material slot(s) {sorted(i + 1 for i in extra)} skipped "
-                         "(slots added in Blender have no Blur part yet)")
+        for slot in sorted(set(np.unique(mesh.tri_mat).tolist()) - set(range(len(keys)))):
+            # a slot added in Blender: a new part (most detailed level only)
+            mat = obj.material_slots[slot].material if slot < len(obj.material_slots) else None
+            if lod == 0:
+                new_piece(obj, mesh, slot, element, mat, f"{obj.name}, slot {slot + 1}")
         for slot, key in enumerate(keys):
             part = by_key.get(key)
             if part is None:
                 notes.append(f"{obj.name}: slot {slot + 1} names part {key}, which the model doesn't have")
                 continue
             name = f"{obj.name}, slot {slot + 1}"
-            pieces.setdefault(key, {}).setdefault(lod, []).append(_encode_slot(sd, part, mesh, slot, name))
             mat = obj.material_slots[slot].material if slot < len(obj.material_slots) else None
+            effect = materials.material_effect(mat) if mat else ""
+            if effect and effect.lower() != _part_effect(part).lower() and _part_effect(part):
+                # drawn with another effect now: the faces become a new part, the old one goes
+                if lod == 0:
+                    removed.add(key)
+                    new_piece(obj, mesh, slot, part.element, mat, name)
+                continue
+            pieces.setdefault(key, {}).setdefault(lod, []).append(_encode_slot(sd, part, mesh, slot, name))
             if key not in slot_material or lod < slot_material[key][2]:
                 slot_material[key] = (mat, name, lod)
             names.setdefault(key, re.sub(r"( LOD\d+)?(\.\d+)?$", "", obj.name))
 
     edits = {}
     for key, levels in pieces.items():
+        if key in removed:
+            continue
         part = by_key[key]
         rows, lods, have = [], [], {}
         at = 0
@@ -322,10 +382,28 @@ def export_model(context, root, source, out_path):
         if not _unchanged(sd, part, vertices, have):
             edits[key] = parts.Edit(vertices, lods)   # parts drawn as before keep their bytes
 
-    changed_sets, added = _apply_materials(sd, by_key, slot_material, root.get("blur_model", ""), notes)
-
+    model_path = root.get("blur_model", "")
+    new_textures = {}
+    changed_sets = _apply_materials(sd, by_key, slot_material, model_path, notes, new_textures)
     try:
         parts.rebuild(sd.scene, edits)
+        for key in removed:
+            parts.remove_part(by_key[key])
+        # new parts last: adding one renumbers the parts drawn after it
+        made = []
+        for (element, _effect, _mat), (template, mat, where, items) in new_parts.items():
+            rows, tris, at = [], [], 0
+            for r, t in items:
+                rows.append(r)
+                tris.append(t + at)
+                at += len(r)
+            current = next(p for p in parts.parts(sd.scene) if p.record is template.record)
+            record = parts.add_part(sd.scene, current, element, np.concatenate(rows), [np.concatenate(tris)])
+            made.append((record, mat, where))
+        now = parts.parts(sd.scene)
+        for record, mat, where in made:
+            part = next(p for p in now if p.record is record)
+            _apply_materials(sd, {part.key: part}, {part.key: (mat, where, 0)}, model_path, notes, new_textures)
         out = chunks.replace_payload(data, sd.path, scene.write(sd.scene))
     except (parts.PartsError, scene.SceneError) as e:
         raise ExportError(str(e)) from e
@@ -334,7 +412,9 @@ def export_model(context, root, source, out_path):
     changed = sorted({names.get(k, k) for k in edits})
     shown = ", ".join(changed[:6]) + ("…" if len(changed) > 6 else "")
     summary = (f"geometry of {len(edits)} part(s) changed" + (f" ({shown})" if changed else "")
-               + f"; {changed_sets} material(s) changed; {added} new texture(s)")
+               + (f"; {len(made)} new part(s)" if made else "")
+               + (f"; {len(removed)} part(s) moved to another effect" if removed else "")
+               + f"; {changed_sets} material(s) changed; {len(new_textures)} new texture(s)")
     return summary, notes
 
 
@@ -388,11 +468,11 @@ def _picture(img):
     return code, pw, ph, mips, data
 
 
-def _apply_materials(sd, by_key, slot_material, model_path, notes):
-    """Writes the Blender materials' numbers and textures into the parts' material values.
-    Returns (value sets changed, textures added)."""
+def _apply_materials(sd, by_key, slot_material, model_path, notes, new_textures):
+    """Writes the Blender materials' numbers and textures into the parts' material values
+    (`new_textures`: image name -> keyed texture number, shared between calls). Returns the
+    number of value sets changed."""
     written = {}           # (render list, value set) -> material name
-    new_textures = {}      # image name -> keyed texture number
     changed = 0
     for key, (mat, where, _lod) in sorted(slot_material.items()):
         part = by_key[key]
@@ -446,7 +526,7 @@ def _apply_materials(sd, by_key, slot_material, model_path, notes):
         if dirty:
             vs["values"] = values
             changed += 1
-    return changed, len(new_textures)
+    return changed
 
 
 def _texture_value(sd, part, mat, input_name, old, model_path, new_textures, where, notes):

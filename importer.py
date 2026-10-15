@@ -1,4 +1,4 @@
-"""Builds Blender objects from a Blur model (blur.model.Model).
+"""Builds Blender objects from a Blur .model file.
 
 Layout in the scene:
 
@@ -19,12 +19,14 @@ placement (MdlDat rotation and position), so parts move like in the game.
 Geometry comes from the scene stream (blur.scene / blur.parts): every material
 slot of a mesh is one part (geometry record) of the model, named in the
 object's "blur_parts" property (part keys in slot order), which is how the
-exporter puts edited meshes back. Materials and textures come from
-blur.model.
+exporter puts edited meshes back. Materials (each part's effect and material
+values) and textures come from the scene stream too; part names and placement
+from MdlDat's element table.
 """
 
 import colorsys
 import os
+import struct
 import tempfile
 
 import bmesh
@@ -33,7 +35,7 @@ import numpy as np
 from mathutils import Matrix
 
 from . import materials
-from .blur import chunks, collision, dds, parts, scene
+from .blur import chunks, collision, dds, parts, scene, textures
 from .blur import model as blurmodel
 
 
@@ -49,17 +51,16 @@ def element_matrix(e):
 
 # ---- textures ------------------------------------------------------------------------------
 
-def load_textures(model, name, folder):
-    """Every stored texture as a Blender image (written as .dds into `folder` and packed)."""
-    images = []
+def load_textures(stored, model_path, folder):
+    """Every texture the model holds (blur.textures.stored) as a Blender image, keyed by where
+    it is stored ("k:3", "p:5:0"); written as .dds into `folder`, loaded and packed."""
+    images = {}
     os.makedirs(folder, exist_ok=True)
-    for i, t in enumerate(model.textures):
+    for i, t in enumerate(stored):
         safe = "".join(c if c.isalnum() or c in "-_." else "_" for c in t.name) or f"texture_{i + 1}"
-        path = os.path.join(folder, f"{safe}.dds")
-        if os.path.exists(path):
-            path = os.path.join(folder, f"{safe}_{i + 1}.dds")
+        path = os.path.join(folder, f"{safe}_{i + 1}.dds")
         with open(path, "wb") as fh:
-            fh.write(dds.write(t.format, t.width, t.height, t.mip_count, t.pixels(model.data)))
+            fh.write(dds.write(t.format, t.width, t.height, t.mip_count, t.pixels))
         try:
             img = bpy.data.images.load(path, check_existing=False)
             img.name = t.name or safe
@@ -75,37 +76,73 @@ def load_textures(model, name, folder):
             img["blur_texture"] = t.name
             img["blur_format"] = dds.name(t.format)
             img["blur_streamed"] = t.streamed
-        images.append(img)
+            img["blur_source"] = t.source       # which stored texture this is (for the exporter)
+            img["blur_model_path"] = model_path
+            images[t.source] = img
     return images
 
 
 # ---- materials -----------------------------------------------------------------------------
 
-def make_materials(model, images, model_name):
-    """One Blender material per distinct (effect, values) pair; returns group -> material."""
+def _values_table(rl):
+    return rl["values"] if "values" in rl else rl["materials"]["values"]
+
+
+_NUMBER = {6: "<f", 0: "<b", 1: "<B", 2: "<h", 3: "<H", 4: "<i", 5: "<I"}
+
+
+def part_material_values(part):
+    """(effect, {texture input: (package, index) entry}, {number input: [values]}) of a part's
+    main pass, read from its render list's material value set."""
+    table = _values_table(part.rl)
+    if part.values >= len(table["sets"]):
+        return "", {}, {}
+    vs = table["sets"][part.values]
+    mt = part.rl["materials"]["types"][vs["type"]]
+    tex, numbers = {}, {}
+    i = 0
+    vals = vs["values"]
+    if mt["size"]:
+        for el in mt["elements"]:
+            got = []
+            for _ in range(el["count"]):
+                v = vals[i] if i < len(vals) else None
+                i += 1
+                if isinstance(v, bytes) and el["type"] in _NUMBER:
+                    got.append(struct.unpack(_NUMBER[el["type"]], v)[0])
+                elif isinstance(v, bytes) and el["type"] == 7:
+                    n = struct.unpack("<I", v)[0]
+                    items = part.rl["textures"]["items"]
+                    if n < len(items):
+                        tex[el["name"]] = tuple(items[n])
+            if got:
+                numbers[el["name"]] = got
+    return mt["effect"], tex, numbers
+
+
+def _source(entry):
+    package, index = entry
+    return f"k:{index}" if package == parts.NULL else f"p:{package}:{index}"
+
+
+def part_materials(sd, images, model_name):
+    """part key -> Blender material: one per distinct (effect, textures, numbers)."""
     by_key, out = {}, {}
-    for g in model.groups:
-        effect = model.effects[g.material] if g.material < len(model.effects) else "default_NB.fx"
-        vs = model.value_sets[g.values] if 0 <= g.values < len(model.value_sets) else None
-        textures, values = {}, {}
-        if vs is not None:
-            for input_name, index in vs.textures:
-                t = model.texture_order[index] if 0 <= index < len(model.texture_order) else -1
-                textures[input_name] = images[t] if 0 <= t < len(images) else None
-            for input_name, numbers in vs.constants:
-                values[input_name] = numbers
-            for input_name, numbers in vs.integers:
-                values[input_name] = numbers
-        key = (effect, tuple(sorted((k, v.name if v else "") for k, v in textures.items())),
-               tuple(sorted((k, tuple(v)) for k, v in values.items())))
+    for p in sd.parts:
+        effect, tex, numbers = part_material_values(p)
+        if not effect:
+            continue
+        slots = {name: images.get(_source(entry)) for name, entry in tex.items()}
+        key = (effect.lower(), tuple(sorted((k, v.name if v else "") for k, v in slots.items())),
+               tuple(sorted((k, tuple(round(x, 6) if isinstance(x, float) else x for x in v))
+                            for k, v in numbers.items())))
         if key not in by_key:
             base = effect.rsplit(".", 1)[0]
-            color = next((img.name for k, img in textures.items() if img and materials.texture_role(k) == "color"),
-                         None)
-            mat = materials.new_material(effect, f"{model_name} {base}" + (f" {color}" if color else ""),
-                                         textures, values)
-            by_key[key] = mat
-        out[id(g)] = by_key[key]
+            colour = next((img.name for k, img in slots.items() if img and materials.texture_role(k) == "color"),
+                          None)
+            by_key[key] = materials.new_material(effect, f"{model_name} {base}" + (f" {colour}" if colour else ""),
+                                                 slots, numbers)
+        out[p.key] = by_key[key]
     return out
 
 
@@ -243,41 +280,6 @@ def build_mesh(sd, name, items, mats):
     return mesh, [p.key for p in keys]
 
 
-def texture_sources(scene_dict, model):
-    """Where each of model.textures is stored: "k:<n>" (n-th keyed texture) or "p:<package>:<n>"
-    (streamed), as the render lists' texture tables name them; [] if the two readers disagree."""
-    out = [f"k:{i}" for i in range(len(scene_dict["scene"]["keyed"]))]
-    for pi, p in enumerate(scene_dict["packages"]):
-        out += [f"p:{pi}:{j}" for j in range(len(p["levels"][0]["textures"]))]
-    names = [t["name"] for t in scene_dict["scene"]["keyed"]]
-    names += [t.get("name", "") for p in scene_dict["packages"] for t in p["levels"][0]["textures"]]
-    if len(out) != len(model.textures) or any(a and a != t.name for a, t in zip(names, model.textures)):
-        return []
-    return out
-
-
-def part_materials(model, sd, group_materials):
-    """part key -> Blender material, via the model.Group drawing the same range."""
-    by_range = {}
-    for g in model.groups:
-        if g.lods:
-            d = g.lods[0]
-            by_range.setdefault((g.material, g.element & 0xFFFF, d.start, d.count, d.min_index), g)
-    out, fallback = {}, {}
-    for p in sd.parts:
-        if not p.lods:
-            continue
-        g = by_range.get((p.material, p.element, *p.lods[0][:3]))
-        if g is not None:
-            out[p.key] = group_materials.get(id(g))
-        if out.get(p.key) is None:
-            effect = model.effects[p.material] if p.material < len(model.effects) else "default_NB.fx"
-            if effect not in fallback:
-                fallback[effect] = materials.new_material(effect)
-            out[p.key] = fallback[effect]
-    return out
-
-
 # ---- collision -----------------------------------------------------------------------------
 
 def _placement(rotation, position):
@@ -348,7 +350,7 @@ def _shape_mesh(shape, name):
     return mesh
 
 
-def import_collision(data, model, model_name, parent_coll, root):
+def import_collision(data, elements, model_name, parent_coll, root):
     """The model's Coll chunk as objects in a "<model> Collision" collection. Returns the
     collection (None if the model has none) and notes."""
     path = chunks.find_path(chunks.parse(data), "Coll")
@@ -363,7 +365,7 @@ def import_collision(data, model, model_name, parent_coll, root):
         return None, []
     coll = bpy.data.collections.new(f"{model_name} Collision")
     parent_coll.children.link(coll)
-    by_tag = {e.tag: e.name for e in model.elements if e.tag not in (0, 0xFFFFFFFF)}
+    by_tag = {e.tag: e.name for e in elements if e.tag not in (0, 0xFFFFFFFF)}
     templates = {}
 
     def label(shape):
@@ -409,10 +411,21 @@ def import_collision(data, model, model_name, parent_coll, root):
     return coll, []
 
 
+class Imported:
+    """What import_model made: notes for the user and the textures it loaded."""
+
+    def __init__(self):
+        self.notes, self.textures = [], []
+
+
 def import_model(context, path, all_lods=False, shadows=True, collisions=True):
     with open(path, "rb") as fh:
         data = fh.read()
-    model = blurmodel.read(data)
+    sd = SceneData(data)
+    if not sd.parts:
+        raise blurmodel.ModelError("no drawable parts in this file")
+    elements = blurmodel.read_elements(data, chunks.parse(data))
+    model = Imported()
     model_name = os.path.splitext(os.path.basename(path))[0]
 
     scene_coll = context.scene.collection
@@ -426,7 +439,7 @@ def import_model(context, path, all_lods=False, shadows=True, collisions=True):
 
     # Element empties, in hierarchy order (parents first in the table)
     empties = []
-    for i, e in enumerate(model.elements):
+    for i, e in enumerate(elements):
         obj = bpy.data.objects.new(e.name or f"element {i}", None)
         obj.empty_display_type = "PLAIN_AXES"
         obj.empty_display_size = 0.1
@@ -436,23 +449,20 @@ def import_model(context, path, all_lods=False, shadows=True, collisions=True):
         empties.append(obj)
     # Element placements are absolute: each empty's local matrix is its placement
     # relative to its parent's.
-    for i, e in enumerate(model.elements):
+    for i, e in enumerate(elements):
         obj = empties[i]
         has_parent = 0 <= e.parent < len(empties) and e.parent != i
         obj.parent = empties[e.parent] if has_parent else root
         world = element_matrix(e)
-        obj.matrix_basis = (element_matrix(model.elements[e.parent]).inverted_safe() @ world) if has_parent else world
+        obj.matrix_basis = (element_matrix(elements[e.parent]).inverted_safe() @ world) if has_parent else world
         # the placement in the file (relative to the root): the exporter measures meshes against
         # it, so moving an element's empty moves that part's vertices
         obj["blur_matrix"] = [x for row in world for x in row]
 
-    images = load_textures(model, model_name, os.path.join(tempfile.gettempdir(), "blur_model_tools"))
-    sd = SceneData(data)
-    for img, source in zip(images, texture_sources(sd.scene, model)):
-        if img is not None and source:
-            img["blur_source"] = source      # which stored texture this is (for the exporter)
-            img["blur_model_path"] = path
-    mats = part_materials(model, sd, make_materials(model, images, model_name))
+    stored = textures.stored(sd.scene)
+    images = load_textures(stored, path, os.path.join(tempfile.gettempdir(), "blur_model_tools"))
+    model.textures = stored
+    mats = part_materials(sd, images, model_name)
 
     lod_count = max((len(p.lods) for p in sd.parts), default=1)
     lod_colls = {0: coll}
@@ -479,8 +489,8 @@ def import_model(context, path, all_lods=False, shadows=True, collisions=True):
 
     made = 0
     for (element, lod, shadow), items in sorted(buckets.items(), key=lambda kv: (kv[0][2], kv[0][1], kv[0][0])):
-        has_element = 0 <= element < len(model.elements)
-        base = model.elements[element].name if has_element and model.elements[element].name else f"part {element}"
+        has_element = 0 <= element < len(elements)
+        base = elements[element].name if has_element and elements[element].name else f"part {element}"
         name = base + (" shadow" if shadow else "") + (f" LOD{lod}" if lod else "")
         mesh, keys = build_mesh(sd, name, items, {} if shadow else mats)
         if mesh is None:
@@ -502,7 +512,7 @@ def import_model(context, path, all_lods=False, shadows=True, collisions=True):
         if lod:
             _exclude(context, c)
     if collisions:
-        coll_coll, notes = import_collision(data, model, model_name, coll, root)
+        coll_coll, notes = import_collision(data, elements, model_name, coll, root)
         model.notes.extend(notes)
         if coll_coll is not None:
             _exclude(context, coll_coll)

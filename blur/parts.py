@@ -337,3 +337,220 @@ def rebuild(scene, edits):
             objs = scene["packages"][p.package]["levels"][0]["objects"]["items"]
             if parent[1] < len(objs) and objs[parent[1]] and objs[parent[1]].get("class", "").endswith("CullNode"):
                 _grow(objs[parent[1]]["body"]["bounds"]["box"], lo, hi)
+        if p.kind == "static":
+            show_everywhere(p.rl, p.number)       # a moved part may now be seen from anywhere
+
+
+# ---- render list bookkeeping ----------------------------------------------------------------------
+#
+# Checked over every model:
+#   six        5-6 buckets (count, first) over the static parts, consecutive, adding up to all
+#              of them: the draw order (opaque first; transparent parts in bucket 3)
+#   bounds_a   one per static part (its vertex box, then its draw distances)
+#   lod_a      cars (record version 1): a = 512 view directions, u16[512] -> row, b = bytes per
+#              row (one bit per static part, lowest bit first), the rows: which parts can be seen
+#              from each direction. Props (version 0): not used (a and b hold leftover memory).
+#   static w[1]   the scene's vertex declaration for the part's vertex buffer
+#   static "indices" (MaterialIndex: row, list): the row of extra list (list - 1), an "Element"
+#              entry whose Index value is the part's element
+
+BIG = 8.507059173023462e+37
+
+
+def _bucket(rl, number):
+    for k, item in enumerate(rl["six"]["items"]):
+        count, first = item["w"][0], item["w"][1]
+        if first <= number < first + count:
+            return k
+    return 0
+
+
+def _visibility(rl):
+    """(rows (n, bytes) uint8 array, lod list) of a car render list, or (None, None)."""
+    lod = rl.get("lod_a")
+    if not lod or not lod.get("_v") or not lod.get("u16", {}).get("items"):
+        return None, None
+    b = lod["b"]
+    data = lod["bytes"]["data"]
+    if not b or len(data) % b:
+        return None, None
+    return np.frombuffer(data, np.uint8).reshape(-1, b).copy(), lod
+
+
+def show_everywhere(rl, number):
+    """Marks static part `number` visible from every view direction."""
+    rows, lod = _visibility(rl)
+    if rows is None:
+        return
+    rows[:, number // 8] |= np.uint8(1 << (number % 8))
+    lod["bytes"]["data"] = rows.tobytes()
+
+
+def _insert_visibility(rl, number, total):
+    """A new static part at `number` (of `total` after the insert): its bit set everywhere."""
+    rows, lod = _visibility(rl)
+    if rows is None:
+        return
+    bits = np.unpackbits(rows, axis=1, bitorder="little")[:, :total - 1]
+    bits = np.insert(bits, number, 1, axis=1)
+    b = (total + 7) // 8
+    packed = np.packbits(bits, axis=1, bitorder="little")
+    if packed.shape[1] < b:
+        packed = np.pad(packed, ((0, 0), (0, b - packed.shape[1])))
+    lod["b"] = b
+    lod["bytes"]["data"] = packed[:, :b].tobytes()
+
+
+def _extra_lists(rl):
+    extra = rl.get("extra")
+    return extra["items"] if isinstance(extra, dict) else (extra or [])
+
+
+def _element_row(rl, record, element):
+    """The (row, list) of the "Element" entry naming `element`, added if missing."""
+    list_no = record["indices"]["b"]
+    lists = _extra_lists(rl)
+    if not 0 < list_no <= len(lists):
+        raise PartsError("the render list has no element table")
+    table = lists[list_no - 1]
+    entry = next((i for i, t in enumerate(table["types"]) if t["effect"] == "Element"), None)
+    if entry is None:
+        raise PartsError("the render list has no Element entry")
+    sets = table["values"]["sets"]
+    for i, st in enumerate(sets):
+        if st["type"] == entry and st["values"] and isinstance(st["values"][0], bytes) \
+                and int.from_bytes(st["values"][0], "little") == element:
+            return i, list_no
+    sets.append({"type": entry, "values": [element.to_bytes(4, "little")]})
+    table["values"]["total"] += table["types"][entry]["size"]
+    return len(sets) - 1, list_no
+
+
+def _values_table(rl):
+    return rl["values"] if "values" in rl else rl["materials"]["values"]
+
+
+def add_part(scene, template, element, vertices, lods):
+    """Adds a static part drawn like `template` (same effect, vertex format, material values
+    to start from, draw bucket) on `element`, with new geometry: `vertices` rows in the
+    template's vertex format and per detail level the triangles (or None). Returns its record
+    (find the part with `p.record is record`: adding a part renumbers the parts drawn after it)."""
+    import copy
+    if template.vb is None or template.kind != "static":
+        raise PartsError("a new part needs a static template part with vertices")
+    vertices = np.asarray(vertices, np.uint8)
+    vb = vertex_buffer(scene, template.vb)
+    if vertices.ndim != 2 or vertices.shape[1] != vb["stride"]:
+        raise PartsError(f"vertices must be rows of {vb['stride']} bytes")
+    if len(vertices) > 0xFFFF:
+        raise PartsError(f"{len(vertices)} vertices in one part, at most 65535 fit")
+    rl = template.rl
+    rec = copy.deepcopy(template.record)
+
+    # vertices at the end of the template's vertex buffer, strips at the end of its index buffer
+    base = vb["count"]
+    vb["blob"]["data"] = bytes(vb["blob"]["data"]) + vertices.tobytes()
+    vb["count"] += len(vertices)
+    rec["streams"][0]["w"][2] = base * vb["stride"]
+    ib = index_buffer(scene, template.ib)
+    strips, at = [], ib["count"]
+    for level, r in enumerate(rec["ranges"]):
+        tris = lods[min(level, len(lods) - 1)] if lods else None
+        if tris is None or not len(tris):
+            r["r"] = [at, 0, EMPTY_MIN, 0]
+            continue
+        tris = np.asarray(tris, np.int64)
+        strip = make_strip(tris)
+        lo, hi = int(tris.min()), int(tris.max())
+        r["r"] = [at, len(strip), lo, hi - lo + 1]
+        strips.append(np.asarray(strip, np.uint16))
+        at += len(strip)
+    if strips:
+        ib["blob"]["data"] = bytes(ib["blob"]["data"]) + np.concatenate(strips).tobytes()
+    ib["count"] = at
+
+    # its own material values (a copy of the template's, edited by the caller), its element
+    table = _values_table(rl)
+    types = rl["materials"]["types"]
+    main = copy.deepcopy(table["sets"][template.values])
+    table["sets"].append(main)
+    table["total"] += types[main["type"]]["size"]
+    rec["streams"][0]["buffer"]["a"] = len(table["sets"]) - 1
+    rec["w"][4] = (element & 0xFFFF) | (template.flags << 16)
+    row, list_no = _element_row(rl, rec, element)
+    rec["indices"]["a"], rec["indices"]["b"] = row, list_no
+    # the lighting pass of a part on the same element, if one uses the same entry
+    for k, st in enumerate(rec["streams"][1:], 1):
+        want = table["sets"][st["buffer"]["a"]]["type"]
+        for other in rl["static"]["items"]:
+            if (other["w"][4] & 0xFFFF) == element and len(other["streams"]) > k:
+                cand = other["streams"][k]["buffer"]["a"]
+                if table["sets"][cand]["type"] == want:
+                    st["buffer"]["a"] = cand
+                    break
+
+    # into the template's draw bucket, with its box and visibility
+    statics = rl["static"]["items"]
+    bucket = _bucket(rl, template.number)
+    six = rl["six"]["items"]
+    number = six[bucket]["w"][1] + six[bucket]["w"][0] if six else len(statics)
+    statics.insert(number, rec)
+    for k, item in enumerate(six):
+        if k == bucket:
+            item["w"][0] += 1
+        elif item["w"][1] >= number and k > bucket:
+            item["w"][1] += 1
+    box = copy.deepcopy(rl["bounds_a"]["items"][template.number])
+    pos_el = find(layout(vb), POSITION)
+    if pos_el is not None and len(vertices):
+        pos = decode(vertices, pos_el, 3)
+        lo, hi = pos.min(0), pos.max(0)
+        box["box"] = [float(x) for x in lo] + [float(x) for x in hi] + [-BIG, BIG]
+        _grow(rl["cull"]["bounds"]["box"], lo, hi)
+        parent = rl["cull"]["node"]["parent"]
+        if template.package >= 0 and parent[0] != NULL:
+            objs = scene["packages"][template.package]["levels"][0]["objects"]["items"]
+            if parent[1] < len(objs) and objs[parent[1]] and objs[parent[1]].get("class", "").endswith("CullNode"):
+                _grow(objs[parent[1]]["body"]["bounds"]["box"], lo, hi)
+    rl["bounds_a"]["items"].insert(number, box)
+    _insert_visibility(rl, number, len(statics))
+    return rec
+
+
+def remove_part(part):
+    """Stops drawing a part (every level's range emptied); its record stays."""
+    for r in part.record["ranges"]:
+        r["r"] = [r["r"][0], 0, EMPTY_MIN, 0]
+    part.lods = [list(r["r"]) for r in part.record["ranges"]]
+
+
+def templates(scene, effect):
+    """Static parts drawn with `effect` (any case), best templates first: drawn up close,
+    with a vertex buffer."""
+    low = effect.lower()
+    out = []
+    for p in parts(scene):
+        if p.kind != "static" or p.vb is None:
+            continue
+        table = _values_table(p.rl)
+        if p.values >= len(table["sets"]):
+            continue
+        mt = p.rl["materials"]["types"][table["sets"][p.values]["type"]]
+        if mt["effect"].lower() == low:
+            near = p.rl["bounds_a"]["items"][p.number]["box"][6] <= 1.0 if p.number < len(p.rl["bounds_a"]["items"]) else True
+            out.append((not near, p.number, p))
+    return [p for _, _, p in sorted(out, key=lambda t: (t[0], t[1]))]
+
+
+def effects_in(scene):
+    """The effects the model's static parts are drawn with (names as stored)."""
+    names = []
+    for p in parts(scene):
+        if p.kind != "static":
+            continue
+        table = _values_table(p.rl)
+        if p.values < len(table["sets"]):
+            name = p.rl["materials"]["types"][table["sets"][p.values]["type"]]["effect"]
+            if name and name not in names:
+                names.append(name)
+    return names
