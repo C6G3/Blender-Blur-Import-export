@@ -30,22 +30,29 @@ The format knowledge comes from [26Viewer](https://github.com/C6G3/26Viewer)
   effect's parameters (`g_vMtlParameters`…) with the game's usual values. Paint has no
   colour texture (Blur paints the car itself): its viewport colour is only a preview.
 - **File ▸ Export ▸ Blur Model (.model)** — write the imported model back with your edits.
-  - Select any object of the imported model, export to a new file (the original is
-    the starting point and is never overwritten; by default `<name>_edited.model` next
-    to it). Put it back into the game with 26Viewer (Edit Mode ▸ Replace). The report
-    says which parts, materials and textures changed; an untouched export is byte for
-    byte the original.
-  - **Geometry.** Every material slot of an imported mesh is one part of the model; its
-    faces become that part's new geometry: move, add or delete vertices and faces,
-    re-UV, repaint vertex colours. Moving a part or its element's empty moves the part.
-    A slot left with no faces removes the part. Parts you didn't import (or whose object
-    you deleted) stay as they were. Edits still in Edit Mode are included.
+  - No need to select everything: the model of the active object is exported (with only
+    one model in the scene, nothing needs selecting). Export to a new file (the original
+    is the starting point and is never overwritten; by default `<name>_edited.model` next
+    to it). Put it back into the game with 26Viewer (Edit Mode ▸ Replace). The status bar
+    shows how long the import or export took; an untouched export is byte for byte the
+    original.
+  - **What you see in Blender is what gets written.** Every material slot of an imported
+    mesh is one part of the model; its faces become that part's new geometry: move, add
+    or delete vertices and faces, re-UV, repaint vertex colours. Moving a part or its
+    element's empty moves the part. **Deleting a mesh object** (or leaving a slot with no
+    faces) removes its parts from the model. **Putting a mesh under another element's
+    empty** (e.g. a mirror under `e_door_right`) moves its parts to that element, so they
+    move with it in the game. Only parts you didn't import at all (detail levels or shadow
+    hulls left out at import) stay as they were. Edits still in Edit Mode are included;
+    hidden objects are still exported (delete what you want gone).
   - **Detail levels.** An imported `LOD1`–`LOD3` mesh is used for its level; without one,
     the edit of LOD0 is drawn at the lower levels too.
   - **Materials.** The numbers in the Blur Shader node and the images in its texture
     slots are written to the part. A slot can take any texture the model holds, or a
-    new picture: a `.dds` is stored as it is, anything else is compressed to DXT1 (DXT5
-    if it has transparency) with mipmaps and added to the model.
+    new picture: a `.dds` with mipmaps is stored as it is; anything else (and a `.dds`
+    without mipmaps — the game's textures always have them) is compressed to DXT1 (DXT5 if
+    it has transparency) with mipmaps and added to the model. Parts that shared one set of
+    material values get their own as soon as you give them different materials.
   - **New parts.** Faces in a material slot you add to an imported mesh, and any new
     mesh object you put under the model (parented to an element's empty, e.g.
     `e_exterior`, or to the model), become new parts on that element — one per Blur
@@ -55,8 +62,19 @@ The format knowledge comes from [26Viewer](https://github.com/C6G3/26Viewer)
   - What Blender doesn't show (damage offsets on cars, bone weights on characters) is
     kept from the original vertex, or copied from the nearest one for new vertices.
     Unmoved vertices keep their exact normals until you *Clear Custom Split Normals*.
+  - **Collision.** Convex hulls you edit, scale, move or delete, and collision bodies you
+    move, are written back (a body keeps at least one shape). Models imported with an
+    older version of the add-on need importing again for this.
   - Not yet: effects a model doesn't use, new elements (part names / hierarchy), moving
-    elements themselves (their placement is baked into the vertices), collision export.
+    elements themselves (their placement is baked into the vertices), collision meshes and
+    boxes/spheres/capsules, new collision shapes.
+
+**Cars and their wheels.** A car's `.model` has its own four tyres, brake discs and callipers
+(each wheel its own copy, not shared), but the **rim** the game draws comes from a separate
+model, `models/vehicles/wheels/<car>.model` (one rim, used for all four wheels; Blur.exe
+loads it next to the car, `default.model` when a car has none). To change a car's rims, edit
+that wheel model (it imports and exports like any other); the car's own `e_alloyRim_…`
+parts are most likely not what you see in a race.
 
 **Making a model "from scratch":** import a model of the same kind (a car for a car),
 delete its meshes or empty their slots, model your own under its element empties
@@ -88,8 +106,10 @@ Requires Blender 5.0 or newer.
 4. ✅ Export of edited geometry for existing parts, every detail level, shadow hulls.
 5. ✅ Export of material numbers and textures (any of the model's, or new pictures).
 6. ✅ New parts and switching a part's effect (effects the model uses).
-7. Effects a model doesn't use (new material entries, vertex formats), new elements,
-   collision export, damage bones, skinning to `.skeleton` bones.
+7. ✅ Every change in Blender written: deleted objects and slots, meshes moved to another
+   element, per-part materials, collision hulls and bodies.
+8. Effects a model doesn't use (new material entries, vertex formats), new elements,
+   collision meshes and primitives, damage bones, skinning to `.skeleton` bones.
 
 ## Layout
 
@@ -107,6 +127,7 @@ Requires Blender 5.0 or newer.
 | `tools/blender_export_test.py` | Imports, exports unchanged and with a part scaled, and compares |
 | `tools/blender_edit_test.py` | Moves a part, edits in Edit Mode, changes materials and textures; checks they arrive |
 | `tools/blender_newparts_test.py` | Adds a new object, a new slot and an effect switch; checks they arrive |
+| `tools/blender_changes_test.py` | Deletes meshes and a detail level, moves a mesh to another element, splits shared materials, edits collision; checks every change arrives |
 
 ## License
 

@@ -373,11 +373,20 @@ def import_collision(data, elements, model_name, parent_coll, root):
         kind = collision.TYPE_NAMES.get(shape["type"], f"type {shape['type']}")
         return f"COL {el} {kind}" if el else f"COL {kind}"
 
-    def add(shape, matrix, parent):
+    shape_ids = []
+
+    def add(shape, matrix, parent, shape_id, copy=False):
         mesh = _shape_mesh(shape, label(shape))
         obj = bpy.data.objects.new(label(shape), mesh)
         obj["blur_collision"] = collision.TYPE_NAMES.get(shape["type"], str(shape["type"]))
         obj["blur_handle"] = f"{shape['handle']:#010x}"
+        # which shape of the stream this is ("3": object 3, "3.1": its body's shape 1) and where
+        # the file places it: the exporter writes edited hulls and moved bodies back
+        obj["blur_shape"] = shape_id
+        obj["blur_matrix"] = [x for row in matrix for x in row]
+        if copy:
+            obj["blur_copy"] = True       # a placed copy of a template: not written back
+        shape_ids.append(shape_id)
         coll.objects.link(obj)
         obj.parent = parent
         obj.matrix_parent_inverse.identity()
@@ -393,21 +402,23 @@ def import_collision(data, elements, model_name, parent_coll, root):
     for o in objects:
         if o["type"] == 11:
             templates[o["handle"]] = o
-    for o in objects:
+    for i, o in enumerate(objects):
         # a top-level object's space starts at its centre of mass; a body's shapes are placed
         # in it (checked: props then line up with their visible geometry to the millimetre)
         m = _placement(o["rotation"], [a + b for a, b in zip(o["position"], o["centre"])])
-        if o["type"] == 10:
+        copy = o["type"] == 10
+        if copy:
             src = templates.get(o["instance_of"])
             if src is None:
                 continue
             o = dict(src, handle=o["handle"], rotation=o["rotation"], position=o["position"])
         if o["type"] == 7:
-            body = add(o, m, root)
-            for child in o["shapes"]:
-                add(child, _placement(child["rotation"], child["position"]), body)
+            body = add(o, m, root, str(i), copy)
+            for j, child in enumerate(o["shapes"]):
+                add(child, _placement(child["rotation"], child["position"]), body, f"{i}.{j}", copy)
         else:
-            add(o, m, root)
+            add(o, m, root, str(i), copy)
+    root["blur_shapes"] = ";".join(shape_ids)   # what was imported: a shape missing now was deleted
     return coll, []
 
 
@@ -488,6 +499,7 @@ def import_model(context, path, all_lods=False, shadows=True, collisions=True):
                 buckets.setdefault((p.element, lod, shadow), []).append((p, lod))
 
     made = 0
+    imported = []
     for (element, lod, shadow), items in sorted(buckets.items(), key=lambda kv: (kv[0][2], kv[0][1], kv[0][0])):
         has_element = 0 <= element < len(elements)
         base = elements[element].name if has_element and elements[element].name else f"part {element}"
@@ -500,12 +512,15 @@ def import_model(context, path, all_lods=False, shadows=True, collisions=True):
         obj["blur_shadow"] = shadow
         obj["blur_element"] = element if has_element else -1
         obj["blur_parts"] = ";".join(keys)
+        imported += [f"{lod}:{k}" for k in keys]
         (shadow_coll if shadow else lod_colls[lod]).objects.link(obj)
         obj.parent = empties[element] if has_element else root
         obj.matrix_parent_inverse.identity()
         if shadow:
             obj.display_type = "WIRE"
         made += 1
+    # every (detail level, part) made into a mesh: one no longer in Blender was deleted there
+    root["blur_imported"] = ";".join(imported)
     if shadow_coll is not None:
         _exclude(context, shadow_coll)
     for lod, c in lod_colls.items():

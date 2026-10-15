@@ -3,9 +3,11 @@
 The model's own file is the starting point (its path is on the root empty,
 "blur_model"): every mesh made by the importer names the part behind each of
 its material slots ("blur_parts"), so the faces of a slot become that part's
-new geometry. Parts whose mesh isn't in Blender (not imported, or the object
-was deleted) keep their old geometry. A slot with no faces left removes that
-part (it stops being drawn).
+new geometry. What Blender holds is what gets written: a part whose mesh was
+deleted, or whose slot has no faces left, stops being drawn (the importer
+records what it made, "blur_imported", so deleted is told apart from never
+imported: parts that weren't imported keep their old geometry). A mesh moved
+under another element's empty moves its parts to that element.
 
 Per vertex the exporter writes position, normal, both UV sets and colour,
 in the part's own vertex format. Anything else a vertex carries (damage
@@ -25,21 +27,29 @@ Placement: meshes are measured against where the file places their element
 or its empty moves the part's vertices.
 
 Materials: for each part, the material in its slot (most detailed level) must
-use the part's own effect; its number inputs and texture slots are written
-into the part's material values. A texture slot can take any image the model
+use the part's own effect (another effect makes it a new part); its number
+inputs and texture slots are written into the part's material values. Parts
+that shared material values but have different materials now get their own. A texture slot can take any image the model
 holds, or a new picture: a .dds is stored as it is, other pictures are
 compressed to DXT1/DXT5 with mipmaps, and added to the model's texture table.
+
+Collision: convex hulls edited, moved or deleted in Blender and moved bodies
+are written into the Coll chunk ("blur_shape" on each collision object says
+which shape it is); other collision edits are listed as not written.
 """
 
+import copy
 import re
 import struct
 
+import bmesh
 import bpy
 import numpy as np
 from mathutils import Matrix, kdtree
 
 from . import importer, materials
-from .blur import chunks, dds, parts, scene, textures
+from .blur import chunks, collision, dds, parts, scene, textures
+from .blur import model as blurmodel
 
 
 class ExportError(Exception):
@@ -55,8 +65,28 @@ def model_root(obj):
     return None
 
 
-def _descendants(root):
-    return [o for o in root.children_recursive]
+def _model_objects(root):
+    """The model's objects: everything under the root empty, and objects of the model's
+    collections that came from it (a mesh whose element empty was deleted stays in)."""
+    out = list(root.children_recursive)
+    seen = set(out)
+    for coll in root.users_collection:
+        for obj in coll.all_objects:
+            if obj not in seen and obj is not root and ("blur_parts" in obj or "blur_shape" in obj):
+                out.append(obj)
+                seen.add(obj)
+    return out
+
+
+def _parent_element(obj, root):
+    """The element of the nearest element empty above `obj`, or None (under the root itself,
+    or outside the model)."""
+    o = obj.parent
+    while o is not None and o is not root:
+        if o.type == "EMPTY" and "blur_element" in o and "blur_collision" not in o:
+            return int(o["blur_element"])
+        o = o.parent
+    return None
 
 
 def _world(obj):
@@ -79,14 +109,21 @@ def element_of(obj, root):
     return 0
 
 
-def _element_space(obj, root, empties, element=None):
+def _matrix(values):
+    m = list(values)
+    return Matrix([m[i:i + 4] for i in range(0, 16, 4)])
+
+
+def _element_space(obj, root, empties, element=None, placed=None):
     """Matrix from the object's local space into its Blur element's space, as the file places
-    that element: moving or turning an element's empty in Blender moves its part."""
+    that element: moving or turning an element's empty in Blender moves its part. `placed`:
+    element -> the file's placement, for elements whose empty was deleted."""
     element = obj.get("blur_element", -1) if element is None else element
     empty = empties.get(element)
     if empty is not None and "blur_matrix" in empty:
-        m = list(empty["blur_matrix"])
-        ref = _world(root) @ Matrix([m[i:i + 4] for i in range(0, 16, 4)])
+        ref = _world(root) @ _matrix(empty["blur_matrix"])
+    elif empty is None and placed and element in placed:
+        ref = _world(root) @ placed[element]
     else:
         ref = _world(empty if empty is not None else root)
     return ref.inverted_safe() @ _world(obj)
@@ -268,6 +305,28 @@ def _unchanged(sd, part, vertices, have):
     return True
 
 
+def _imported(root, sd, objects):
+    """{part key: detail levels} the importer made meshes for."""
+    out = {}
+    if "blur_imported" in root:
+        for item in str(root["blur_imported"]).split(";"):
+            if ":" in item:
+                lod, key = item.split(":", 1)
+                out.setdefault(key, set()).add(int(lod))
+        return out
+    # imported before that was recorded: what the importer makes for the levels found
+    meshes = [o for o in objects if o.type == "MESH" and "blur_parts" in o]
+    levels = {int(o.get("blur_lod", 0)) for o in meshes if not o.get("blur_shadow")}
+    shadow_levels = {int(o.get("blur_lod", 0)) for o in meshes if o.get("blur_shadow")}
+    for p in sd.parts:
+        if p.vb is None:
+            continue
+        for lod in (shadow_levels if parts.is_shadow(sd.layout(p)) else levels):
+            if lod < len(p.lods) and len(sd.triangles(p, lod)):
+                out.setdefault(p.key, set()).add(lod)
+    return out
+
+
 def _part_effect(part):
     table = _values_table(part.rl)
     if part.values >= len(table["sets"]):
@@ -281,8 +340,11 @@ def export_model(context, root, source, out_path):
         data = fh.read()
     sd = importer.SceneData(data)
     by_key = {p.key: p for p in sd.parts}
-    objects = _descendants(root)
-    empties = {o["blur_element"]: o for o in objects if o.type == "EMPTY" and "blur_element" in o}
+    objects = _model_objects(root)
+    empties = {o["blur_element"]: o for o in objects
+               if o.type == "EMPTY" and "blur_element" in o and "blur_collision" not in o}
+    placed = {i: importer.element_matrix(e)
+              for i, e in enumerate(blurmodel.read_elements(data, chunks.parse(data)))}
     for obj in objects:
         if obj.type == "MESH" and obj.mode == "EDIT":
             obj.update_from_editmode()          # edits still in Edit Mode
@@ -293,7 +355,9 @@ def export_model(context, root, source, out_path):
     slot_material = {}     # key -> (material, where, level) from the most detailed level seen
     names = {}             # key -> object name, for the report
     new_parts = {}         # (element, effect, material name) -> [template, material, where, [(rows, tris)]]
-    removed = set()        # parts drawn with another effect now (their faces become a new part)
+    removed = set()        # parts drawn with another effect or on another element now (their
+                           # faces become a new part), and parts deleted in Blender
+    present = {}           # key -> detail levels with a mesh in Blender
     notes = []
 
     def new_piece(obj, mesh, slot, element, mat, name):
@@ -319,15 +383,26 @@ def export_model(context, root, source, out_path):
         if "blur_parts" not in obj:
             # a new object: every slot becomes a new part on the element it sits under
             element = element_of(obj, root)
-            mesh = _Mesh(obj, depsgraph, _element_space(obj, root, empties, element))
+            mesh = _Mesh(obj, depsgraph, _element_space(obj, root, empties, element, placed))
             for slot in sorted(set(np.unique(mesh.tri_mat).tolist())):
                 mat = obj.material_slots[slot].material if slot < len(obj.material_slots) else None
                 new_piece(obj, mesh, slot, element, mat, f"{obj.name}, slot {slot + 1}")
             continue
         keys = str(obj["blur_parts"]).split(";")
         lod = int(obj.get("blur_lod", 0))
+        for key in keys:
+            present.setdefault(key, set()).add(lod)
         element = element_of(obj, root)
-        mesh = _Mesh(obj, depsgraph, _element_space(obj, root, empties))
+        to = _parent_element(obj, root)
+        if to is not None and element >= 0 and to != element and lod == 0 and not obj.get("blur_shadow"):
+            # put under another element's empty: its parts move to that element
+            mesh = _Mesh(obj, depsgraph, _element_space(obj, root, empties, to, placed))
+            for slot in sorted(set(np.unique(mesh.tri_mat).tolist())):
+                mat = obj.material_slots[slot].material if slot < len(obj.material_slots) else None
+                new_piece(obj, mesh, slot, to, mat, f"{obj.name}, slot {slot + 1}")
+            removed.update(keys)
+            continue
+        mesh = _Mesh(obj, depsgraph, _element_space(obj, root, empties, None, placed))
         for slot in sorted(set(np.unique(mesh.tri_mat).tolist()) - set(range(len(keys)))):
             # a slot added in Blender: a new part (most detailed level only)
             mat = obj.material_slots[slot].material if slot < len(obj.material_slots) else None
@@ -351,6 +426,19 @@ def export_model(context, root, source, out_path):
             if key not in slot_material or lod < slot_material[key][2]:
                 slot_material[key] = (mat, name, lod)
             names.setdefault(key, re.sub(r"( LOD\d+)?(\.\d+)?$", "", obj.name))
+
+    # parts the importer made a mesh for that isn't there any more: deleted in Blender
+    deleted = []
+    for key, levels in _imported(root, sd, objects).items():
+        if key not in by_key or key in removed:
+            continue
+        have = present.get(key, set())
+        if not have:
+            removed.add(key)
+            deleted.append(key)
+        else:
+            for lod in levels - have:
+                pieces.setdefault(key, {})[lod] = []        # that level's mesh was deleted
 
     edits = {}
     for key, levels in pieces.items():
@@ -386,9 +474,18 @@ def export_model(context, root, source, out_path):
     new_textures = {}
     changed_sets = _apply_materials(sd, by_key, slot_material, model_path, notes, new_textures)
     try:
-        parts.rebuild(sd.scene, edits)
+        # removed parts are rebuilt empty: their vertices and indices leave the buffers (a gap
+        # left behind isn't how the game's files look, and 26Viewer can't read past one)
+        emptied = {}
         for key in removed:
-            parts.remove_part(by_key[key])
+            part = by_key[key]
+            if part.vb is not None:
+                stride = parts.vertex_buffer(sd.scene, part.vb)["stride"]
+                emptied[key] = parts.Edit(np.zeros((0, stride), np.uint8), [None])
+        parts.rebuild(sd.scene, {**edits, **emptied})
+        for key in removed:
+            if key not in emptied:
+                parts.remove_part(by_key[key])
         # new parts last: adding one renumbers the parts drawn after it
         made = []
         for (element, _effect, _mat), (template, mat, where, items) in new_parts.items():
@@ -405,17 +502,159 @@ def export_model(context, root, source, out_path):
             part = next(p for p in now if p.record is record)
             _apply_materials(sd, {part.key: part}, {part.key: (mat, where, 0)}, model_path, notes, new_textures)
         out = chunks.replace_payload(data, sd.path, scene.write(sd.scene))
-    except (parts.PartsError, scene.SceneError) as e:
+        coll_payload, coll_summary = _export_collision(data, root, objects, depsgraph, notes)
+        if coll_payload is not None:
+            out = chunks.replace_payload(out, chunks.find_path(chunks.parse(out), "Coll"), coll_payload)
+    except (parts.PartsError, scene.SceneError, collision.CollisionError) as e:
         raise ExportError(str(e)) from e
     with open(out_path, "wb") as fh:
         fh.write(out)
     changed = sorted({names.get(k, k) for k in edits})
     shown = ", ".join(changed[:6]) + ("…" if len(changed) > 6 else "")
+    gone = sorted({_deleted_name(by_key[k], root) for k in deleted})
     summary = (f"geometry of {len(edits)} part(s) changed" + (f" ({shown})" if changed else "")
+               + (f"; {len(deleted)} part(s) removed ({', '.join(gone[:6])}{'…' if len(gone) > 6 else ''})"
+                  if deleted else "")
                + (f"; {len(made)} new part(s)" if made else "")
-               + (f"; {len(removed)} part(s) moved to another effect" if removed else "")
-               + f"; {changed_sets} material(s) changed; {len(new_textures)} new texture(s)")
+               + (f"; {len(removed) - len(deleted)} part(s) moved to another effect or element"
+                  if len(removed) > len(deleted) else "")
+               + f"; {changed_sets} material(s) changed; {len(new_textures)} new texture(s)"
+               + (f"; collision: {coll_summary}" if coll_summary else ""))
     return summary, notes
+
+
+def _deleted_name(part, root):
+    """A readable name for a deleted part: its element's empty, if that's still there."""
+    for o in root.children_recursive:
+        if o.type == "EMPTY" and o.get("blur_element") == part.element and "blur_collision" not in o:
+            return o.name
+    return part.key
+
+
+# ---- collision ------------------------------------------------------------------------------------
+
+def _close(a, b, tol=1e-5):
+    a = [v for row in a for v in row]
+    b = [v for row in b for v in row]
+    return len(a) == len(b) and all(abs(x - y) <= tol for x, y in zip(a, b))
+
+
+def _hull(points):
+    """(vertices, triangles) of the convex hull of `points` (Blur axes), triangles facing out."""
+    bm = bmesh.new()
+    try:
+        for p in points:
+            bm.verts.new(p)
+        res = bmesh.ops.convex_hull(bm, input=bm.verts[:], use_existing_faces=False)
+        drop = [v for v in res["geom_interior"] + res["geom_unused"] if isinstance(v, bmesh.types.BMVert)]
+        if drop:
+            bmesh.ops.delete(bm, geom=drop, context="VERTS")
+        bmesh.ops.triangulate(bm, faces=bm.faces[:])
+        bm.verts.index_update()
+        verts = [tuple(v.co) for v in bm.verts]
+        tris = [[v.index for v in f.verts] for f in bm.faces]
+    finally:
+        bm.free()
+    if len(verts) < 4 or not tris:
+        return None, None
+    v = np.array(verts)
+    centre = v.mean(axis=0)
+    out = []
+    for a, b, c in tris:
+        n = np.cross(v[b] - v[a], v[c] - v[a])
+        out.append((a, b, c) if np.dot(n, (v[a] + v[b] + v[c]) / 3 - centre) >= 0 else (a, c, b))
+    return verts, out
+
+
+def _export_collision(data, root, objects, depsgraph, notes):
+    """(the Coll chunk's new payload or None, summary) for the collision edits in Blender:
+    convex hulls edited, moved or deleted, bodies moved."""
+    path = chunks.find_path(chunks.parse(data), "Coll")
+    if not path:
+        return None, ""
+    in_blender = [o for o in objects if "blur_collision" in o]
+    if "blur_shapes" not in root:
+        if in_blender:
+            notes.append("collision: this model was imported before collision export existed, so collision "
+                         "edits aren't written; import it again to edit its collision")
+        return None, ""
+    c = path[-1]
+    start, end = c.payload_offset, c.offset + c.size
+    stream = collision.read(data, start, end)
+    shapes = {}
+    for i, o in enumerate(stream):
+        shapes[str(i)] = (o, None)
+        for j, child in enumerate(o.get("shapes", [])):
+            shapes[f"{i}.{j}"] = (child, o)
+    present = {str(o["blur_shape"]): o for o in in_blender if "blur_shape" in o}
+    changes, edited, moved, gone = [], 0, 0, {}
+    for sid in str(root["blur_shapes"]).split(";"):
+        if sid not in shapes:
+            continue
+        shape, body = shapes[sid]
+        obj = present.get(sid)
+        kind = collision.TYPE_NAMES.get(shape["type"], str(shape["type"]))
+        if obj is None:
+            if body is not None and body["type"] == 7:
+                gone.setdefault(id(body), [body, []])[1].append(shape)
+            else:
+                notes.append(f"collision object {sid} ({kind}): deleting a whole collision object "
+                             "isn't supported (delete the shapes inside it), kept")
+            continue
+        local = obj.matrix_parent_inverse @ obj.matrix_basis
+        orig = _matrix(obj["blur_matrix"]) if "blur_matrix" in obj else local
+        if shape["type"] == 3 and obj.type == "MESH":
+            ev = obj.evaluated_get(depsgraph)
+            me = ev.to_mesh()
+            try:
+                to_shape = orig.inverted_safe() @ local
+                pts = [tuple(to_shape @ v.co) for v in me.vertices]
+            finally:
+                ev.to_mesh_clear()
+            pts = [(x, z, y) for x, y, z in pts]                   # Blender z-up -> Blur y-up
+            if _close(pts, shape["vertices"]):
+                continue
+            if obj.get("blur_copy"):
+                notes.append(f"{obj.name}: a placed copy of a shared collision shape, edits not written")
+                continue
+            verts, tris = _hull(pts)
+            if verts is None:
+                notes.append(f"{obj.name}: a convex hull needs at least 4 points that aren't flat, kept")
+                continue
+            changes.append((shape["_hull"], shape["_hull_end"], collision.hull_bytes(verts, tris)))
+            edited += 1
+        elif body is None and not _close(local, orig):
+            # a top-level object moved: its placement (its space starts at position + centre)
+            m = importer.SWAP @ local @ importer.SWAP
+            loc, rot, scale = m.decompose()
+            if any(abs(x - 1.0) > 1e-4 for x in scale):
+                notes.append(f"{obj.name}: collision objects can't be scaled, only the move and turn are written")
+            r = rot.to_matrix()
+            rotation = [r[i][j] for j in range(3) for i in range(3)]   # rotation[3j + i] = m[i][j]
+            position = [loc[k] - shape["centre"][k] for k in range(3)]
+            p = shape["_place"]
+            changes.append((p, p + 48, struct.pack("<12f", *position, *rotation)))
+            moved += 1
+        elif obj.type == "MESH" and shape["type"] != 3:
+            if not _close(local, orig) or len(obj.data.vertices) != len(shape.get("vertices") or []):
+                notes.append(f"{obj.name}: editing {kind} collision shapes isn't supported yet, kept")
+        elif not _close(local, orig):
+            notes.append(f"{obj.name}: moving {kind} collision shapes isn't supported yet, kept")
+    removed = 0
+    for body, lost in gone.values():
+        left = len(body["shapes"]) - len(lost)
+        if left < 1:
+            notes.append("collision: a body keeps at least one shape (deleting all of them isn't supported)")
+            continue
+        for shape in lost:
+            changes.append((shape["_at"], shape["_end"], b""))
+        changes.append((body["_count"], body["_count"] + 4, struct.pack("<I", left)))
+        removed += len(lost)
+    if not changes:
+        return None, ""
+    bits = [f"{edited} hull(s) changed" if edited else "", f"{moved} object(s) moved" if moved else "",
+            f"{removed} shape(s) removed" if removed else ""]
+    return collision.write(data, start, end, changes), ", ".join(b for b in bits if b)
 
 
 # ---- materials -------------------------------------------------------------------------------------
@@ -436,8 +675,10 @@ def _texture_entry(source):
 
 
 def _picture(img):
-    """(format, width, height, mips, pixels) to store for an image: a .dds as it is, any other
-    picture compressed to DXT1 (DXT5 if it has transparency) with a full mip chain."""
+    """(format, width, height, mips, pixels) to store for an image: a .dds with mipmaps as it
+    is; any other picture (and a .dds without mipmaps: the game's textures always have them,
+    without them a texture shimmers at a distance) compressed to DXT1 (DXT5 if it has
+    transparency) with a full mip chain."""
     raw = None
     if img.packed_file is not None:
         raw = bytes(img.packed_file.data)
@@ -449,7 +690,7 @@ def _picture(img):
             raw = None
     if raw and raw[:4] == b"DDS ":
         got = dds.read(raw)
-        if got is not None:
+        if got is not None and (got[3] > 1 or max(got[1], got[2]) <= 4):
             return got
     w, h = img.size
     if not w or not h:
@@ -474,7 +715,17 @@ def _apply_materials(sd, by_key, slot_material, model_path, notes, new_textures)
     number of value sets changed."""
     written = {}           # (render list, value set) -> material name
     changed = 0
-    for key, (mat, where, _lod) in sorted(slot_material.items()):
+    # parts sharing one value set: the material most of them have keeps it, the others get a copy
+    users = {}
+    for key, (mat, _where, _lod) in slot_material.items():
+        part = by_key[key]
+        if mat is not None:
+            users.setdefault((id(part.rl), part.values), []).append(mat.name)
+    owner = {k: max(names, key=names.count) for k, names in users.items()}
+    order = sorted(slot_material.items(),
+                   key=lambda kv: (kv[1][0] is None or owner.get((id(by_key[kv[0]].rl), by_key[kv[0]].values))
+                                   != kv[1][0].name, kv[0]))
+    for key, (mat, where, _lod) in order:
         part = by_key[key]
         if mat is None:
             continue
@@ -496,10 +747,14 @@ def _apply_materials(sd, by_key, slot_material, model_path, notes, new_textures)
             continue
         slot_id = (id(part.rl), part.values)
         if slot_id in written:
-            if written[slot_id] != mat.name:
-                notes.append(f"{where}: shares its material values with a part using {written[slot_id]}, "
-                             f"so {written[slot_id]}'s were written")
-            continue
+            if written[slot_id] == mat.name:
+                continue
+            # shared with a part that has another material now: this part gets its own values
+            vs = copy.deepcopy(vs)
+            table["sets"].append(vs)
+            table["total"] += mt["size"]
+            part.record["streams"][0]["buffer"]["a"] = len(table["sets"]) - 1
+            slot_id = (id(part.rl), part.values)
         written[slot_id] = mat.name
         if not mt["size"]:
             continue

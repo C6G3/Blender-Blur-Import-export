@@ -26,6 +26,9 @@ mass); a body's shapes are placed in that space. Props then line up with their
 visible geometry. A car part's body has handle 0xC00000nn: the render tag of
 its MdlDat element.
 Triangle meshes give every triangle a surface material (SURFACES).
+
+The reader also notes where things are in the stream (keys starting with "_"), so
+write() can put edited hulls, moved bodies and removed shapes back.
 """
 
 import struct
@@ -134,6 +137,7 @@ def _shape(r, t, version):
     elif t == 2:
         s["half"] = r.f32(3)
     elif t == 3:
+        s["_hull"] = r.p
         nv, nt = r.u32(), r.u32()
         if r.p + 12 * nv + 12 * nt > len(r.d):
             raise CollisionError(f"hull larger than the stream at {r.p:#x}")
@@ -143,21 +147,26 @@ def _shape(r, t, version):
         r.p += 12 * nt
         s["vertices"] = [v[i:i + 3] for i in range(0, len(v), 3)]
         s["triangles"] = [idx[i:i + 3] for i in range(0, len(idx), 3)]
+        s["_hull_end"] = r.p
     elif t == 4:
         s["radius"] = r.f32() if version >= 4 else 0.0
     elif t in (5, 6, 15):
         s["height"], s["radius"] = r.f32(2) if version >= 4 else (0.0, 0.0)
     elif t == 7:
+        s["_count"] = r.p
         count = r.u32()
         if version >= 6:
             r.u32()
         s["shapes"] = []
         for _ in range(count):
+            at = r.p
             child = _shape(r, r.u32(), version)
             r.f32()
+            child["_place"] = r.p
             child["rotation"] = r.f32(9)
             child["position"] = r.f32(3)
             r.f32(9)
+            child["_at"], child["_end"] = at, r.p
             s["shapes"].append(child)
     elif t == 10:
         s["instance_of"] = r.u32() if version >= 4 else 0
@@ -174,12 +183,34 @@ def read(data, start, end=None):
     version = r.u32()
     objects = []
     while True:
+        at = r.p
         t = r.u32()
         if t == END:
             break
         o = _shape(r, t, version)
+        o["_place"] = r.p
         o["position"] = r.f32(3)
         o["rotation"] = r.f32(9)
         r.f32(9)
+        o["_at"], o["_end"] = at, r.p
         objects.append(o)
     return objects
+
+
+def hull_bytes(vertices, triangles):
+    """A convex hull's fields: u32 nv, u32 nt, f32 points[nv][3], u32 corners[nt][3]."""
+    out = struct.pack("<2I", len(vertices), len(triangles))
+    out += b"".join(struct.pack("<3f", *v) for v in vertices)
+    out += b"".join(struct.pack("<3I", *t) for t in triangles)
+    return out
+
+
+def write(data, start, end, changes):
+    """The stream data[start:end] with `changes` applied: [(from, to, new bytes)], positions
+    in `data` (from read()), not overlapping. A body's shape count is a change too."""
+    out = bytearray(data[start:end])
+    for a, b, new in sorted(changes, key=lambda c: c[0], reverse=True):
+        if not start <= a <= b <= end:
+            raise CollisionError(f"change outside the stream at {a:#x}")
+        out[a - start:b - start] = new
+    return bytes(out)

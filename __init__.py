@@ -8,6 +8,7 @@ Sollumz's shader presets, and wires up its texture slots.
 """
 
 import os
+import time
 
 import bpy
 from bpy.props import BoolProperty, EnumProperty, StringProperty
@@ -35,21 +36,24 @@ class BLUR_OT_import_model(bpy.types.Operator, ImportHelper):
                                          "surface, e.g. Metal or Glass, is its material)")
 
     def execute(self, context):
+        started = time.perf_counter()
         try:
-            model, made = importer.import_model(context, self.filepath, self.all_lods, self.shadows,
-                                                self.collisions)
+            importer.import_model(context, self.filepath, self.all_lods, self.shadows, self.collisions)
         except (blurmodel.ModelError, OSError) as e:
             self.report({"ERROR"}, f"Can't import {self.filepath}: {e}")
             return {"CANCELLED"}
-        note = f"; {'; '.join(model.notes)}" if model.notes else ""
-        self.report({"INFO"}, f"Imported {made} object(s), {len(model.textures)} texture(s){note}")
+        self.report({"INFO"}, f"Imported {os.path.basename(self.filepath)} in {time.perf_counter() - started:.1f} s")
         return {"FINISHED"}
 
 
 def _roots(context):
-    """The imported models the selection belongs to (else every one in the scene)."""
+    """The imported model to export: the active object's, else the one the selection belongs
+    to, else the scene's (any one object of a model is enough, nothing needs selecting when
+    the scene holds one model)."""
+    active = exporter.model_root(context.active_object)
+    if active is not None:
+        return [active]
     picked = {exporter.model_root(o) for o in context.selected_objects}
-    picked.add(exporter.model_root(context.active_object))
     picked.discard(None)
     if not picked:
         picked = {o for o in context.scene.objects if "blur_model" in o}
@@ -83,7 +87,7 @@ class BLUR_OT_export_model(bpy.types.Operator, ExportHelper):
     def execute(self, context):
         roots = _roots(context)
         if len(roots) != 1:
-            self.report({"ERROR"}, "Select one imported Blur model (any of its objects) to export")
+            self.report({"ERROR"}, "Several Blur models here: click any object of the one to export")
             return {"CANCELLED"}
         root = roots[0]
         source = bpy.path.abspath(self.source or root["blur_model"])
@@ -93,14 +97,13 @@ class BLUR_OT_export_model(bpy.types.Operator, ExportHelper):
         if os.path.normcase(os.path.abspath(source)) == os.path.normcase(os.path.abspath(self.filepath)):
             self.report({"ERROR"}, "Export to a new file: the original model is what the export starts from")
             return {"CANCELLED"}
+        started = time.perf_counter()
         try:
-            summary, notes = exporter.export_model(context, root, source, self.filepath)
+            exporter.export_model(context, root, source, self.filepath)
         except (exporter.ExportError, blurmodel.ModelError, OSError) as e:
             self.report({"ERROR"}, f"Can't export: {e}")
             return {"CANCELLED"}
-        for note in notes:
-            self.report({"WARNING"}, note)
-        self.report({"INFO"}, f"Wrote {os.path.basename(self.filepath)}: {summary}")
+        self.report({"INFO"}, f"Exported {os.path.basename(self.filepath)} in {time.perf_counter() - started:.1f} s")
         return {"FINISHED"}
 
 

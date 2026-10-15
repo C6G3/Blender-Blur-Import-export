@@ -1,9 +1,9 @@
 schema_version = "1.0.0"
 
 id = "blur_model_tools"
-version = "0.1.0"
+version = "0.2.0"
 name = "Blur Model Tools"
-tagline = "Import Blur (2010) .model files with their parts, materials and textures"
+tagline = "Import and export Blur (2010) .model files"
 maintainer = "Wamburu G."
 type = "add-on"
 
@@ -15,7 +15,7 @@ copyright = ["2026 Wamburu G."]
 tags = ["Import-Export"]
 
 [permissions]
-files = "Read Blur .model files and write their textures next to the .blend"
+files = "Read and write Blur .model files and pictures"
 
 [build]
 paths_exclude_pattern = [
