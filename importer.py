@@ -10,10 +10,17 @@ Layout in the scene:
     shadow hulls (hidden)
 
 Coordinates: Blur is Direct3D (left-handed, x right, y up, z forward); Blender
-is right-handed z-up, so (x, y, z) -> (x, z, y). Swapping two axes also turns
-the triangles' clockwise front faces into Blender's counter-clockwise ones.
+is right-handed z-up, so (x, y, z) -> (x, z, y). Swapping two axes mirrors the
+model, so every triangle's corner order is reversed too (faces point out, as
+their normals do: checked against the stored normals).
 Mesh vertices stay in their element's own space; the element empties carry the
 placement (MdlDat rotation and position), so parts move like in the game.
+
+Geometry comes from the scene stream (blur.scene / blur.parts): every material
+slot of a mesh is one part (geometry record) of the model, named in the
+object's "blur_parts" property (part keys in slot order), which is how the
+exporter puts edited meshes back. Materials and textures come from
+blur.model.
 """
 
 import os
@@ -24,57 +31,8 @@ import numpy as np
 from mathutils import Matrix
 
 from . import materials
-from .blur import dds
+from .blur import chunks, dds, parts, scene
 from .blur import model as blurmodel
-
-
-# ---- vertex data ---------------------------------------------------------------------------
-
-def _column(model, vb, offset, dtype, components):
-    """One element of every vertex in `vb` as an (n, components) array."""
-    raw = np.frombuffer(model.data, dtype=np.uint8, count=vb.size, offset=vb.start).reshape(vb.count, vb.stride)
-    width = np.dtype(dtype).itemsize * components
-    return raw[:, offset:offset + width].copy().view(dtype).reshape(vb.count, components)
-
-
-def positions(model, vb):
-    if vb.position_bytes == 8:
-        p = _column(model, vb, 0, np.float16, 4)[:, :3].astype(np.float32)
-    else:
-        p = _column(model, vb, 0, np.float32, 3)
-    return np.nan_to_num(p, nan=0.0, posinf=0.0, neginf=0.0)
-
-
-def _ubyte4n(model, vb, offset):
-    return _column(model, vb, offset, np.uint8, 4).astype(np.float32) / 127.5 - 1.0
-
-
-def normals(model, vb):
-    e = vb.element(blurmodel.NORMAL, 0, (blurmodel.UBYTE4N,))
-    return None if e is None else _ubyte4n(model, vb, e.offset)[:, :3]
-
-
-def uvs(model, vb, index):
-    e = vb.element(blurmodel.TEXCOORD, index, (blurmodel.HALF2, blurmodel.HALF4, blurmodel.FLOAT3,
-                                              blurmodel.FLOAT4))
-    if e is None and index == 0 and not vb.elements and len(vb.offsets) > 2:
-        return None
-    if e is None:
-        return None
-    if e.type in (blurmodel.HALF2, blurmodel.HALF4):
-        uv = _column(model, vb, e.offset, np.float16, 2).astype(np.float32)
-    else:
-        uv = _column(model, vb, e.offset, np.float32, 2)
-    return np.nan_to_num(uv)
-
-
-def colors(model, vb):
-    """Vertex colour (usage 10 = COLOR in Blur's numbering: 9 or 10, four bytes) or None."""
-    for usage in (10, 9):
-        e = vb.element(usage, 0, (blurmodel.UBYTE4N, blurmodel.UBYTE4))
-        if e is not None:
-            return _column(model, vb, e.offset, np.uint8, 4).astype(np.float32) / 255.0
-    return None
 
 
 SWAP = Matrix(((1, 0, 0, 0), (0, 0, 1, 0), (0, 1, 0, 0), (0, 0, 0, 1)))
@@ -151,37 +109,100 @@ def make_materials(model, images, model_name):
 
 # ---- meshes --------------------------------------------------------------------------------
 
-def build_mesh(model, name, parts, mats, cache):
-    """A mesh of `parts` [(group, lod)], all in one element's space, one material slot each."""
-    verts, norms, uv0, uv1, cols, faces, face_mat, slot_of = [], [], [], [], [], [], [], {}
-    mesh = bpy.data.meshes.new(name)
+VERTEX_ID = "blur_vertex"
+
+
+class SceneData:
+    """The model's scene stream and its parts, with decoded buffers cached."""
+
+    def __init__(self, data):
+        root = chunks.parse(data)
+        path = chunks.find_path(root, "Scene") if root else []
+        if not path:
+            raise blurmodel.ModelError("no Render/Scene chunk")
+        try:
+            self.scene = scene.read(data, path[-1].payload_offset, path[-1].offset + path[-1].size)
+        except scene.SceneError as e:
+            raise blurmodel.ModelError(f"scene stream: {e}") from e
+        self.path = path
+        self.parts = [p for p in parts.parts(self.scene) if p.vb is not None]
+        self._rows, self._indices = {}, {}
+
+    def rows(self, ref):
+        if ref not in self._rows:
+            self._rows[ref] = parts.rows(parts.vertex_buffer(self.scene, ref))
+        return self._rows[ref]
+
+    def indices(self, ref):
+        if ref not in self._indices:
+            self._indices[ref] = np.frombuffer(parts.index_buffer(self.scene, ref)["blob"]["data"], np.uint16)
+        return self._indices[ref]
+
+    def layout(self, part):
+        return parts.layout(parts.vertex_buffer(self.scene, part.vb))
+
+    def triangles(self, part, lod):
+        """Triangles of a part at a detail level, numbered from the part's first vertex."""
+        if lod >= len(part.lods) or not part.lods[lod][1]:
+            return np.zeros((0, 3), np.int64)
+        start, count = part.lods[lod][:2]
+        return parts.strip_triangles(self.indices(part.ib)[start:start + count])
+
+
+def attribute(rows, elements, usage, index, components):
+    e = parts.find(elements, usage, index)
+    if e is None or (usage == parts.TEXCOORD and e.type not in (parts.HALF2, parts.HALF4, parts.FLOAT3,
+                                                                     parts.FLOAT4)):
+        return None
+    return parts.decode(rows, e, components)
+
+
+def _separate_duplicates(used, tris):
+    """Blender keeps one face per set of vertices: a triangle drawn twice on the same vertices
+    (both sides of a thin part) gets its own copies of them. The exporter merges equal
+    vertices again."""
+    _, first = np.unique(np.sort(tris, axis=1), axis=0, return_index=True)
+    dup = np.ones(len(tris), bool)
+    dup[first] = False
+    if not dup.any():
+        return used, tris
+    tris = tris.copy()
+    src = tris[dup].ravel()
+    tris[dup] = (len(used) + np.arange(len(src))).reshape(-1, 3)
+    return np.concatenate([used, used[src]]), tris
+
+
+def build_mesh(sd, name, items, mats):
+    """A mesh of `items` [(part, lod)], all in one element's space, one material slot per part.
+    Returns (mesh, part keys in slot order) or (None, [])."""
+    verts, norms, uv0, uv1, cols, faces, face_mat, keys, ids = [], [], [], [], [], [], [], [], []
     total = 0
-    for g, lod in parts:
-        tris = blurmodel.triangles(model, g, lod)
-        if not tris:
+    for p, lod in items:
+        tri = sd.triangles(p, lod)
+        if not len(tri):
             continue
-        vb = model.vertex_buffers[g.vertex_buffer]
-        if g.vertex_buffer not in cache:
-            cache[g.vertex_buffer] = (positions(model, vb), normals(model, vb), uvs(model, vb, 0), uvs(model, vb, 1),
-                                      colors(model, vb))
-        pos, nrm, t0, t1, col = cache[g.vertex_buffer]
-        tri = np.asarray(tris, dtype=np.int64)
         used, remap = np.unique(tri, return_inverse=True)
-        verts.append(pos[used][:, [0, 2, 1]])
-        norms.append(nrm[used][:, [0, 2, 1]] if nrm is not None else np.zeros((len(used), 3), np.float32))
-        uv0.append(t0[used] if t0 is not None else np.zeros((len(used), 2), np.float32))
-        uv1.append(t1[used] if t1 is not None else None)
-        cols.append(col[used] if col is not None else None)
-        faces.append(remap.reshape(-1, 3) + total)
-        mat = mats.get(id(g))
-        if mat not in slot_of:
-            slot_of[mat] = len(slot_of)
-            mesh.materials.append(mat)
-        face_mat.append(np.full(len(tri), slot_of[mat], np.int32))
+        remap = remap.reshape(-1, 3)
+        used, remap = _separate_duplicates(used, remap)
+        rows = sd.rows(p.vb)[p.base + used]
+        els = sd.layout(p)
+        pos = attribute(rows, els, parts.POSITION, 0, 3)
+        nrm = attribute(rows, els, parts.NORMAL, 0, 3)
+        verts.append(pos[:, [0, 2, 1]])
+        norms.append(nrm[:, [0, 2, 1]] if nrm is not None else np.zeros((len(used), 3), np.float32))
+        uv0.append(attribute(rows, els, parts.TEXCOORD, 0, 2))
+        uv1.append(attribute(rows, els, parts.TEXCOORD, 1, 2))
+        cols.append(attribute(rows, els, parts.COLOR, 0, 4))
+        faces.append(remap[:, [0, 2, 1]] + total)   # mirrored axes: reverse the corner order
+        ids.append(used)
+        face_mat.append(np.full(len(tri), len(keys), np.int32))
+        keys.append(p)
         total += len(used)
     if not faces:
-        bpy.data.meshes.remove(mesh)
-        return None
+        return None, []
+    mesh = bpy.data.meshes.new(name)
+    for p in keys:
+        mesh.materials.append(mats.get(p.key))
     v = np.concatenate(verts).astype(np.float32)
     f = np.concatenate(faces).astype(np.int32)
     mesh.vertices.add(len(v))
@@ -201,9 +222,8 @@ def build_mesh(model, name, parts, mats, cache):
         n = n / np.where(lengths[:, None] > 0, lengths[:, None], 1.0)
         mesh.normals_split_custom_set_from_vertices([tuple(x) for x in n])
     for layer_name, layer in (("UVMap", uv0), ("UVMap.001", uv1)):
-        if any(a is None for a in layer):
-            if layer_name != "UVMap":
-                continue
+        if all(a is None for a in layer) and layer_name != "UVMap":
+            continue
         data = np.concatenate([a if a is not None else np.zeros((len(vv), 2), np.float32)
                                for a, vv in zip(layer, verts)])
         uv = data[loops].copy()
@@ -214,7 +234,33 @@ def build_mesh(model, name, parts, mats, cache):
         c = np.concatenate(cols)
         attr = mesh.color_attributes.new("Color", "BYTE_COLOR", "POINT")
         attr.data.foreach_set("color", c[:, [2, 1, 0, 3]].ravel())  # stored B, G, R, A
-    return mesh
+    # Which vertex of its part each one was: the exporter keeps what Blender doesn't show
+    # (damage offsets, bone weights) and, for vertices left in place, the exact normal.
+    attr = mesh.attributes.new(VERTEX_ID, "INT", "POINT")
+    attr.data.foreach_set("value", np.concatenate(ids).astype(np.int32))
+    return mesh, [p.key for p in keys]
+
+
+def part_materials(model, sd, group_materials):
+    """part key -> Blender material, via the model.Group drawing the same range."""
+    by_range = {}
+    for g in model.groups:
+        if g.lods:
+            d = g.lods[0]
+            by_range.setdefault((g.material, g.element & 0xFFFF, d.start, d.count, d.min_index), g)
+    out, fallback = {}, {}
+    for p in sd.parts:
+        if not p.lods:
+            continue
+        g = by_range.get((p.material, p.element, *p.lods[0][:3]))
+        if g is not None:
+            out[p.key] = group_materials.get(id(g))
+        if out.get(p.key) is None:
+            effect = model.effects[p.material] if p.material < len(model.effects) else "default_NB.fx"
+            if effect not in fallback:
+                fallback[effect] = materials.new_material(effect)
+            out[p.key] = fallback[effect]
+    return out
 
 
 def import_model(context, path, all_lods=False, shadows=True):
@@ -252,41 +298,45 @@ def import_model(context, path, all_lods=False, shadows=True):
         obj.matrix_basis = (element_matrix(model.elements[e.parent]).inverted_safe() @ world) if has_parent else world
 
     images = load_textures(model, model_name, os.path.join(tempfile.gettempdir(), "blur_model_tools"))
-    mats = make_materials(model, images, model_name)
+    sd = SceneData(data)
+    mats = part_materials(model, sd, make_materials(model, images, model_name))
 
-    lod_count = max((len(g.lods) for g in model.groups), default=1)
+    lod_count = max((len(p.lods) for p in sd.parts), default=1)
     lod_colls = {0: coll}
     if all_lods:
         for lod in range(1, lod_count):
             c = bpy.data.collections.new(f"{model_name} LOD{lod}")
             coll.children.link(c)
             lod_colls[lod] = c
+    shadow_of = {p.key: parts.is_shadow(sd.layout(p)) for p in sd.parts}
     shadow_coll = None
-    if shadows and any(g.shadow for g in model.groups):
+    if shadows and any(shadow_of.values()):
         shadow_coll = bpy.data.collections.new(f"{model_name} Shadow")
         coll.children.link(shadow_coll)
 
     # Parts grouped by element, detail level and shadow-ness
     buckets = {}
-    for g in model.groups:
-        if g.shadow and shadow_coll is None:
+    for p in sd.parts:
+        shadow = shadow_of[p.key]
+        if shadow and shadow_coll is None:
             continue
-        for lod in (range(len(g.lods)) if all_lods else [0]):
-            if lod < len(g.lods):
-                buckets.setdefault((g.element, lod, g.shadow), []).append((g, lod))
+        for lod in (range(len(p.lods)) if all_lods else [0]):
+            if lod < len(p.lods):
+                buckets.setdefault((p.element, lod, shadow), []).append((p, lod))
 
-    cache, made = {}, 0
-    for (element, lod, shadow), parts in sorted(buckets.items(), key=lambda kv: (kv[0][2], kv[0][1], kv[0][0])):
+    made = 0
+    for (element, lod, shadow), items in sorted(buckets.items(), key=lambda kv: (kv[0][2], kv[0][1], kv[0][0])):
         has_element = 0 <= element < len(model.elements)
         base = model.elements[element].name if has_element and model.elements[element].name else f"part {element}"
         name = base + (" shadow" if shadow else "") + (f" LOD{lod}" if lod else "")
-        mesh = build_mesh(model, name, parts, {} if shadow else mats, cache)
+        mesh, keys = build_mesh(sd, name, items, {} if shadow else mats)
         if mesh is None:
             continue
         obj = bpy.data.objects.new(name, mesh)
         obj["blur_lod"] = lod
         obj["blur_shadow"] = shadow
         obj["blur_element"] = element if has_element else -1
+        obj["blur_parts"] = ";".join(keys)
         (shadow_coll if shadow else lod_colls[lod]).objects.link(obj)
         obj.parent = empties[element] if has_element else root
         obj.matrix_parent_inverse.identity()

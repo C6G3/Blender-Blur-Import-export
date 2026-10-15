@@ -23,7 +23,21 @@ The format knowledge comes from [26Viewer](https://github.com/C6G3/26Viewer)
   which textures the game normally uses in each slot and the effect's parameters
   (`g_vMtlParameters`…) with the game's usual values. Switching to another effect keeps the
   images already plugged in.
-- **Export**: not yet (see the roadmap below).
+- **File ▸ Export ▸ Blur Model (.model)** — edit an imported model and write it back.
+  - Select any object of the imported model, export to a new file (the original is
+    the starting point and is never overwritten; by default `<name>_edited.model` next
+    to it). Put it back into the game with 26Viewer (Edit Mode ▸ Replace).
+  - Every material slot of an imported mesh is one part of the model; its faces become
+    that part's new geometry: move, add or delete vertices and faces, re-UV, repaint
+    vertex colours. A slot left with no faces removes the part. Parts you didn't import
+    (or whose object you deleted) stay as they were.
+  - Detail levels: an imported `LOD1`–`LOD3` mesh is used for its level; without one, the
+    edit of LOD0 is drawn at the lower levels too.
+  - What Blender doesn't show (damage offsets on cars, bone weights on characters) is
+    kept from the original vertex, or copied from the nearest one for new vertices.
+    Unmoved vertices keep their exact normals until you *Clear Custom Split Normals*.
+  - Not yet: new parts / new material slots, other effects or textures, moving parts
+    (element placement), collision.
 
 The preview inside the node group is an approximation (Principled BSDF with the colour
 texture, normal map and alpha); the game's own shaders aren't reproduced. Paint has no
@@ -42,22 +56,28 @@ Requires Blender 5.0 or newer.
 
 1. ✅ Import: geometry, hierarchy, materials, textures, detail levels, shadow hulls.
 2. ✅ Blur material presets (106 effects from every model in the game).
-3. ⏳ Export: writing the model's scene stream (`Render/Scene`, an "ARCH" serialized
-   object graph). The records the game reads are being mapped from Blur.exe's own loader.
-   First target: write a model back with edited parts, materials and textures; then
-   models made from scratch in Blender.
-4. Collision (`Coll`), damage bones, skinning to `.skeleton` bones.
+3. ✅ The scene stream (`Render/Scene`, an "ARCH" serialized object graph) read and
+   written back byte for byte for all 1,744 models (`blur/scene.py`, field order from
+   Blur.exe's loader).
+4. ✅ Export of edited geometry for existing parts, every detail level, shadow hulls.
+5. ⏳ Textures (replace / add) and changing a part's effect and parameters.
+6. New parts and models made from scratch (new geometry records, material entries and
+   value sets).
+7. Collision (`Coll`), damage bones, skinning to `.skeleton` bones.
 
 ## Layout
 
 | Path | What |
 |---|---|
-| `blur/` | The format readers (plain Python, no Blender needed): chunk files, models, DDS |
-| `importer.py`, `materials.py`, `__init__.py` | The Blender side |
+| `blur/` | The format code (plain Python + numpy, no Blender needed): chunk files, models, the scene stream (`scene.py`), parts and buffer rebuilding (`parts.py`), DDS |
+| `importer.py`, `exporter.py`, `materials.py`, `__init__.py` | The Blender side |
 | `presets/effects.json` | Every Blur effect's passes, inputs, usual values and textures |
 | `tools/scan_effects.py` | Rebuilds `effects.json` from the game (`python tools/scan_effects.py F:/Games/BLUR`) |
 | `tools/check_all_models.py` | Reads every model in the game (sanity check of `blur/model.py`) |
+| `tools/check_scene.py` | Reads and rewrites every model's scene stream; must come out byte for byte |
+| `tools/check_parts.py` | Rebuilds every model's buffers from its own parts; must draw the same |
 | `tools/blender_test.py` | Imports a model in a background Blender and renders a picture |
+| `tools/blender_export_test.py` | Imports, exports unchanged and with a part scaled, and compares |
 
 ## License
 

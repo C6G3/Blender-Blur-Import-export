@@ -168,6 +168,7 @@ def new_material(effect, name=None, images=None, values=None):
     (filled from `images`: input name -> bpy image) and number values (`values`:
     input name -> [floats])."""
     mat = bpy.data.materials.new(name or effect.rsplit(".", 1)[0])
+    mat.use_backface_culling = True   # Blur draws front faces only (two-sided parts have both)
     setup_material(mat, effect, images, values)
     return mat
 

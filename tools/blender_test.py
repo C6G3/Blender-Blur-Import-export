@@ -64,6 +64,7 @@ def main():
     scene.render.engine = "BLENDER_WORKBENCH"
     scene.display.shading.color_type = "TEXTURE"
     scene.display.shading.light = "STUDIO"
+    scene.display.shading.show_backface_culling = True   # like the game
     scene.render.resolution_x, scene.render.resolution_y = 1000, 700
     scene.render.filepath = out
     bpy.ops.render.render(write_still=True)

@@ -2,15 +2,18 @@
 
 File > Import > Blur Model (.model) brings in a model with its part hierarchy,
 materials (Blur effects as node groups) and the textures stored in it.
+File > Export > Blur Model (.model) writes it back with the meshes' edits.
 Material Properties > Blur Material picks a Blur effect for any material, like
 Sollumz's shader presets, and wires up its texture slots.
 """
 
+import os
+
 import bpy
 from bpy.props import BoolProperty, EnumProperty, StringProperty
-from bpy_extras.io_utils import ImportHelper
+from bpy_extras.io_utils import ExportHelper, ImportHelper
 
-from . import importer, materials
+from . import exporter, importer, materials
 from .blur import model as blurmodel
 
 
@@ -36,6 +39,64 @@ class BLUR_OT_import_model(bpy.types.Operator, ImportHelper):
             return {"CANCELLED"}
         note = f"; {'; '.join(model.notes)}" if model.notes else ""
         self.report({"INFO"}, f"Imported {made} object(s), {len(model.textures)} texture(s){note}")
+        return {"FINISHED"}
+
+
+def _roots(context):
+    """The imported models the selection belongs to (else every one in the scene)."""
+    picked = {exporter.model_root(o) for o in context.selected_objects}
+    picked.add(exporter.model_root(context.active_object))
+    picked.discard(None)
+    if not picked:
+        picked = {o for o in context.scene.objects if "blur_model" in o}
+    return sorted(picked, key=lambda o: o.name)
+
+
+class BLUR_OT_export_model(bpy.types.Operator, ExportHelper):
+    """Write the imported Blur model back, with the meshes' edits (geometry of existing parts)"""
+
+    bl_idname = "export_scene.blur_model"
+    bl_label = "Export Blur Model"
+
+    filename_ext = ".model"
+    filter_glob: StringProperty(default="*.model", options={"HIDDEN"})
+    source: StringProperty(name="Original Model", subtype="FILE_PATH",
+                           description="The .model file this was imported from: the export starts from it "
+                                       "and replaces the edited parts")
+
+    @classmethod
+    def poll(cls, context):
+        return bool(_roots(context))
+
+    def invoke(self, context, event):
+        roots = _roots(context)
+        if len(roots) == 1:
+            self.source = roots[0]["blur_model"]
+            base = os.path.splitext(os.path.basename(self.source))[0]
+            self.filepath = os.path.join(os.path.dirname(self.source), base + "_edited.model")
+        return super().invoke(context, event)
+
+    def execute(self, context):
+        roots = _roots(context)
+        if len(roots) != 1:
+            self.report({"ERROR"}, "Select one imported Blur model (any of its objects) to export")
+            return {"CANCELLED"}
+        root = roots[0]
+        source = bpy.path.abspath(self.source or root["blur_model"])
+        if not os.path.isfile(source):
+            self.report({"ERROR"}, f"The original model isn't at {source}: point Original Model at it")
+            return {"CANCELLED"}
+        if os.path.normcase(os.path.abspath(source)) == os.path.normcase(os.path.abspath(self.filepath)):
+            self.report({"ERROR"}, "Export to a new file: the original model is what the export starts from")
+            return {"CANCELLED"}
+        try:
+            count, notes = exporter.export_model(context, root, source, self.filepath)
+        except (exporter.ExportError, blurmodel.ModelError, OSError) as e:
+            self.report({"ERROR"}, f"Can't export: {e}")
+            return {"CANCELLED"}
+        for note in notes:
+            self.report({"WARNING"}, note)
+        self.report({"INFO"}, f"Wrote {os.path.basename(self.filepath)}: {count} part(s) from Blender")
         return {"FINISHED"}
 
 
@@ -138,16 +199,22 @@ def menu_import(self, context):
     self.layout.operator(BLUR_OT_import_model.bl_idname, text="Blur Model (.model)")
 
 
-classes = (BLUR_OT_import_model, BLUR_OT_set_effect, BLUR_PT_material)
+def menu_export(self, context):
+    self.layout.operator(BLUR_OT_export_model.bl_idname, text="Blur Model (.model)")
+
+
+classes = (BLUR_OT_import_model, BLUR_OT_export_model, BLUR_OT_set_effect, BLUR_PT_material)
 
 
 def register():
     for cls in classes:
         bpy.utils.register_class(cls)
     bpy.types.TOPBAR_MT_file_import.append(menu_import)
+    bpy.types.TOPBAR_MT_file_export.append(menu_export)
 
 
 def unregister():
+    bpy.types.TOPBAR_MT_file_export.remove(menu_export)
     bpy.types.TOPBAR_MT_file_import.remove(menu_import)
     for cls in reversed(classes):
         bpy.utils.unregister_class(cls)

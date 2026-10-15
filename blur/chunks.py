@@ -120,3 +120,29 @@ def parse(data):
     _parse_children(data, root, 0)
     _widen_root(data, root, len(data))
     return root
+
+
+def find_path(root, name):
+    """The chunks from `root` down to the first chunk called `name` (depth first), or []."""
+    if root.name == name:
+        return [root]
+    for c in root.children:
+        path = find_path(c, name)
+        if path:
+            return [root] + path
+    return []
+
+
+def replace_payload(data, path, payload):
+    """`data` with the payload of path[-1] replaced, every chunk on `path` resized.
+
+    The stored sizes are adjusted by the difference (not recomputed), so the root's
+    quirk of being stored 4 bytes short stays as it was."""
+    target = path[-1]
+    delta = len(payload) - target.payload_size
+    out = bytearray(data[:target.payload_offset]) + payload + data[target.offset + target.size:]
+    for c in path:
+        at = c.offset + c.header_size - 8
+        stored = struct.unpack_from("<I", out, at)[0]
+        struct.pack_into("<I", out, at, stored + delta)
+    return bytes(out)
