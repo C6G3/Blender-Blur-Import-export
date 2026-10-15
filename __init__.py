@@ -30,10 +30,14 @@ class BLUR_OT_import_model(bpy.types.Operator, ImportHelper):
                            description="Also import the lower detail levels (each in its own hidden collection)")
     shadows: BoolProperty(name="Shadow Hulls", default=True,
                           description="Import the shadow hulls (hidden collection)")
+    collisions: BoolProperty(name="Collision", default=True,
+                             description="Import the collision shapes (hidden collection; each triangle's "
+                                         "surface, e.g. Metal or Glass, is its material)")
 
     def execute(self, context):
         try:
-            model, made = importer.import_model(context, self.filepath, self.all_lods, self.shadows)
+            model, made = importer.import_model(context, self.filepath, self.all_lods, self.shadows,
+                                                self.collisions)
         except (blurmodel.ModelError, OSError) as e:
             self.report({"ERROR"}, f"Can't import {self.filepath}: {e}")
             return {"CANCELLED"}
@@ -90,13 +94,13 @@ class BLUR_OT_export_model(bpy.types.Operator, ExportHelper):
             self.report({"ERROR"}, "Export to a new file: the original model is what the export starts from")
             return {"CANCELLED"}
         try:
-            count, notes = exporter.export_model(context, root, source, self.filepath)
+            summary, notes = exporter.export_model(context, root, source, self.filepath)
         except (exporter.ExportError, blurmodel.ModelError, OSError) as e:
             self.report({"ERROR"}, f"Can't export: {e}")
             return {"CANCELLED"}
         for note in notes:
             self.report({"WARNING"}, note)
-        self.report({"INFO"}, f"Wrote {os.path.basename(self.filepath)}: {count} part(s) from Blender")
+        self.report({"INFO"}, f"Wrote {os.path.basename(self.filepath)}: {summary}")
         return {"FINISHED"}
 
 
@@ -148,6 +152,35 @@ class BLUR_OT_set_effect(bpy.types.Operator):
         return {"FINISHED"}
 
 
+class BLUR_OT_open_texture(bpy.types.Operator, ImportHelper):
+    """Load a picture from disk into this texture slot (replaces the one there)"""
+
+    bl_idname = "material.blur_open_texture"
+    bl_label = "Open Texture"
+    bl_options = {"REGISTER", "UNDO"}
+
+    filter_glob: StringProperty(default="*.dds;*.png;*.jpg;*.jpeg;*.tga;*.bmp;*.tif;*.tiff",
+                                options={"HIDDEN"})
+    input_name: StringProperty(options={"HIDDEN"})
+
+    @classmethod
+    def poll(cls, context):
+        return context.object is not None and context.object.active_material is not None
+
+    def execute(self, context):
+        mat = context.object.active_material
+        try:
+            img = bpy.data.images.load(self.filepath, check_existing=True)
+        except RuntimeError as e:
+            self.report({"ERROR"}, f"Can't open {self.filepath}: {e}")
+            return {"CANCELLED"}
+        if not materials.assign_image(mat, self.input_name, img):
+            self.report({"ERROR"}, f"{mat.name} has no {self.input_name} slot")
+            return {"CANCELLED"}
+        self.report({"INFO"}, f"{self.input_name}: {img.name}")
+        return {"FINISHED"}
+
+
 class BLUR_PT_material(bpy.types.Panel):
     bl_label = "Blur Material"
     bl_space_type = "PROPERTIES"
@@ -175,6 +208,13 @@ class BLUR_PT_material(bpy.types.Panel):
         preset = materials.presets().get(effect)
         if preset is None:
             layout.label(text="Not a known effect (kept as imported).", icon="INFO")
+        preview = materials.preview_image(mat)
+        if preview is not None:
+            box = layout.box()
+            row = box.row()
+            row.prop(preview, "generated_color", text="Viewport colour")
+            if effect.lower().startswith("veh_paint"):
+                box.label(text="Paint has no colour texture: the game picks the colour.", icon="INFO")
         box = layout.box()
         box.label(text="Textures", icon="TEXTURE")
         for input_name in materials.texture_inputs(effect):
@@ -182,7 +222,10 @@ class BLUR_PT_material(bpy.types.Panel):
             col = box.column(align=True)
             col.label(text=input_name)
             if tex is not None and tex.type == "TEX_IMAGE":
-                col.template_ID(tex, "image", open="image.open")
+                row = col.row(align=True)
+                row.template_ID(tex, "image")
+                op = row.operator(BLUR_OT_open_texture.bl_idname, text="", icon="FILEBROWSER")
+                op.input_name = input_name
             if preset:
                 usual = preset.get("textures", {}).get(input_name)
                 if usual:
@@ -203,7 +246,8 @@ def menu_export(self, context):
     self.layout.operator(BLUR_OT_export_model.bl_idname, text="Blur Model (.model)")
 
 
-classes = (BLUR_OT_import_model, BLUR_OT_export_model, BLUR_OT_set_effect, BLUR_PT_material)
+classes = (BLUR_OT_import_model, BLUR_OT_export_model, BLUR_OT_set_effect, BLUR_OT_open_texture,
+           BLUR_PT_material)
 
 
 def register():

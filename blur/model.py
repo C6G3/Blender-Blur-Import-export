@@ -826,23 +826,17 @@ def read(data):
 
 def triangles(model, group, lod):
     """The triangles of `group` at level of detail `lod` as (a, b, c) vertex numbers within
-    its vertex buffer (strips are unstitched; degenerate triangles dropped)."""
+    its vertex buffer (the strip unstitched; degenerate triangles dropped)."""
     if lod >= len(group.lods):
         return []
     draw = group.lods[lod]
     ib = model.index_buffers[group.index_buffer]
     sl = ib[draw.start:draw.start + draw.count]
     base = group.base_vertex
-    is_list = len(sl) % 3 == 0 and all(
-        sl[i] != sl[i + 1] and sl[i + 1] != sl[i + 2] and sl[i] != sl[i + 2] for i in range(0, len(sl) - 2, 3))
     out = []
-    if is_list:
-        for i in range(0, len(sl) - 2, 3):
-            out.append((base + sl[i], base + sl[i + 1], base + sl[i + 2]))
-    else:
-        for i in range(len(sl) - 2):
-            a, b, c = sl[i], sl[i + 1], sl[i + 2]
-            if a == b or b == c or a == c:
-                continue
-            out.append((base + a, base + c, base + b) if i % 2 else (base + a, base + b, base + c))
+    for i in range(len(sl) - 2):            # always a triangle strip (primitive type 5 in every model)
+        a, b, c = sl[i], sl[i + 1], sl[i + 2]
+        if a == b or b == c or a == c:
+            continue
+        out.append((base + a, base + c, base + b) if i % 2 else (base + a, base + b, base + c))
     return out

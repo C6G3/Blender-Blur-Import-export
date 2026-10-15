@@ -16,7 +16,8 @@ The format knowledge comes from [26Viewer](https://github.com/C6G3/26Viewer)
   - One material per Blur material, using the game's effect (see below).
   - Options: all detail levels (each in its own hidden collection), shadow hulls.
 - **Blur materials (like Sollumz shaders).** In *Material Properties ▸ Blur Material*,
-  click **Choose Blur Effect…** and pick one of the game's 106 effects (`veh_Paint_a`,
+  click **Choose Blur Effect…** and pick one of the game's 106 effects (all explained in
+  [BLUR_MATERIALS.md](BLUR_MATERIALS.md)) (`veh_Paint_a`,
   `veh_Glass_c_h`, `veh_Default_b_f`, `default_NL_NV`, `MeshEffect`…). The material gets a
   **Blur Shader** node group with one socket per input the game gives that effect, plus an
   Image Texture node for each texture slot. Pick images in the panel; the panel also shows

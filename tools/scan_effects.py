@@ -5,8 +5,10 @@
 For each effect file (veh_Paint_a.fx...), over all parts drawn with it: the
 render-list entries of its passes (effect name and inputs: name, type, count),
 the most common value of every number input, which texture names fill each
-texture input, and how many parts / models use it. Writes the material presets
-the add-on ships (blur_presets/effects.json).
+texture input, how many parts / models use it, where (kind of model, part
+names, example models). Writes the material presets the add-on ships
+(presets/effects.json), which tools/make_materials_doc.py turns into
+BLUR_MATERIALS.md.
 """
 
 import collections
@@ -16,6 +18,17 @@ import sys
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 from blur import model  # noqa: E402
+
+
+def category(path):
+    """What kind of model a path is: vehicles, wheels, characters, objects (place)..."""
+    parts = path.lower().split("/")
+    if len(parts) > 2 and parts[1] == "vehicles":
+        return "wheels" if parts[2] == "wheels" else "vehicles"
+    if len(parts) > 2 and parts[1] == "objects":
+        return "objects: " + parts[2]
+    names = {"characters": "characters", "specialfx": "special effects", "perks": "power-ups (perks)"}
+    return names.get(parts[1], parts[1]) if len(parts) > 2 else "other"
 
 
 def main():
@@ -45,12 +58,24 @@ def main():
                 e = effects.setdefault(fx.lower(), dict(name=fx, parts=0, models=set(), layouts=collections.Counter(),
                                                         values=collections.defaultdict(collections.Counter),
                                                         textures=collections.defaultdict(collections.Counter),
-                                                        folders=collections.Counter(), skinned=0, shadow=0))
+                                                        folders=collections.Counter(), skinned=0, shadow=0,
+                                                        where=collections.defaultdict(set),
+                                                        elements=collections.Counter(),
+                                                        model_parts=collections.Counter()))
                 e["parts"] += 1
                 e["models"].add(path)
                 e["folders"][path.rsplit("/", 1)[0]] += 1
                 e["shadow"] += g.shadow
+                e["where"][category(path)].add(path)
+                e["model_parts"][path.rsplit("/", 1)[-1]] += 1
+                if 0 <= g.element < len(m.elements) and m.elements[g.element].name:
+                    e["elements"][m.elements[g.element].name.lower()] += 1
                 vb = m.vertex_buffers[g.vertex_buffer]
+                layout = tuple((el.type, el.usage, el.index) for el in vb.elements)
+                if g.shadow:
+                    # shadow hulls: positions only; their value sets aren't in the list read here
+                    e["layouts"][(((fx, ()),), layout)] += 1
+                    continue
                 # skinned: bone slots (texcoord 3, four bytes) and weights (texcoord 4, 0..1);
                 # cars use the same sets the other way round for damage data
                 if vb.element(model.TEXCOORD, 3, (model.UBYTE4,)) and vb.element(model.TEXCOORD, 4, (model.UBYTE4N,)):
@@ -71,9 +96,7 @@ def main():
                         t = m.texture_for(index)
                         e["textures"][name][t.name if t else "(not held)"] += 1
                 if passes:
-                    # the vertex layout this effect is drawn with
-                    layout = tuple((el.type, el.usage, el.index) for el in vb.elements)
-                    e["layouts"][(tuple(passes), layout)] += 1
+                    e["layouts"][(tuple(passes), layout)] += 1  # passes and vertex layout
         print(pak, "done", len(effects), "effects so far")
 
     out = {}
@@ -90,6 +113,9 @@ def main():
             variants=len(e["layouts"]),
             defaults={name: list(c.most_common(1)[0][0]) for name, c in sorted(e["values"].items())},
             textures={name: [n for n, _ in c.most_common(5)] for name, c in sorted(e["textures"].items())},
+            where=sorted(([k, len(v)] for k, v in e["where"].items()), key=lambda kv: (-kv[1], kv[0])),
+            elements=[n for n, _ in e["elements"].most_common(12)],
+            examples=[n for n, _ in e["model_parts"].most_common(5)],
         )
     os.makedirs(os.path.dirname(out_path), exist_ok=True)
     with open(out_path, "w", encoding="utf-8", newline="\n") as fh:

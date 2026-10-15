@@ -26,6 +26,27 @@
     0.0
    ]
   },
+  "elements": [
+   "defaultelement",
+   "o_trafficlighttyped",
+   "o_trafficlighttypeb",
+   "s_trafficlighttypea_head",
+   "o_trafficlighttypea",
+   "o_trafficlighttypee",
+   "o_trafficlighttypef",
+   "m_trafficcone_light",
+   "o_trafficlighttypec",
+   "m_ferriswheel",
+   "s_trafficlighttyped_light",
+   "s_trafficlighttyped_button"
+  ],
+  "examples": [
+   "trafficlighttypef.model",
+   "trafficlighttyped.model",
+   "trafficlighttypea.model",
+   "trafficlighttypee.model",
+   "trafficlighttypeb.model"
+  ],
   "folder": "models/objects/uk_london_hackney/lampostsandtrafficlights",
   "models": 14,
   "parts": 44,
@@ -119,10 +140,42 @@
     "type": 8,
     "usage": 5
    }
+  ],
+  "where": [
+   [
+    "objects: uk_london_hackney",
+    7
+   ],
+   [
+    "objects: uk_brighton",
+    2
+   ],
+   [
+    "special effects",
+    2
+   ],
+   [
+    "objects: shared",
+    1
+   ],
+   [
+    "objects: usa_amboy",
+    1
+   ],
+   [
+    "objects: usa_la_longbeachdocks",
+    1
+   ]
   ]
  },
  "CarLightFlare.fx": {
   "defaults": {},
+  "elements": [
+   "defaultelement"
+  ],
+  "examples": [
+   "carlightflare.model"
+  ],
   "folder": "models/system",
   "models": 1,
   "parts": 1,
@@ -172,6 +225,12 @@
     "type": 9,
     "usage": 5
    }
+  ],
+  "where": [
+   [
+    "system",
+    1
+   ]
   ]
  },
  "FlashingLightFlare.fx": {
@@ -213,6 +272,14 @@
     0.0
    ]
   },
+  "elements": [
+   "defaultelement",
+   "o_airfieldlight_01"
+  ],
+  "examples": [
+   "gantrycabcontainer.model",
+   "airfieldlight_01.model"
+  ],
   "folder": "models/objects/usa_la_longbeachdocks/cranes",
   "models": 2,
   "parts": 2,
@@ -277,6 +344,16 @@
     "type": 9,
     "usage": 5
    }
+  ],
+  "where": [
+   [
+    "objects: usa_amboy",
+    1
+   ],
+   [
+    "objects: usa_la_longbeachdocks",
+    1
+   ]
   ]
  },
  "HighVisBarrier_NL_NV.fx": {
@@ -312,6 +389,20 @@
     0.0
    ]
   },
+  "elements": [
+   "defaultelement",
+   "o_road_barrier",
+   "s_leg_r_d5",
+   "s_leg_l_d4",
+   "s_road_barrier_dam_l_d3",
+   "s_road_barrier_dam_r_d1",
+   "s_road_barrier_dam_m_d2"
+  ],
+  "examples": [
+   "road_barrier01.model",
+   "highway_barrell.model",
+   "traffic_cone_hviz.model"
+  ],
   "folder": "models/objects/shared/construction",
   "models": 3,
   "parts": 12,
@@ -401,6 +492,12 @@
     "type": 11,
     "usage": 5
    }
+  ],
+  "where": [
+   [
+    "objects: shared",
+    3
+   ]
   ]
  },
  "HighVis_NB_NL_NV.fx": {
@@ -418,6 +515,27 @@
     0.0
    ]
   },
+  "elements": [
+   "defaultelement",
+   "o_barrier1",
+   "s_barrier1_base_dam_d1",
+   "o_barrier2",
+   "s_barrier2_base_d1",
+   "o_small_caresign",
+   "s_wood_b_l_d2",
+   "s_wood_b_r_d1",
+   "m_trafficcone_light",
+   "s_barrier1_toprpeg_dam_d5",
+   "s_barrier1_connector_dam_d3",
+   "s_barrier1_leg_dam_d2"
+  ],
+  "examples": [
+   "small_caresign.model",
+   "barrier1.model",
+   "barrier2.model",
+   "traffic_cone01_light.model",
+   "traffic_cone01.model"
+  ],
   "folder": "models/objects/shared/construction",
   "models": 19,
   "parts": 43,
@@ -483,6 +601,28 @@
     "type": 8,
     "usage": 5
    }
+  ],
+  "where": [
+   [
+    "objects: shared",
+    11
+   ],
+   [
+    "objects: usa_amboy",
+    3
+   ],
+   [
+    "objects: uk_brighton",
+    2
+   ],
+   [
+    "objects: usa_la_downtown",
+    2
+   ],
+   [
+    "objects: usa_la_longbeachdocks",
+    1
+   ]
   ]
  },
  "LightFlare.fx": {
@@ -506,6 +646,27 @@
     0.0
    ]
   },
+  "elements": [
+   "defaultelement",
+   "o_lampostc",
+   "o_lamposta",
+   "e_police_lights1",
+   "e_police_lights2",
+   "o_streetlamp09",
+   "o_modernmetalliclamppostcurved",
+   "o_streetlamp07",
+   "o_lampostb",
+   "o_modernmetalliclamppoststraight",
+   "e_police_lights",
+   "o_streetlamp08"
+  ],
+  "examples": [
+   "police_flashing_lights.model",
+   "fire_engine_lights.model",
+   "lamposta.model",
+   "corner_arrows.model",
+   "police_lights.model"
+  ],
   "folder": "models/specialfx",
   "models": 59,
   "parts": 75,
@@ -559,6 +720,52 @@
     "type": 9,
     "usage": 5
    }
+  ],
+  "where": [
+   [
+    "objects: usa_la_downtown",
+    12
+   ],
+   [
+    "objects: shared",
+    10
+   ],
+   [
+    "objects: uk_london_hackney",
+    9
+   ],
+   [
+    "special effects",
+    8
+   ],
+   [
+    "objects: uk_brighton",
+    5
+   ],
+   [
+    "objects: spa_barcelona_gracia",
+    4
+   ],
+   [
+    "objects: usa_sanfran_russianhill",
+    4
+   ],
+   [
+    "objects: jpn_shutoko",
+    3
+   ],
+   [
+    "objects: usa_la_longbeachdocks",
+    2
+   ],
+   [
+    "objects: spa_barcelona_oval",
+    1
+   ],
+   [
+    "objects: usa_amboy",
+    1
+   ]
   ]
  },
  "MeshEffect.fx": {
@@ -606,6 +813,27 @@
     0.0
    ]
   },
+  "elements": [
+   "defaultelement",
+   "e_pasted__pasted__pplane2",
+   "e_pplane1",
+   "e_beam_2",
+   "e_beam_1",
+   "e_polysurface8",
+   "e_pplane2",
+   "e_beam1",
+   "e_polysurface11",
+   "e_pplane4",
+   "e_pplane3",
+   "e_beam_4"
+  ],
+  "examples": [
+   "direction_ambient_spot_01.model",
+   "shieldsuper.model",
+   "shieldsuperbumper.model",
+   "direction_corner_beam_ccw.model",
+   "minesparks1.model"
+  ],
   "folder": "models/perks",
   "models": 114,
   "parts": 267,
@@ -689,6 +917,24 @@
     "type": 11,
     "usage": 9
    }
+  ],
+  "where": [
+   [
+    "power-ups (perks)",
+    77
+   ],
+   [
+    "special effects",
+    29
+   ],
+   [
+    "objects: uk_london_hackney",
+    7
+   ],
+   [
+    "objects: usa_la_downtown",
+    1
+   ]
   ]
  },
  "MeshEffectCull.fx": {
@@ -730,6 +976,18 @@
     0.0
    ]
   },
+  "elements": [
+   "e_barge_build_2",
+   "e_ring",
+   "e_wave1"
+  ],
+  "examples": [
+   "bargewave1left.model",
+   "splashdamagebargewave.model",
+   "minebuild1.model",
+   "shuntbuild2bumper.model",
+   "minebuild1reverse.model"
+  ],
   "folder": "models/perks",
   "models": 5,
   "parts": 14,
@@ -812,6 +1070,12 @@
     "type": 11,
     "usage": 9
    }
+  ],
+  "where": [
+   [
+    "power-ups (perks)",
+    5
+   ]
   ]
  },
  "MeshEffectCullNoDepth.fx": {
@@ -859,6 +1123,19 @@
     0.0
    ]
   },
+  "elements": [
+   "defaultelement",
+   "e_cylinder1",
+   "e_barge_build_1",
+   "e_barge_build_2"
+  ],
+  "examples": [
+   "draftwind1.model",
+   "draftwindfadein1.model",
+   "draftwindfadeout1.model",
+   "shunt_flow_car_02.model",
+   "shockfiredown1.model"
+  ],
   "folder": "models/perks",
   "models": 13,
   "parts": 32,
@@ -942,6 +1219,12 @@
     "type": 11,
     "usage": 9
    }
+  ],
+  "where": [
+   [
+    "power-ups (perks)",
+    13
+   ]
   ]
  },
  "MeshEffectDLayer.fx": {
@@ -1025,6 +1308,20 @@
     0.0
    ]
   },
+  "elements": [
+   "defaultelement",
+   "e_grafitti",
+   "e_swirl",
+   "e_phelix2",
+   "e_pplane2"
+  ],
+  "examples": [
+   "fangoldenpickup.model",
+   "fangoldenpickup_dimmed.model",
+   "repairzone1.model",
+   "blind_projectile_01.model",
+   "fanpickup_aggressive_dimmed.model"
+  ],
   "folder": "models/specialfx",
   "models": 40,
   "parts": 57,
@@ -1149,6 +1446,16 @@
     "type": 11,
     "usage": 9
    }
+  ],
+  "where": [
+   [
+    "special effects",
+    28
+   ],
+   [
+    "power-ups (perks)",
+    12
+   ]
   ]
  },
  "MeshEffectDLayerCull.fx": {
@@ -1214,6 +1521,16 @@
     0.0
    ]
   },
+  "elements": [
+   "defaultelement"
+  ],
+  "examples": [
+   "destructionmodecolumn_orange.model",
+   "destructionmodecolumn_green.model",
+   "destructionmodecolumn_red.model",
+   "splitscreencolumn_bottomleft.model",
+   "splitscreencolumn_topright.model"
+  ],
   "folder": "models/specialfx",
   "models": 10,
   "parts": 20,
@@ -1336,6 +1653,16 @@
     "type": 11,
     "usage": 9
    }
+  ],
+  "where": [
+   [
+    "special effects",
+    6
+   ],
+   [
+    "power-ups (perks)",
+    4
+   ]
   ]
  },
  "MeshEffectDLayerCullNDepth.fx": {
@@ -1395,6 +1722,14 @@
     0.0
    ]
   },
+  "elements": [
+   "e_nitro_1_2"
+  ],
+  "examples": [
+   "nitrolevel2.model",
+   "nitro_carver.model",
+   "nitrolevel2nr.model"
+  ],
   "folder": "models/perks",
   "models": 3,
   "parts": 6,
@@ -1514,6 +1849,12 @@
     "type": 11,
     "usage": 9
    }
+  ],
+  "where": [
+   [
+    "power-ups (perks)",
+    3
+   ]
   ]
  },
  "MeshEffectDLayerUVDist.fx": {
@@ -1597,6 +1938,12 @@
     0.0
    ]
   },
+  "elements": [
+   "e_distortl"
+  ],
+  "examples": [
+   "bargewave1.model"
+  ],
   "folder": "models/perks",
   "models": 1,
   "parts": 1,
@@ -1750,6 +2097,12 @@
     "type": 11,
     "usage": 9
    }
+  ],
+  "where": [
+   [
+    "power-ups (perks)",
+    1
+   ]
   ]
  },
  "MeshEffectDLayerUVDistCull.fx": {
@@ -1869,6 +2222,19 @@
     0.0
    ]
   },
+  "elements": [
+   "defaultelement",
+   "e_barge_build_pt2_03",
+   "e_psphere3",
+   "e_psphere4"
+  ],
+  "examples": [
+   "shieldedbaybubble.model",
+   "minecore2.model",
+   "repairpickupdecoyhit.model",
+   "roadsweeper_bolt_rotate.model",
+   "shunt_flow_car_02.model"
+  ],
   "folder": "models/perks",
   "models": 37,
   "parts": 70,
@@ -2043,6 +2409,12 @@
     "type": 11,
     "usage": 9
    }
+  ],
+  "where": [
+   [
+    "power-ups (perks)",
+    37
+   ]
   ]
  },
  "MeshEffectDLayerUVDistCullNDepth.fx": {
@@ -2156,6 +2528,17 @@
     0.0
    ]
   },
+  "elements": [
+   "e_shock_1_ball",
+   "e_innerdome",
+   "e_innerdome1",
+   "defaultelement"
+  ],
+  "examples": [
+   "shocklevel2.model",
+   "shocklevel2player.model",
+   "minedtcore1.model"
+  ],
   "folder": "models/perks",
   "models": 3,
   "parts": 8,
@@ -2324,6 +2707,12 @@
     "type": 11,
     "usage": 9
    }
+  ],
+  "where": [
+   [
+    "power-ups (perks)",
+    3
+   ]
   ]
  },
  "MeshEffectDLayerUVDistNDepth.fx": {
@@ -2413,6 +2802,17 @@
     0.0
    ]
   },
+  "elements": [
+   "e_pplane1",
+   "e_pplane6",
+   "e_pplane5",
+   "e_pplane4",
+   "e_pplane3",
+   "e_pplane2"
+  ],
+  "examples": [
+   "shunt_flow_car_01.model"
+  ],
   "folder": "models/perks",
   "models": 1,
   "parts": 6,
@@ -2576,6 +2976,12 @@
     "type": 11,
     "usage": 9
    }
+  ],
+  "where": [
+   [
+    "power-ups (perks)",
+    1
+   ]
   ]
  },
  "MeshEffectNoDepth.fx": {
@@ -2617,6 +3023,24 @@
     0.0
    ]
   },
+  "elements": [
+   "e_pplane1",
+   "e_pplane5",
+   "e_pplane4",
+   "e_pplane3",
+   "e_pplane2",
+   "e_pplane7",
+   "e_pplane6",
+   "e_lightningbolts2",
+   "defaultelement"
+  ],
+  "examples": [
+   "shuntpow1.model",
+   "blindfireshotgunpow.model",
+   "blindfire_pow_01.model",
+   "shocksparks02.model",
+   "shocksparks03.model"
+  ],
   "folder": "models/perks",
   "models": 7,
   "parts": 65,
@@ -2699,6 +3123,12 @@
     "type": 11,
     "usage": 9
    }
+  ],
+  "where": [
+   [
+    "power-ups (perks)",
+    7
+   ]
   ]
  },
  "MeshEffectRefract.fx": {
@@ -2758,6 +3188,26 @@
     0.0
    ]
   },
+  "elements": [
+   "e_surface",
+   "e_torus",
+   "e_psphere2",
+   "e_inner",
+   "e_powerring",
+   "e_bumpershield",
+   "e_bumpersupershield",
+   "e_pcylinder1",
+   "e_distortl",
+   "e_distortr",
+   "e_sphere1"
+  ],
+  "examples": [
+   "shieldlevel1.model",
+   "shieldsuper.model",
+   "mineblastimplode.model",
+   "nitroreversebumper01.model",
+   "shuntpow2.model"
+  ],
   "folder": "models/perks",
   "models": 21,
   "parts": 40,
@@ -2866,6 +3316,12 @@
     "type": 11,
     "usage": 9
    }
+  ],
+  "where": [
+   [
+    "power-ups (perks)",
+    21
+   ]
   ]
  },
  "MeshEffectUVDistort.fx": {
@@ -2937,6 +3393,27 @@
     0.0
    ]
   },
+  "elements": [
+   "defaultelement",
+   "e_psphere1",
+   "e_pplane1",
+   "e_ball",
+   "e_outer",
+   "e_shock_up_pilllar_01",
+   "e_psphere2",
+   "e_shock_pickup",
+   "e_shock_sparks_02_pplane5",
+   "e_shock_sparks_02_pplane4",
+   "e_shock_sparks_02_pplane3",
+   "e_shock_sparks_02_pplane2"
+  ],
+  "examples": [
+   "shuntlevel1.model",
+   "bargelevel1.model",
+   "barged1env.model",
+   "shockfireup1.model",
+   "shuntball1.model"
+  ],
   "folder": "models/perks",
   "models": 88,
   "parts": 188,
@@ -3052,6 +3529,16 @@
     "type": 11,
     "usage": 9
    }
+  ],
+  "where": [
+   [
+    "power-ups (perks)",
+    61
+   ],
+   [
+    "special effects",
+    27
+   ]
   ]
  },
  "MeshEffectUVDistortCull.fx": {
@@ -3117,6 +3604,21 @@
     0.0
    ]
   },
+  "elements": [
+   "defaultelement",
+   "e_shock_1_ball",
+   "e_shock_1_ball2",
+   "e_shock_1_ball1",
+   "e_psphere2",
+   "e_ring"
+  ],
+  "examples": [
+   "mineboomcircles.model",
+   "mastermineboomcircles.model",
+   "roadsweeper_shock_norotate.model",
+   "roadsweeper_nitro_norotate.model",
+   "roadsweeper_shock_rotate.model"
+  ],
   "folder": "models/perks",
   "models": 21,
   "parts": 48,
@@ -3228,6 +3730,12 @@
     "type": 11,
     "usage": 9
    }
+  ],
+  "where": [
+   [
+    "power-ups (perks)",
+    21
+   ]
   ]
  },
  "MeshEffectUVDistortCullNoDepth.fx": {
@@ -3299,6 +3807,27 @@
     0.0
    ]
   },
+  "elements": [
+   "e_pplane7",
+   "e_pplane6",
+   "e_pplane5",
+   "e_pplane4",
+   "e_pplane3",
+   "e_pplane2",
+   "e_pplane1",
+   "e_imprint",
+   "e_psphere2",
+   "e_shunt_ball_core",
+   "e_bomb_a_splode",
+   "e_pcylinder101"
+  ],
+  "examples": [
+   "repairpickupdecoyhit.model",
+   "nitropickupdecoyhit.model",
+   "shieldpickupdecoyhit.model",
+   "shuntedball1.model",
+   "shockpickupdecoyhit.model"
+  ],
   "folder": "models/perks/pickups",
   "models": 38,
   "parts": 215,
@@ -3413,6 +3942,12 @@
     "type": 11,
     "usage": 9
    }
+  ],
+  "where": [
+   [
+    "power-ups (perks)",
+    38
+   ]
   ]
  },
  "MeshEffectUVDistortNoDepth.fx": {
@@ -3484,6 +4019,27 @@
     0.0
    ]
   },
+  "elements": [
+   "e_sparkles",
+   "e_pcube3",
+   "e_ring9",
+   "e_ring7",
+   "e_ring6",
+   "e_ring5",
+   "e_ring4",
+   "e_ring3",
+   "e_ring2",
+   "e_ring1",
+   "e_ring8",
+   "e_pplane7"
+  ],
+  "examples": [
+   "minecore1.model",
+   "masterminecore1.model",
+   "rifted.model",
+   "shuntprojectile1.model",
+   "bargelevel1left.model"
+  ],
   "folder": "models/perks",
   "models": 16,
   "parts": 73,
@@ -3598,6 +4154,12 @@
     "type": 11,
     "usage": 9
    }
+  ],
+  "where": [
+   [
+    "power-ups (perks)",
+    16
+   ]
   ]
  },
  "Ocean_NL.fx": {
@@ -3639,6 +4201,12 @@
     0.0
    ]
   },
+  "elements": [
+   "e_water"
+  ],
+  "examples": [
+   "water_jet.model"
+  ],
   "folder": "models/specialfx",
   "models": 1,
   "parts": 1,
@@ -3721,6 +4289,12 @@
     "type": 11,
     "usage": 9
    }
+  ],
+  "where": [
+   [
+    "special effects",
+    1
+   ]
   ]
  },
  "Puddle_NL_NV.fx": {
@@ -3762,6 +4336,12 @@
     0.7
    ]
   },
+  "elements": [
+   "defaultelement"
+  ],
+  "examples": [
+   "dynamicpuddlelevel.model"
+  ],
   "folder": "models/objects/usa_la_river/misc",
   "models": 1,
   "parts": 1,
@@ -3855,10 +4435,24 @@
     "type": 8,
     "usage": 5
    }
+  ],
+  "where": [
+   [
+    "objects: usa_la_river",
+    1
+   ]
   ]
  },
  "ScreenFacingSprite.fx": {
   "defaults": {},
+  "elements": [
+   "defaultelement",
+   "e_tumbleweed"
+  ],
+  "examples": [
+   "lantern01.model",
+   "tumbleweed.model"
+  ],
   "folder": "models/specialfx",
   "models": 2,
   "parts": 3,
@@ -3904,6 +4498,12 @@
     "type": 11,
     "usage": 9
    }
+  ],
+  "where": [
+   [
+    "special effects",
+    2
+   ]
   ]
  },
  "ScrollFade_NL.fx": {
@@ -3933,6 +4533,17 @@
     0.0
    ]
   },
+  "elements": [
+   "defaultelement",
+   "e_hydrantspray"
+  ],
+  "examples": [
+   "brighton_tide1.model",
+   "saus_tide1.model",
+   "brightonmultiplayer_tide1.model",
+   "hydrantspray.model",
+   "jumbojet.model"
+  ],
   "folder": "models/specialfx",
   "models": 5,
   "parts": 98,
@@ -4008,6 +4619,12 @@
     "type": 11,
     "usage": 9
    }
+  ],
+  "where": [
+   [
+    "special effects",
+    5
+   ]
   ]
  },
  "ScrollFade_skin_NL.fx": {
@@ -4031,6 +4648,12 @@
     0.0
    ]
   },
+  "elements": [
+   "e_electricity"
+  ],
+  "examples": [
+   "electricity01.model"
+  ],
   "folder": "models/specialfx",
   "models": 1,
   "parts": 1,
@@ -4123,6 +4746,12 @@
     "type": 11,
     "usage": 9
    }
+  ],
+  "where": [
+   [
+    "special effects",
+    1
+   ]
   ]
  },
  "ScrollUVNeon_NV.fx": {
@@ -4152,6 +4781,12 @@
     0.0
    ]
   },
+  "elements": [
+   "defaultelement"
+  ],
+  "examples": [
+   "spline_plane.model"
+  ],
   "folder": "models/objects/usa_amboy/misc",
   "models": 1,
   "parts": 1,
@@ -4240,6 +4875,12 @@
     "type": 9,
     "usage": 5
    }
+  ],
+  "where": [
+   [
+    "objects: usa_amboy",
+    1
+   ]
   ]
  },
  "SoftLightFlare.fx": {
@@ -4263,6 +4904,14 @@
     0.0
    ]
   },
+  "elements": [
+   "defaultelement"
+  ],
+  "examples": [
+   "light_projection_beam.model",
+   "helilight.model",
+   "traffic_cone01_light.model"
+  ],
   "folder": "models/specialfx",
   "models": 3,
   "parts": 5,
@@ -4313,6 +4962,16 @@
     "type": 9,
     "usage": 5
    }
+  ],
+  "where": [
+   [
+    "special effects",
+    2
+   ],
+   [
+    "objects: shared",
+    1
+   ]
   ]
  },
  "Water_NL_NV.fx": {
@@ -4366,6 +5025,12 @@
     0.0
    ]
   },
+  "elements": [
+   "defaultelement"
+  ],
+  "examples": [
+   "dynamicwaterlevel.model"
+  ],
   "folder": "models/objects/usa_la_river/misc",
   "models": 1,
   "parts": 3,
@@ -4453,10 +5118,35 @@
     "type": 8,
     "usage": 5
    }
+  ],
+  "where": [
+   [
+    "objects: usa_la_river",
+    1
+   ]
   ]
  },
  "default_NB_NL.fx": {
   "defaults": {},
+  "elements": [
+   "s_damaged06_d1",
+   "o_directionsigna",
+   "s_damage06_d1",
+   "s_damage07_d2",
+   "s_damage05_d3",
+   "o_directionsignb",
+   "o_directionsignc",
+   "s_signdam_d1",
+   "s_damage03_d5",
+   "s_damaged02_d3",
+   "s_damaged03_d4",
+   "s_damaged04_d5"
+  ],
+  "examples": [
+   "directionsigna.model",
+   "directionsignb.model",
+   "directionsignc.model"
+  ],
   "folder": "models/objects/usa_sanfran_sausalito/instance_references",
   "models": 3,
   "parts": 25,
@@ -4513,10 +5203,37 @@
     "type": 11,
     "usage": 9
    }
+  ],
+  "where": [
+   [
+    "objects: usa_sanfran_sausalito",
+    3
+   ]
   ]
  },
  "default_NB_NL_NM_NV.fx": {
   "defaults": {},
+  "elements": [
+   "defaultelement",
+   "s_main_d1",
+   "s_sign_d2",
+   "s_pole_d1",
+   "o_busstop",
+   "s_smlsizedvan_damage",
+   "s_trackmiddledoublebridgeunit_metal_piece2",
+   "s_lampostc_head",
+   "s_sign_d1",
+   "s_main_fence_d1",
+   "o_steelfencedoor_3",
+   "o_trafficlighta"
+  ],
+  "examples": [
+   "birds02.model",
+   "birds01.model",
+   "busstop.model",
+   "ny_trackmiddledoublebridgeunit.model",
+   "smlsizedvan.model"
+  ],
   "folder": "models/objects/shared/us",
   "models": 378,
   "parts": 1628,
@@ -4560,10 +5277,93 @@
     "type": 8,
     "usage": 5
    }
+  ],
+  "where": [
+   [
+    "objects: shared",
+    115
+   ],
+   [
+    "objects: usa_la_river",
+    65
+   ],
+   [
+    "objects: spa_barcelona_gracia",
+    57
+   ],
+   [
+    "objects: uk_brighton",
+    29
+   ],
+   [
+    "objects: usa_la_downtown",
+    20
+   ],
+   [
+    "objects: usa_amboy",
+    17
+   ],
+   [
+    "objects: uk_london_hackney",
+    16
+   ],
+   [
+    "objects: usa_la_longbeachdocks",
+    16
+   ],
+   [
+    "objects: jpn_mountaintrack",
+    15
+   ],
+   [
+    "special effects",
+    12
+   ],
+   [
+    "objects: usa_sanfran_russianhill",
+    6
+   ],
+   [
+    "objects: jpn_shutoko",
+    5
+   ],
+   [
+    "objects: usa_la_observatory",
+    3
+   ],
+   [
+    "characters",
+    1
+   ],
+   [
+    "objects: usa_ny_dumbo",
+    1
+   ]
   ]
  },
  "default_NB_NL_NV.fx": {
   "defaults": {},
+  "elements": [
+   "defaultelement",
+   "s_base_d1",
+   "s_main_d1",
+   "s_pole_d1",
+   "o_streetlamp14",
+   "s_bottom_d2",
+   "o_lamposta",
+   "o_smlsizedvan",
+   "o_lampostc",
+   "s_lampostc_head",
+   "s_top_d1",
+   "o_lad_labrownvan"
+  ],
+  "examples": [
+   "windmill01.model",
+   "lamposta.model",
+   "vehicletransporter.model",
+   "bluetransit.model",
+   "gantryblue.model"
+  ],
   "folder": "models/objects/shared/us",
   "models": 674,
   "parts": 2585,
@@ -4619,10 +5419,104 @@
     "type": 8,
     "usage": 5
    }
+  ],
+  "where": [
+   [
+    "objects: shared",
+    140
+   ],
+   [
+    "objects: usa_la_longbeachdocks",
+    123
+   ],
+   [
+    "objects: usa_la_downtown",
+    109
+   ],
+   [
+    "objects: uk_london_hackney",
+    103
+   ],
+   [
+    "objects: jpn_shutoko",
+    63
+   ],
+   [
+    "objects: uk_brighton",
+    42
+   ],
+   [
+    "objects: usa_la_observatory",
+    21
+   ],
+   [
+    "objects: usa_amboy",
+    20
+   ],
+   [
+    "objects: usa_la_river",
+    13
+   ],
+   [
+    "objects: usa_ny_dumbo",
+    12
+   ],
+   [
+    "objects: spa_barcelona_gracia",
+    8
+   ],
+   [
+    "special effects",
+    6
+   ],
+   [
+    "objects: usa_sanfran_russianhill",
+    5
+   ],
+   [
+    "objects: usa_sanfran_sausalito",
+    4
+   ],
+   [
+    "models",
+    2
+   ],
+   [
+    "objects: jpn_mountaintrack",
+    1
+   ],
+   [
+    "objects: spa_barcelona_oval",
+    1
+   ],
+   [
+    "system",
+    1
+   ]
   ]
  },
  "default_NL_NV.fx": {
   "defaults": {},
+  "elements": [
+   "o_sunlounger",
+   "s_sunlounger_brokenpiece5",
+   "s_sunlounger_brokenpiece4",
+   "o_rowingboat01",
+   "e_fanblades",
+   "s_sunlounger_brokenpiece7",
+   "s_sunlounger_brokenpiece3",
+   "s_sunlounger_brokenpiece2",
+   "s_sunlounger_brokenpiece1",
+   "s_sunlounger_brokenpiece6",
+   "defaultelement",
+   "s_rowingboat01_piece06"
+  ],
+  "examples": [
+   "sunlounger.model",
+   "rowingboat01.model",
+   "fanblades.model",
+   "shsphere.model"
+  ],
   "folder": "models/objects/uk_brighton/objects",
   "models": 4,
   "parts": 21,
@@ -4692,10 +5586,34 @@
     "type": 11,
     "usage": 5
    }
+  ],
+  "where": [
+   [
+    "objects: uk_brighton",
+    2
+   ],
+   [
+    "models",
+    1
+   ],
+   [
+    "special effects",
+    1
+   ]
   ]
  },
  "default_skin_NB_NL_NM_NV.fx": {
   "defaults": {},
+  "elements": [
+   "defaultelement"
+  ],
+  "examples": [
+   "igm_sanfran_minor6.model",
+   "igm_sanfran_minor5.model",
+   "igm_hackney_minor3.model",
+   "igm_ny_minor4.model",
+   "igm_casimiro_ml.model"
+  ],
   "folder": "models/characters/male/la",
   "models": 96,
   "parts": 1874,
@@ -4759,10 +5677,22 @@
     "type": 11,
     "usage": 5
    }
+  ],
+  "where": [
+   [
+    "characters",
+    96
+   ]
   ]
  },
  "default_skin_NV.fx": {
   "defaults": {},
+  "elements": [
+   "defaultelement"
+  ],
+  "examples": [
+   "n01.model"
+  ],
   "folder": "models/characters/male",
   "models": 1,
   "parts": 2,
@@ -4843,6 +5773,12 @@
     "type": 7,
     "usage": 5
    }
+  ],
+  "where": [
+   [
+    "characters",
+    1
+   ]
   ]
  },
  "veh_Alloy_a_b_f.fx": {
@@ -4864,6 +5800,25 @@
     0.0
    ]
   },
+  "elements": [
+   "e_alloyrim_backleft",
+   "e_alloyrim_frontleft",
+   "defaultelement",
+   "e_alloyrim_frontright",
+   "e_alloyrim_backright",
+   "e_exterior",
+   "e_gearstick",
+   "e_interior",
+   "e_wing_right",
+   "e_boot"
+  ],
+  "examples": [
+   "volkswagen_golfw12650_stock.model",
+   "foose_69_stock.model",
+   "dodge_challenger_tuner.model",
+   "bmw_m3e92_drift.model",
+   "bmw_1seriestii_race.model"
+  ],
   "folder": "models/vehicles",
   "models": 127,
   "parts": 364,
@@ -4914,6 +5869,16 @@
     "type": 11,
     "usage": 9
    }
+  ],
+  "where": [
+   [
+    "vehicles",
+    73
+   ],
+   [
+    "wheels",
+    54
+   ]
   ]
  },
  "veh_Alloy_a_f.fx": {
@@ -4935,6 +5900,14 @@
     0.0
    ]
   },
+  "elements": [
+   "defaultelement"
+  ],
+  "examples": [
+   "audi_tt_stock.model",
+   "dodge_challenger_stock.model",
+   "audi_r8v10_stock.model"
+  ],
   "folder": "models/vehicles/wheels",
   "models": 3,
   "parts": 3,
@@ -5001,6 +5974,12 @@
     "type": 11,
     "usage": 9
    }
+  ],
+  "where": [
+   [
+    "wheels",
+    3
+   ]
   ]
  },
  "veh_Alloy_b_f.fx": {
@@ -5022,6 +6001,27 @@
     0.0
    ]
   },
+  "elements": [
+   "m_alloy",
+   "defaultelement",
+   "e_alloyrim_backleft",
+   "e_alloyrim_frontleft",
+   "e_alloyrim_frontright",
+   "e_alloyrim_backright",
+   "e_exterior",
+   "e_brakecaliper_frontleft",
+   "e_brakecaliper_frontright",
+   "e_brakecaliper_backleft",
+   "e_brakecaliper_backright",
+   "e_spokes"
+  ],
+  "examples": [
+   "nissan_navara_offroad.model",
+   "nissan_skyliner34ztune_stock.model",
+   "ford_supervan_stock.model",
+   "nissan_navara_rat.model",
+   "ford_gt_stock.model"
+  ],
   "folder": "models/vehicles/wheels",
   "models": 63,
   "parts": 107,
@@ -5090,6 +6090,16 @@
     "type": 11,
     "usage": 9
    }
+  ],
+  "where": [
+   [
+    "wheels",
+    55
+   ],
+   [
+    "vehicles",
+    8
+   ]
   ]
  },
  "veh_Alloy_f.fx": {
@@ -5111,6 +6121,15 @@
     0.0
    ]
   },
+  "elements": [
+   "defaultelement"
+  ],
+  "examples": [
+   "corvette_zr1_stock.model",
+   "dodge_viperacr_stock.model",
+   "foose_stallion.model",
+   "hennessey_vipervenom1000coupe_stock.model"
+  ],
   "folder": "models/vehicles/wheels",
   "models": 4,
   "parts": 5,
@@ -5194,6 +6213,12 @@
     "type": 11,
     "usage": 9
    }
+  ],
+  "where": [
+   [
+    "wheels",
+    4
+   ]
   ]
  },
  "veh_Alpha.fx": {
@@ -5209,6 +6234,21 @@
     0.0
    ]
   },
+  "elements": [
+   "e_bumper_front",
+   "e_bonnet",
+   "e_bumper_back",
+   "e_wing_right",
+   "e_wing_left",
+   "e_boot"
+  ],
+  "examples": [
+   "dodge_challenger_legend_v.model",
+   "dodge_challenger_stock.model",
+   "ford_mustanggtr_legend_x.model",
+   "hennessey_vipervenom1000coupe_stock.model",
+   "dodge_challenger_tuner.model"
+  ],
   "folder": "models/vehicles",
   "models": 16,
   "parts": 29,
@@ -5296,6 +6336,12 @@
     "type": 11,
     "usage": 9
    }
+  ],
+  "where": [
+   [
+    "vehicles",
+    16
+   ]
   ]
  },
  "veh_Alpha_c.fx": {
@@ -5311,6 +6357,27 @@
     0.0
    ]
   },
+  "elements": [
+   "e_exterior",
+   "e_boot",
+   "e_door_right",
+   "e_door_left",
+   "e_bumper_back",
+   "e_wing_frontright",
+   "e_wing_frontleft",
+   "e_bumper_front",
+   "e_headlightcover_right",
+   "e_headlightcover_left",
+   "e_door_frontleft",
+   "e_door_frontright"
+  ],
+  "examples": [
+   "landrover_defendersvx_stock.model",
+   "dodge_challenger_legend_v.model",
+   "renault_meganetrophy_stock.model",
+   "dodge_challenger_stock.model",
+   "ford_mustanggtr_legend_x.model"
+  ],
   "folder": "models/vehicles",
   "models": 25,
   "parts": 38,
@@ -5393,6 +6460,12 @@
     "type": 11,
     "usage": 9
    }
+  ],
+  "where": [
+   [
+    "vehicles",
+    25
+   ]
   ]
  },
  "veh_Alpha_c_h.fx": {
@@ -5408,6 +6481,21 @@
     0.0
    ]
   },
+  "elements": [
+   "e_exterior",
+   "e_interior",
+   "e_steeringwheel",
+   "e_wing_frontleft",
+   "e_wing_frontright",
+   "e_door_left"
+  ],
+  "examples": [
+   "chevrolet_camaro_stock.model",
+   "ford_mustanggtr_legend_x.model",
+   "ford_mustanggtr_stock.model",
+   "ford_fr100_stock.model",
+   "volkswagen_golfw12650_stock.model"
+  ],
   "folder": "models/vehicles",
   "models": 16,
   "parts": 23,
@@ -5480,6 +6568,12 @@
     "type": 11,
     "usage": 9
    }
+  ],
+  "where": [
+   [
+    "vehicles",
+    16
+   ]
   ]
  },
  "veh_Default_a_b.fx": {
@@ -5495,6 +6589,21 @@
     0.0
    ]
   },
+  "elements": [
+   "e_bumper_back",
+   "e_wing_left",
+   "e_wing_right",
+   "e_bumper_front",
+   "e_bonnet",
+   "e_boot"
+  ],
+  "examples": [
+   "dodge_challenger_race.model",
+   "renault_meganesportr26_stock_shannon.model",
+   "hummer_h2_offroad.model",
+   "hummer_h2_offroad_drayke.model",
+   "renault_meganesportr26_stock.model"
+  ],
   "folder": "models/vehicles",
   "models": 7,
   "parts": 20,
@@ -5582,6 +6691,12 @@
     "type": 11,
     "usage": 9
    }
+  ],
+  "where": [
+   [
+    "vehicles",
+    7
+   ]
   ]
  },
  "veh_Default_a_b_c.fx": {
@@ -5597,6 +6712,27 @@
     0.0
    ]
   },
+  "elements": [
+   "e_exterior",
+   "e_door_right",
+   "e_door_left",
+   "e_mirror_left",
+   "e_mirror_right",
+   "e_boot",
+   "e_door_frontright",
+   "e_wing_frontleft",
+   "e_wing_frontright",
+   "e_door_frontleft",
+   "defaultelement",
+   "e_mirror_frontright"
+  ],
+  "examples": [
+   "renault_meganesportr26_stock_shannon.model",
+   "renault_meganesportr26_stock.model",
+   "foose_69_stock.model",
+   "lotus_exigecup260_stock.model",
+   "dodge_challenger_race.model"
+  ],
   "folder": "models/vehicles",
   "models": 16,
   "parts": 53,
@@ -5679,6 +6815,12 @@
     "type": 11,
     "usage": 9
    }
+  ],
+  "where": [
+   [
+    "vehicles",
+    16
+   ]
   ]
  },
  "veh_Default_a_b_c_f.fx": {
@@ -5694,6 +6836,27 @@
     0.0
    ]
   },
+  "elements": [
+   "e_exterior",
+   "e_door_right",
+   "e_mirror_left",
+   "e_mirror_right",
+   "e_door_left",
+   "e_boot",
+   "e_wing_frontleft",
+   "e_wing_frontright",
+   "e_bumper_back",
+   "e_bumper_front",
+   "e_door_frontright",
+   "e_door_frontleft"
+  ],
+  "examples": [
+   "nissan_350z_drift.model",
+   "hummer_h2_offroad.model",
+   "hummer_h2_offroad_drayke.model",
+   "volkswagen_beetle_rat.model",
+   "bmw_1seriestii_race_natalya.model"
+  ],
   "folder": "models/vehicles",
   "models": 76,
   "parts": 590,
@@ -5758,6 +6921,12 @@
     "type": 11,
     "usage": 9
    }
+  ],
+  "where": [
+   [
+    "vehicles",
+    76
+   ]
   ]
  },
  "veh_Default_a_b_c_f_h.fx": {
@@ -5779,6 +6948,27 @@
     0.0
    ]
   },
+  "elements": [
+   "e_exterior",
+   "e_interior",
+   "e_mirror_centre",
+   "e_steeringwheel",
+   "e_brakecaliper_backright",
+   "e_brakecaliper_frontright",
+   "e_brakecaliper_backleft",
+   "e_brakecaliper_frontleft",
+   "e_brakedisc_frontright",
+   "e_brakedisc_backright",
+   "e_brakedisc_backleft",
+   "e_brakedisc_frontleft"
+  ],
+  "examples": [
+   "nissan_350znismo_stock.model",
+   "landrover_lrx_stock.model",
+   "bmw_1seriestii_stock.model",
+   "chevrolet_camaross_stock_rymer.model",
+   "chevrolet_camaro_legend_ii.model"
+  ],
   "folder": "models/vehicles",
   "models": 75,
   "parts": 912,
@@ -5843,6 +7033,12 @@
     "type": 11,
     "usage": 9
    }
+  ],
+  "where": [
+   [
+    "vehicles",
+    75
+   ]
   ]
  },
  "veh_Default_a_b_c_h.fx": {
@@ -5864,6 +7060,27 @@
     0.0
    ]
   },
+  "elements": [
+   "e_exterior",
+   "e_interior",
+   "e_brakecaliper_frontleft",
+   "e_brakecaliper_backright",
+   "e_brakecaliper_backleft",
+   "e_brakecaliper_frontright",
+   "e_steeringwheel",
+   "e_wiper_left",
+   "e_wiper_right",
+   "e_wiper_frontright",
+   "e_wiper_frontleft",
+   "e_exhaust_right"
+  ],
+  "examples": [
+   "foose_69_stock.model",
+   "chevrolet_camaro_stock.model",
+   "renault_meganesportr26_stock_shannon.model",
+   "renault_meganesportr26_stock.model",
+   "dodge_challenger_race.model"
+  ],
   "folder": "models/vehicles",
   "models": 13,
   "parts": 77,
@@ -5936,6 +7153,12 @@
     "type": 11,
     "usage": 9
    }
+  ],
+  "where": [
+   [
+    "vehicles",
+    13
+   ]
   ]
  },
  "veh_Default_a_b_f.fx": {
@@ -5951,6 +7174,23 @@
     0.0
    ]
   },
+  "elements": [
+   "e_bumper_front",
+   "e_bonnet",
+   "e_bumper_back",
+   "e_wing_left",
+   "e_wing_right",
+   "e_boot",
+   "e_wing_frontleft",
+   "e_wing_frontright"
+  ],
+  "examples": [
+   "landrover_lrx_stock.model",
+   "chevrolet_camaross_stock_rymer.model",
+   "chevrolet_camaro_legend_ii.model",
+   "chevrolet_camaross_stock.model",
+   "chevrolet_camaross_drag.model"
+  ],
   "folder": "models/vehicles",
   "models": 52,
   "parts": 217,
@@ -6020,6 +7260,12 @@
     "type": 11,
     "usage": 9
    }
+  ],
+  "where": [
+   [
+    "vehicles",
+    52
+   ]
   ]
  },
  "veh_Default_a_b_f_h.fx": {
@@ -6035,6 +7281,15 @@
     0.0
    ]
   },
+  "elements": [
+   "e_bumper_back",
+   "e_wing_right",
+   "e_wing_left"
+  ],
+  "examples": [
+   "hummer_h2_rat.model",
+   "ford_focusrs_stock.model"
+  ],
   "folder": "models/vehicles",
   "models": 2,
   "parts": 4,
@@ -6094,6 +7349,12 @@
     "type": 11,
     "usage": 9
    }
+  ],
+  "where": [
+   [
+    "vehicles",
+    2
+   ]
   ]
  },
  "veh_Default_a_b_h.fx": {
@@ -6109,6 +7370,14 @@
     0.0
    ]
   },
+  "elements": [
+   "e_wing_left",
+   "e_wing_right",
+   "e_bumper_back"
+  ],
+  "examples": [
+   "hummer_h2_rat.model"
+  ],
   "folder": "models/vehicles",
   "models": 1,
   "parts": 3,
@@ -6182,6 +7451,12 @@
     "type": 11,
     "usage": 9
    }
+  ],
+  "where": [
+   [
+    "vehicles",
+    1
+   ]
   ]
  },
  "veh_Default_a_c.fx": {
@@ -6197,6 +7472,14 @@
     0.0
    ]
   },
+  "elements": [
+   "e_door_frontright",
+   "e_door_frontleft"
+  ],
+  "examples": [
+   "renault_meganesportr26_stock_shannon.model",
+   "renault_meganesportr26_stock.model"
+  ],
   "folder": "models/vehicles",
   "models": 2,
   "parts": 4,
@@ -6288,6 +7571,12 @@
     "type": 11,
     "usage": 9
    }
+  ],
+  "where": [
+   [
+    "vehicles",
+    2
+   ]
   ]
  },
  "veh_Default_a_c_f.fx": {
@@ -6303,6 +7592,17 @@
     0.0
    ]
   },
+  "elements": [
+   "e_boot",
+   "e_exterior"
+  ],
+  "examples": [
+   "audi_r8v10_stock.model",
+   "nissan_skyliner34ztune_stock_harumi.model",
+   "nissan_skyliner34ztune_stock.model",
+   "volkswagen_beetle_rat.model",
+   "nissan_skyliner34ztune_stock_ayumi.model"
+  ],
   "folder": "models/vehicles",
   "models": 5,
   "parts": 5,
@@ -6383,6 +7683,12 @@
     "type": 11,
     "usage": 9
    }
+  ],
+  "where": [
+   [
+    "vehicles",
+    5
+   ]
   ]
  },
  "veh_Default_a_c_f_h.fx": {
@@ -6398,6 +7704,17 @@
     0.0
    ]
   },
+  "elements": [
+   "e_exterior",
+   "e_bumper_back"
+  ],
+  "examples": [
+   "nissan_skyliner34ztune_stock_harumi.model",
+   "nissan_skyliner34ztune_stock.model",
+   "nissan_skyliner34ztune_stock_ayumi.model",
+   "volkswagen_beetle_rat.model",
+   "ford_focusrs_stock.model"
+  ],
   "folder": "models/vehicles",
   "models": 6,
   "parts": 9,
@@ -6469,6 +7786,12 @@
     "type": 11,
     "usage": 9
    }
+  ],
+  "where": [
+   [
+    "vehicles",
+    6
+   ]
   ]
  },
  "veh_Default_a_c_h.fx": {
@@ -6484,6 +7807,15 @@
     0.0
    ]
   },
+  "elements": [
+   "e_rearlight_left",
+   "e_rearlight_right",
+   "e_exterior"
+  ],
+  "examples": [
+   "renault_meganesportr26_stock_shannon.model",
+   "renault_meganesportr26_stock.model"
+  ],
   "folder": "models/vehicles",
   "models": 2,
   "parts": 6,
@@ -6565,6 +7897,12 @@
     "type": 11,
     "usage": 9
    }
+  ],
+  "where": [
+   [
+    "vehicles",
+    2
+   ]
   ]
  },
  "veh_Default_b.fx": {
@@ -6580,6 +7918,17 @@
     0.0
    ]
   },
+  "elements": [
+   "e_bonnet",
+   "e_bumper_front"
+  ],
+  "examples": [
+   "volkswagen_golfw12650_stock.model",
+   "bmw_1seriestii_race_natalya.model",
+   "audi_s3_stock.model",
+   "hummer_h2_offroad.model",
+   "hummer_h2_offroad_drayke.model"
+  ],
   "folder": "models/vehicles",
   "models": 7,
   "parts": 8,
@@ -6679,6 +8028,12 @@
     "type": 11,
     "usage": 9
    }
+  ],
+  "where": [
+   [
+    "vehicles",
+    7
+   ]
   ]
  },
  "veh_Default_b_c.fx": {
@@ -6694,6 +8049,21 @@
     0.0
    ]
   },
+  "elements": [
+   "e_exterior",
+   "e_door_left",
+   "e_door_right",
+   "e_wing_right",
+   "e_wing_left",
+   "e_bumper_back",
+   "e_boot"
+  ],
+  "examples": [
+   "volkswagen_golfw12650_stock.model",
+   "lotus_exigecup260_stock.model",
+   "ford_bronco_offroad.model",
+   "landrover_defendersvx_stock.model"
+  ],
   "folder": "models/vehicles",
   "models": 4,
   "parts": 12,
@@ -6786,6 +8156,12 @@
     "type": 11,
     "usage": 9
    }
+  ],
+  "where": [
+   [
+    "vehicles",
+    4
+   ]
   ]
  },
  "veh_Default_b_c_f.fx": {
@@ -6801,6 +8177,27 @@
     0.0
    ]
   },
+  "elements": [
+   "e_exterior",
+   "e_door_right",
+   "e_door_left",
+   "e_boot",
+   "e_mirror_left",
+   "e_mirror_right",
+   "e_door_frontleft",
+   "e_wing_frontleft",
+   "e_wing_frontright",
+   "e_door_frontright",
+   "e_bumper_back",
+   "e_bumper_front"
+  ],
+  "examples": [
+   "opel_astraextreme_stock_shannon.model",
+   "opel_astraextreme_stock.model",
+   "opel_astra_extreme_legend_viii.model",
+   "ford_supervan_stock.model",
+   "ford_gt_stock.model"
+  ],
   "folder": "models/vehicles",
   "models": 74,
   "parts": 483,
@@ -6883,6 +8280,12 @@
     "type": 11,
     "usage": 9
    }
+  ],
+  "where": [
+   [
+    "vehicles",
+    74
+   ]
   ]
  },
  "veh_Default_b_c_f_h.fx": {
@@ -6904,6 +8307,27 @@
     0.0
    ]
   },
+  "elements": [
+   "e_exterior",
+   "e_interior",
+   "e_brakedisc_frontright",
+   "e_brakedisc_backright",
+   "e_brakedisc_backleft",
+   "e_brakedisc_frontleft",
+   "e_steeringwheel",
+   "e_brakecaliper_frontleft",
+   "e_brakecaliper_frontright",
+   "e_gearstick",
+   "e_brakecaliper_backleft",
+   "e_brakecaliper_backright"
+  ],
+  "examples": [
+   "koenigsegg_ccxr_stock.model",
+   "ford_gt_stock.model",
+   "audi_tt_legend_vi.model",
+   "audi_tt_stock.model",
+   "ford_mustanggtr_legend_x.model"
+  ],
   "folder": "models/vehicles",
   "models": 80,
   "parts": 1119,
@@ -6976,6 +8400,12 @@
     "type": 11,
     "usage": 9
    }
+  ],
+  "where": [
+   [
+    "vehicles",
+    80
+   ]
   ]
  },
  "veh_Default_b_c_h.fx": {
@@ -6997,6 +8427,24 @@
     0.0
    ]
   },
+  "elements": [
+   "e_interior",
+   "e_gearstick",
+   "e_steering_wheel",
+   "e_steeringwheel",
+   "e_mirror_centre",
+   "e_rearlight_right",
+   "e_rearlight_left",
+   "e_door_left",
+   "e_exterior",
+   "e_brakecaliper_frontright",
+   "e_brakecaliper_frontleft",
+   "e_door_right"
+  ],
+  "examples": [
+   "lotus_exigecup260_stock.model",
+   "volkswagen_golfw12650_stock.model"
+  ],
   "folder": "models/vehicles",
   "models": 2,
   "parts": 19,
@@ -7076,6 +8524,12 @@
     "type": 11,
     "usage": 9
    }
+  ],
+  "where": [
+   [
+    "vehicles",
+    2
+   ]
   ]
  },
  "veh_Default_b_f.fx": {
@@ -7091,6 +8545,23 @@
     0.0
    ]
   },
+  "elements": [
+   "e_bumper_front",
+   "e_bonnet",
+   "e_bumper_back",
+   "e_wing_left",
+   "e_wing_right",
+   "e_boot",
+   "e_wing_frontleft",
+   "e_wing_frontright"
+  ],
+  "examples": [
+   "ford_gt_stock.model",
+   "chevrolet_socalhhr_stock.model",
+   "audi_s3_stock.model",
+   "dodge_viperacr_legend_iii.model",
+   "koenigsegg_ccxr_stock.model"
+  ],
   "folder": "models/vehicles",
   "models": 68,
   "parts": 247,
@@ -7178,6 +8649,12 @@
     "type": 11,
     "usage": 9
    }
+  ],
+  "where": [
+   [
+    "vehicles",
+    68
+   ]
   ]
  },
  "veh_Default_b_f_h.fx": {
@@ -7193,6 +8670,12 @@
     0.0
    ]
   },
+  "elements": [
+   "e_bumper_front"
+  ],
+  "examples": [
+   "ford_f150_offroad.model"
+  ],
   "folder": "models/vehicles",
   "models": 1,
   "parts": 2,
@@ -7267,6 +8750,12 @@
     "type": 11,
     "usage": 9
    }
+  ],
+  "where": [
+   [
+    "vehicles",
+    1
+   ]
   ]
  },
  "veh_Default_c.fx": {
@@ -7282,6 +8771,12 @@
     0.0
    ]
   },
+  "elements": [
+   "e_exterior"
+  ],
+  "examples": [
+   "volkswagen_golfw12650_stock.model"
+  ],
   "folder": "models/vehicles",
   "models": 1,
   "parts": 1,
@@ -7381,6 +8876,12 @@
     "type": 11,
     "usage": 9
    }
+  ],
+  "where": [
+   [
+    "vehicles",
+    1
+   ]
   ]
  },
  "veh_Default_c_f.fx": {
@@ -7396,6 +8897,18 @@
     0.0
    ]
   },
+  "elements": [
+   "e_exterior",
+   "e_boot",
+   "e_bonnet"
+  ],
+  "examples": [
+   "chevrolet_camaro_stock.model",
+   "chevrolet_camaross_stock_rymer.model",
+   "bmw_1seriestii_race_natalya.model",
+   "shelby_mustanggt500_stock.model",
+   "chevrolet_camaro_rat.model"
+  ],
   "folder": "models/vehicles",
   "models": 25,
   "parts": 25,
@@ -7495,6 +9008,12 @@
     "type": 11,
     "usage": 9
    }
+  ],
+  "where": [
+   [
+    "vehicles",
+    25
+   ]
   ]
  },
  "veh_Default_c_f_h.fx": {
@@ -7516,6 +9035,26 @@
     0.0
    ]
   },
+  "elements": [
+   "e_tyre_frontright",
+   "e_tyre_frontleft",
+   "e_tyre_backleft",
+   "e_tyre_backright",
+   "e_exterior",
+   "e_brakecaliper_backright",
+   "e_brakecaliper_backleft",
+   "e_brakecaliper_frontleft",
+   "e_brakecaliper_frontright",
+   "e_bumper_front",
+   "e_wing_left"
+  ],
+  "examples": [
+   "toyota_supratrd_stock.model",
+   "toyota_supra_smooth.model",
+   "dodge_challenger_legend_v.model",
+   "dodge_challenger_stock.model",
+   "koenigsegg_ccxr_stock.model"
+  ],
   "folder": "models/vehicles",
   "models": 22,
   "parts": 76,
@@ -7605,6 +9144,12 @@
     "type": 11,
     "usage": 9
    }
+  ],
+  "where": [
+   [
+    "vehicles",
+    22
+   ]
   ]
  },
  "veh_Default_f.fx": {
@@ -7620,6 +9165,17 @@
     0.0
    ]
   },
+  "elements": [
+   "e_bumper_front",
+   "e_bonnet"
+  ],
+  "examples": [
+   "chevrolet_camaross_stock_rymer.model",
+   "shelby_mustanggt500_stock.model",
+   "chevrolet_camaro_legend_ii.model",
+   "dodge_challenger_legend_v.model",
+   "volkswagen_beetle_rat.model"
+  ],
   "folder": "models/vehicles",
   "models": 7,
   "parts": 7,
@@ -7723,6 +9279,12 @@
     "type": 11,
     "usage": 9
    }
+  ],
+  "where": [
+   [
+    "vehicles",
+    7
+   ]
   ]
  },
  "veh_Glass_a_c.fx": {
@@ -7738,6 +9300,21 @@
     0.0
    ]
   },
+  "elements": [
+   "e_window_back",
+   "e_window_frontright",
+   "e_window_frontleft",
+   "e_window_rear",
+   "e_headlightcover_frontright",
+   "e_headlightcover_frontleft"
+  ],
+  "examples": [
+   "chevrolet_socalhhr_stock.model",
+   "volkswagen_golfw12650_stock.model",
+   "volkswagen_beetle_offroad.model",
+   "volkswagen_beetle_rat.model",
+   "ford_focusrs_stock.model"
+  ],
   "folder": "models/vehicles",
   "models": 13,
   "parts": 21,
@@ -7824,6 +9401,12 @@
     "type": 11,
     "usage": 9
    }
+  ],
+  "where": [
+   [
+    "vehicles",
+    13
+   ]
   ]
  },
  "veh_Glass_a_c_d.fx": {
@@ -7839,6 +9422,26 @@
     0.0
    ]
   },
+  "elements": [
+   "e_window_frontright",
+   "e_window_frontleft",
+   "e_headlightcover_frontleft",
+   "e_headlightcover_frontright",
+   "e_window_right",
+   "e_window_left",
+   "e_headlightcover_left",
+   "e_headlightcover_right",
+   "e_exterior",
+   "e_wing_left",
+   "e_wing_right"
+  ],
+  "examples": [
+   "ford_f100_offroad.model",
+   "dodge_challenger_tuner.model",
+   "ford_f100_rat.model",
+   "dodge_challenger_legend_v.model",
+   "bmw_x548msport_stock.model"
+  ],
   "folder": "models/vehicles",
   "models": 19,
   "parts": 50,
@@ -7917,6 +9520,12 @@
     "type": 11,
     "usage": 9
    }
+  ],
+  "where": [
+   [
+    "vehicles",
+    19
+   ]
   ]
  },
  "veh_Glass_a_c_d_h.fx": {
@@ -7932,6 +9541,27 @@
     0.0
    ]
   },
+  "elements": [
+   "e_window_frontright",
+   "e_window_frontleft",
+   "e_window_backright",
+   "e_headlightcover_frontright",
+   "e_headlightcover_frontleft",
+   "e_window_backleft",
+   "e_headlightcover_left",
+   "e_headlightcover_backleft",
+   "e_headlightcover_backright",
+   "e_headlightcover_right",
+   "e_window_left",
+   "e_window_front"
+  ],
+  "examples": [
+   "audi_r8v10_stock.model",
+   "audi_tt_legend_vi.model",
+   "audi_tt_stock.model",
+   "renault_meganesportr26_stock_shannon.model",
+   "ford_f150_offroad.model"
+  ],
   "folder": "models/vehicles",
   "models": 48,
   "parts": 196,
@@ -8001,6 +9631,12 @@
     "type": 11,
     "usage": 9
    }
+  ],
+  "where": [
+   [
+    "vehicles",
+    48
+   ]
   ]
  },
  "veh_Glass_a_c_h.fx": {
@@ -8016,6 +9652,27 @@
     0.0
    ]
   },
+  "elements": [
+   "e_window_front",
+   "e_window_back",
+   "e_window_backright",
+   "e_window_backleft",
+   "e_window_rear",
+   "e_headlightcover_frontright",
+   "e_headlightcover_frontleft",
+   "e_window_frontright",
+   "e_window_frontleft",
+   "e_window_left",
+   "e_window_right",
+   "e_headlightcover_backleft"
+  ],
+  "examples": [
+   "volkswagen_golfw12650_stock.model",
+   "nissan_navara_rat.model",
+   "ford_focusrs_race.model",
+   "corvette_zr1_stock.model",
+   "ford_bronco_offroad.model"
+  ],
   "folder": "models/vehicles",
   "models": 40,
   "parts": 123,
@@ -8092,6 +9749,12 @@
     "type": 11,
     "usage": 9
    }
+  ],
+  "where": [
+   [
+    "vehicles",
+    40
+   ]
   ]
  },
  "veh_Glass_c.fx": {
@@ -8107,6 +9770,26 @@
     0.0
    ]
   },
+  "elements": [
+   "e_window_frontright",
+   "e_window_frontleft",
+   "e_window_rear",
+   "e_window_back",
+   "e_headlightcover_frontright",
+   "e_window_backleft",
+   "e_headlightcover_frontleft",
+   "e_window_backright",
+   "e_window_front",
+   "e_headlightcover_right",
+   "e_headlightcover_left"
+  ],
+  "examples": [
+   "toyota_supratrd_stock.model",
+   "ford_supervan_stock.model",
+   "chevrolet_camaross_drag.model",
+   "ford_gt_stock.model",
+   "nissan_350z_drift.model"
+  ],
   "folder": "models/vehicles",
   "models": 6,
   "parts": 17,
@@ -8205,6 +9888,12 @@
     "type": 11,
     "usage": 9
    }
+  ],
+  "where": [
+   [
+    "vehicles",
+    6
+   ]
   ]
  },
  "veh_Glass_c_d.fx": {
@@ -8220,6 +9909,27 @@
     0.0
    ]
   },
+  "elements": [
+   "e_window_frontright",
+   "e_window_frontleft",
+   "e_headlightcover_left",
+   "e_headlightcover_right",
+   "e_mirror_right",
+   "e_mirror_left",
+   "e_foglightcover_frontleft",
+   "e_foglightcover_frontright",
+   "e_headlightcover_frontleft",
+   "e_window_right",
+   "e_window_left",
+   "e_headlightcover_frontright"
+  ],
+  "examples": [
+   "ford_gt_stock.model",
+   "chevrolet_camaross_stock_rymer.model",
+   "chevrolet_camaro_legend_ii.model",
+   "chevrolet_camaross_stock.model",
+   "acschnitzer_acs1coupe_stock.model"
+  ],
   "folder": "models/vehicles",
   "models": 10,
   "parts": 30,
@@ -8311,6 +10021,12 @@
     "type": 11,
     "usage": 9
    }
+  ],
+  "where": [
+   [
+    "vehicles",
+    10
+   ]
   ]
  },
  "veh_Glass_c_d_h.fx": {
@@ -8326,6 +10042,27 @@
     0.0
    ]
   },
+  "elements": [
+   "e_window_backright",
+   "e_window_backleft",
+   "e_headlightcover_frontright",
+   "e_headlightcover_frontleft",
+   "e_window_frontright",
+   "e_window_frontleft",
+   "e_window_front",
+   "e_window_right",
+   "e_window_left",
+   "e_interior",
+   "e_headlightcover_backright",
+   "e_headlightcover_backleft"
+  ],
+  "examples": [
+   "opel_astraextreme_stock_shannon.model",
+   "opel_astraextreme_stock.model",
+   "opel_astra_extreme_legend_viii.model",
+   "dodge_vipergtsr_stock.model",
+   "dodge_vipergtsr_stock_carver.model"
+  ],
   "folder": "models/vehicles",
   "models": 23,
   "parts": 86,
@@ -8407,6 +10144,12 @@
     "type": 11,
     "usage": 9
    }
+  ],
+  "where": [
+   [
+    "vehicles",
+    23
+   ]
   ]
  },
  "veh_Glass_c_h.fx": {
@@ -8422,6 +10165,27 @@
     0.0
    ]
   },
+  "elements": [
+   "e_window_front",
+   "e_window_back",
+   "e_window_backright",
+   "e_window_backleft",
+   "e_window_rear",
+   "e_window_frontright",
+   "e_window_frontleft",
+   "e_window_top",
+   "e_headlightcover_backleft",
+   "e_headlightcover_backright",
+   "e_headlightcover_right",
+   "e_headlightcover_left"
+  ],
+  "examples": [
+   "toyota_supra_smooth.model",
+   "koenigsegg_ccxr_stock.model",
+   "landrover_lrx_stock.model",
+   "volkswagen_scirocco_24.model",
+   "nissan_350znismo_stock.model"
+  ],
   "folder": "models/vehicles",
   "models": 39,
   "parts": 106,
@@ -8510,6 +10274,12 @@
     "type": 11,
     "usage": 9
    }
+  ],
+  "where": [
+   [
+    "vehicles",
+    39
+   ]
   ]
  },
  "veh_Glass_d.fx": {
@@ -8525,6 +10295,12 @@
     0.0
    ]
   },
+  "elements": [
+   "e_bumper_front"
+  ],
+  "examples": [
+   "volkswagen_scirocco_24.model"
+  ],
   "folder": "models/vehicles",
   "models": 1,
   "parts": 1,
@@ -8616,6 +10392,12 @@
     "type": 11,
     "usage": 9
    }
+  ],
+  "where": [
+   [
+    "vehicles",
+    1
+   ]
   ]
  },
  "veh_Light_c.fx": {
@@ -8631,6 +10413,27 @@
     0.0
    ]
   },
+  "elements": [
+   "e_brakelight_centre",
+   "e_signallight_frontleft",
+   "e_signallight_frontright",
+   "e_foglight_frontleft",
+   "e_foglight_frontright",
+   "e_headlight_right",
+   "e_headlight_left",
+   "e_reverselight_left",
+   "e_runninglight_backright",
+   "e_runninglight_backleft",
+   "e_headlight_frontleft",
+   "e_headlight_frontright"
+  ],
+  "examples": [
+   "ford_gt_stock.model",
+   "dodge_challenger_race.model",
+   "chevrolet_camaross_stock_rymer.model",
+   "chevrolet_camaro_legend_ii.model",
+   "chevrolet_camaross_stock.model"
+  ],
   "folder": "models/vehicles",
   "models": 51,
   "parts": 288,
@@ -8754,6 +10557,12 @@
     "type": 11,
     "usage": 9
    }
+  ],
+  "where": [
+   [
+    "vehicles",
+    51
+   ]
   ]
  },
  "veh_Light_c_h.fx": {
@@ -8769,6 +10578,27 @@
     0.0
    ]
   },
+  "elements": [
+   "e_reverselight_right",
+   "e_reverselight_left",
+   "e_brakelight_left",
+   "e_rearlight_right",
+   "e_rearlight_left",
+   "e_brakelight_right",
+   "e_headlight_left",
+   "e_headlight_right",
+   "e_signallight_frontright",
+   "e_signallight_frontleft",
+   "e_headlight_frontright",
+   "e_headlight_frontleft"
+  ],
+  "examples": [
+   "corvette_zr1_stock.model",
+   "corvette_zr1_stock_talon.model",
+   "renault_meganesportr26_stock_shannon.model",
+   "renault_meganesportr26_stock.model",
+   "chevrolet_camaro_rat.model"
+  ],
   "folder": "models/vehicles",
   "models": 71,
   "parts": 636,
@@ -8882,6 +10712,12 @@
     "type": 11,
     "usage": 9
    }
+  ],
+  "where": [
+   [
+    "vehicles",
+    71
+   ]
   ]
  },
  "veh_Matt_a_b_c_f.fx": {
@@ -8903,6 +10739,20 @@
     0.0
    ]
   },
+  "elements": [
+   "e_exterior",
+   "e_door_left",
+   "e_door_right",
+   "e_mirror_right",
+   "e_mirror_left",
+   "e_wing_frontleft",
+   "e_wing_frontright"
+  ],
+  "examples": [
+   "ford_f150_offroad.model",
+   "shelby_mustanggt500_stock.model",
+   "ford_focusrs_race.model"
+  ],
   "folder": "models/vehicles",
   "models": 3,
   "parts": 25,
@@ -8972,6 +10822,12 @@
     "type": 11,
     "usage": 9
    }
+  ],
+  "where": [
+   [
+    "vehicles",
+    3
+   ]
   ]
  },
  "veh_Matt_a_b_c_f_h.fx": {
@@ -8999,6 +10855,26 @@
     0.0
    ]
   },
+  "elements": [
+   "e_exterior",
+   "e_wiper_left",
+   "e_wiper_right",
+   "e_brakecaliper_frontleft",
+   "e_brakecaliper_backleft",
+   "e_brakecaliper_backright",
+   "e_brakecaliper_frontright",
+   "e_interior",
+   "e_headlight_frontright",
+   "e_mirror_center",
+   "e_wiper_frontright",
+   "e_headlight_frontleft"
+  ],
+  "examples": [
+   "ford_focusrs_race.model",
+   "ford_f150_offroad.model",
+   "shelby_mustanggt500_stock.model",
+   "volkswagen_beetle_rat.model"
+  ],
   "folder": "models/vehicles",
   "models": 4,
   "parts": 29,
@@ -9058,6 +10934,12 @@
     "type": 11,
     "usage": 9
    }
+  ],
+  "where": [
+   [
+    "vehicles",
+    4
+   ]
   ]
  },
  "veh_Matt_a_b_f.fx": {
@@ -9079,6 +10961,21 @@
     0.0
    ]
   },
+  "elements": [
+   "e_bonnet",
+   "e_bumper_front",
+   "e_bumper_back",
+   "e_wing_frontleft",
+   "e_wing_frontright",
+   "e_boot"
+  ],
+  "examples": [
+   "ford_focusrs_race.model",
+   "shelby_mustanggt500_stock.model",
+   "foose_stallion_stock_khan.model",
+   "ford_f150_offroad.model",
+   "foose_stallion_stock.model"
+  ],
   "folder": "models/vehicles",
   "models": 8,
   "parts": 19,
@@ -9153,6 +11050,12 @@
     "type": 11,
     "usage": 9
    }
+  ],
+  "where": [
+   [
+    "vehicles",
+    8
+   ]
   ]
  },
  "veh_Matt_a_b_f_h.fx": {
@@ -9174,6 +11077,12 @@
     0.0
    ]
   },
+  "elements": [
+   "e_bumper_front"
+  ],
+  "examples": [
+   "ford_f150_offroad.model"
+  ],
   "folder": "models/vehicles",
   "models": 1,
   "parts": 3,
@@ -9238,6 +11147,12 @@
     "type": 11,
     "usage": 9
    }
+  ],
+  "where": [
+   [
+    "vehicles",
+    1
+   ]
   ]
  },
  "veh_Matt_b.fx": {
@@ -9259,6 +11174,12 @@
     0.0
    ]
   },
+  "elements": [
+   "e_bonnet"
+  ],
+  "examples": [
+   "bmw_1seriestii_stock.model"
+  ],
   "folder": "models/vehicles",
   "models": 1,
   "parts": 1,
@@ -9355,6 +11276,12 @@
     "type": 11,
     "usage": 9
    }
+  ],
+  "where": [
+   [
+    "vehicles",
+    1
+   ]
   ]
  },
  "veh_Matt_b_c_f.fx": {
@@ -9376,6 +11303,20 @@
     0.0
    ]
   },
+  "elements": [
+   "e_exterior",
+   "e_wing_frontright",
+   "e_door_left",
+   "e_door_right",
+   "e_wing_frontleft",
+   "e_boot"
+  ],
+  "examples": [
+   "ford_f150_offroad.model",
+   "lotus_exigecup260_stock.model",
+   "shelby_mustanggt500_stock.model",
+   "corvette_c3_drag.model"
+  ],
   "folder": "models/vehicles",
   "models": 4,
   "parts": 11,
@@ -9463,6 +11404,12 @@
     "type": 11,
     "usage": 9
    }
+  ],
+  "where": [
+   [
+    "vehicles",
+    4
+   ]
   ]
  },
  "veh_Matt_b_c_f_h.fx": {
@@ -9484,6 +11431,21 @@
     0.0
    ]
   },
+  "elements": [
+   "e_exterior",
+   "e_interior",
+   "e_exhaust",
+   "e_steeringwheel",
+   "e_signalstalk",
+   "e_mirror_center"
+  ],
+  "examples": [
+   "ford_f150_offroad.model",
+   "corvette_zr1_stock.model",
+   "foose_stallion_stock_khan.model",
+   "corvette_c3_drag.model",
+   "corvette_zr1_stock_talon.model"
+  ],
   "folder": "models/vehicles",
   "models": 7,
   "parts": 12,
@@ -9561,6 +11523,12 @@
     "type": 11,
     "usage": 9
    }
+  ],
+  "where": [
+   [
+    "vehicles",
+    7
+   ]
   ]
  },
  "veh_Matt_b_f.fx": {
@@ -9582,6 +11550,16 @@
     0.0
    ]
   },
+  "elements": [
+   "e_bumper_front",
+   "e_bonnet",
+   "e_bumper_back"
+  ],
+  "examples": [
+   "renault_meganetrophy_stock.model",
+   "corvette_c3_drag.model",
+   "ford_focusrs_race.model"
+  ],
   "folder": "models/vehicles",
   "models": 3,
   "parts": 4,
@@ -9672,6 +11650,12 @@
     "type": 11,
     "usage": 9
    }
+  ],
+  "where": [
+   [
+    "vehicles",
+    3
+   ]
   ]
  },
  "veh_Matt_b_f_h.fx": {
@@ -9693,6 +11677,12 @@
     0.0
    ]
   },
+  "elements": [
+   "e_bumper_front"
+  ],
+  "examples": [
+   "ford_f150_offroad.model"
+  ],
   "folder": "models/vehicles",
   "models": 1,
   "parts": 1,
@@ -9771,6 +11761,12 @@
     "type": 11,
     "usage": 9
    }
+  ],
+  "where": [
+   [
+    "vehicles",
+    1
+   ]
   ]
  },
  "veh_Matt_c_f.fx": {
@@ -9792,6 +11788,20 @@
     0.0
    ]
   },
+  "elements": [
+   "e_exterior",
+   "e_boot",
+   "defaultelement",
+   "e_door_right",
+   "e_door_left"
+  ],
+  "examples": [
+   "toyota_supratrd_stock.model",
+   "nissan_navara_offroad.model",
+   "hummer_h2_offroad.model",
+   "ford_f150_offroad.model",
+   "hummer_h2_offroad_drayke.model"
+  ],
   "folder": "models/vehicles",
   "models": 33,
   "parts": 45,
@@ -9896,6 +11906,12 @@
     "type": 11,
     "usage": 9
    }
+  ],
+  "where": [
+   [
+    "vehicles",
+    33
+   ]
   ]
  },
  "veh_Matt_c_f_h.fx": {
@@ -9923,6 +11939,25 @@
     0.0
    ]
   },
+  "elements": [
+   "e_tyre_frontright",
+   "e_tyre_backleft",
+   "e_tyre_frontleft",
+   "e_tyre_backright",
+   "e_exterior",
+   "e_tyre_rearright",
+   "e_brakecaliper_backright",
+   "e_brakecaliper_frontright",
+   "e_brakecaliper_backleft",
+   "e_brakecaliper_frontleft"
+  ],
+  "examples": [
+   "bmw_1seriestii_race_natalya.model",
+   "bmw_1seriestii_race.model",
+   "ford_bronco_offroad.model",
+   "ford_f100_offroad.model",
+   "volkswagen_beetle_offroad.model"
+  ],
   "folder": "models/vehicles",
   "models": 78,
   "parts": 610,
@@ -10017,6 +12052,12 @@
     "type": 11,
     "usage": 9
    }
+  ],
+  "where": [
+   [
+    "vehicles",
+    78
+   ]
   ]
  },
  "veh_Matt_f.fx": {
@@ -10038,6 +12079,16 @@
     0.0
    ]
   },
+  "elements": [
+   "e_bumper_front",
+   "e_bonnet"
+  ],
+  "examples": [
+   "koenigsegg_ccxr_stock.model",
+   "bmw_m3e92_drift.model",
+   "toyota_supratrd_stock.model",
+   "bmw_m3e92_legend_ix.model"
+  ],
   "folder": "models/vehicles",
   "models": 4,
   "parts": 4,
@@ -10143,6 +12194,12 @@
     "type": 11,
     "usage": 9
    }
+  ],
+  "where": [
+   [
+    "vehicles",
+    4
+   ]
   ]
  },
  "veh_Neon_c.fx": {
@@ -10158,6 +12215,13 @@
     0.0
    ]
   },
+  "elements": [
+   "e_mirror_right",
+   "e_mirror_left"
+  ],
+  "examples": [
+   "volkswagen_golfw12650_stock.model"
+  ],
   "folder": "models/vehicles",
   "models": 1,
   "parts": 2,
@@ -10244,6 +12308,12 @@
     "type": 11,
     "usage": 9
    }
+  ],
+  "where": [
+   [
+    "vehicles",
+    1
+   ]
   ]
  },
  "veh_Neon_c_g.fx": {
@@ -10259,6 +12329,18 @@
     0.0
    ]
   },
+  "elements": [
+   "e_licenseplate_front",
+   "e_licenseplate_back",
+   "e_licenseplate_rear"
+  ],
+  "examples": [
+   "nissan_navara_offroad.model",
+   "ford_gt_stock.model",
+   "chevrolet_socalhhr_stock.model",
+   "bmw_x548msport_stock.model",
+   "volkswagen_scirocco_24.model"
+  ],
   "folder": "models/vehicles",
   "models": 10,
   "parts": 15,
@@ -10341,6 +12423,12 @@
     "type": 11,
     "usage": 9
    }
+  ],
+  "where": [
+   [
+    "vehicles",
+    10
+   ]
   ]
  },
  "veh_Neon_c_g_h.fx": {
@@ -10356,6 +12444,21 @@
     0.0
    ]
   },
+  "elements": [
+   "e_licenseplate_back",
+   "e_interior",
+   "e_licenseplate_front",
+   "e_licenseplate_rear",
+   "defaultelement",
+   "e_exterior"
+  ],
+  "examples": [
+   "acschnitzer_acs1coupe_stock.model",
+   "chevrolet_camaro_stock.model",
+   "chevrolet_camaross_stock_rymer.model",
+   "bmw_1seriestii_race_natalya.model",
+   "volkswagen_golfw12650_stock.model"
+  ],
   "folder": "models/vehicles",
   "models": 78,
   "parts": 209,
@@ -10428,6 +12531,12 @@
     "type": 11,
     "usage": 9
    }
+  ],
+  "where": [
+   [
+    "vehicles",
+    78
+   ]
   ]
  },
  "veh_Neon_c_h.fx": {
@@ -10443,6 +12552,13 @@
     0.0
    ]
   },
+  "elements": [
+   "e_headlightcover_frontleft",
+   "e_headlightcover_frontright"
+  ],
+  "examples": [
+   "volkswagen_golfw12650_stock.model"
+  ],
   "folder": "models/vehicles",
   "models": 1,
   "parts": 2,
@@ -10519,6 +12635,12 @@
     "type": 11,
     "usage": 9
    }
+  ],
+  "where": [
+   [
+    "vehicles",
+    1
+   ]
   ]
  },
  "veh_Paint_a.fx": {
@@ -10534,6 +12656,14 @@
     0.0
    ]
   },
+  "elements": [
+   "e_bumper_front",
+   "e_bumper_back"
+  ],
+  "examples": [
+   "audi_s3_stock.model",
+   "nissan_skyliner34ztune_stock.model"
+  ],
   "folder": "models/vehicles",
   "models": 2,
   "parts": 2,
@@ -10640,10 +12770,33 @@
     "type": 11,
     "usage": 9
    }
+  ],
+  "where": [
+   [
+    "vehicles",
+    2
+   ]
   ]
  },
  "veh_Paint_a_b.fx": {
   "defaults": {},
+  "elements": [
+   "e_bonnet",
+   "e_bumper_front",
+   "e_bumper_back",
+   "e_wing_left",
+   "e_wing_right",
+   "e_boot",
+   "e_wing_frontleft",
+   "e_wing_frontright"
+  ],
+  "examples": [
+   "hennessey_vipervenom1000coupe_stock.model",
+   "chevrolet_camaross_drag.model",
+   "dodge_challenger_race.model",
+   "ford_focusrs_race.model",
+   "dodge_viperacr_stock.model"
+  ],
   "folder": "models/vehicles",
   "models": 44,
   "parts": 165,
@@ -10735,10 +12888,37 @@
     "type": 11,
     "usage": 9
    }
+  ],
+  "where": [
+   [
+    "vehicles",
+    44
+   ]
   ]
  },
  "veh_Paint_a_b_c.fx": {
   "defaults": {},
+  "elements": [
+   "e_exterior",
+   "e_door_right",
+   "e_door_left",
+   "e_boot",
+   "e_mirror_right",
+   "e_mirror_left",
+   "e_wing_frontleft",
+   "e_wing_frontright",
+   "e_door_frontright",
+   "e_door_frontleft",
+   "e_bumper_back",
+   "e_wing_right"
+  ],
+  "examples": [
+   "nissan_350z_drift.model",
+   "volkswagen_golfw12650_stock.model",
+   "ford_f150_offroad.model",
+   "audi_r8v10_stock.model",
+   "volkswagen_beetle_offroad.model"
+  ],
   "folder": "models/vehicles",
   "models": 47,
   "parts": 238,
@@ -10825,6 +13005,12 @@
     "type": 11,
     "usage": 9
    }
+  ],
+  "where": [
+   [
+    "vehicles",
+    47
+   ]
   ]
  },
  "veh_Paint_a_b_c_h.fx": {
@@ -10840,6 +13026,27 @@
     0.0
    ]
   },
+  "elements": [
+   "e_interior",
+   "e_exterior",
+   "e_mirror_left",
+   "e_mirror_right",
+   "e_steeringwheel",
+   "e_mirror_centre",
+   "e_headlight_frontleft",
+   "e_headlight_frontright",
+   "e_mirror_center",
+   "e_door_left",
+   "e_door_frontleft",
+   "e_door_frontright"
+  ],
+  "examples": [
+   "ford_mustanggtr_stock.model",
+   "volkswagen_beetle_offroad.model",
+   "ford_mustanggtr_legend_x.model",
+   "chevrolet_camaro_stock.model",
+   "corvette_zr1_stock.model"
+  ],
   "folder": "models/vehicles",
   "models": 25,
   "parts": 42,
@@ -10928,10 +13135,24 @@
     "type": 11,
     "usage": 9
    }
+  ],
+  "where": [
+   [
+    "vehicles",
+    25
+   ]
   ]
  },
  "veh_Paint_a_b_h.fx": {
   "defaults": {},
+  "elements": [
+   "e_bumper_front",
+   "e_bumper_back"
+  ],
+  "examples": [
+   "ford_f150_offroad.model",
+   "ford_focusrs_stock.model"
+  ],
   "folder": "models/vehicles",
   "models": 2,
   "parts": 2,
@@ -11010,6 +13231,12 @@
     "type": 11,
     "usage": 9
    }
+  ],
+  "where": [
+   [
+    "vehicles",
+    2
+   ]
   ]
  },
  "veh_Paint_a_c.fx": {
@@ -11025,6 +13252,17 @@
     0.0
    ]
   },
+  "elements": [
+   "e_exterior",
+   "e_boot"
+  ],
+  "examples": [
+   "nissan_skyliner34ztune_stock.model",
+   "shelby_mustanggt500_stock.model",
+   "ford_bronco_offroad.model",
+   "audi_s3_stock.model",
+   "chevrolet_camaross_stock.model"
+  ],
   "folder": "models/vehicles",
   "models": 6,
   "parts": 7,
@@ -11132,6 +13370,12 @@
     "type": 11,
     "usage": 9
    }
+  ],
+  "where": [
+   [
+    "vehicles",
+    6
+   ]
   ]
  },
  "veh_Paint_a_c_h.fx": {
@@ -11147,6 +13391,12 @@
     1.0
    ]
   },
+  "elements": [
+   "e_exterior"
+  ],
+  "examples": [
+   "volkswagen_beetle_offroad.model"
+  ],
   "folder": "models/vehicles",
   "models": 1,
   "parts": 1,
@@ -11236,6 +13486,12 @@
     "type": 11,
     "usage": 9
    }
+  ],
+  "where": [
+   [
+    "vehicles",
+    1
+   ]
   ]
  },
  "veh_Paint_b_c_h.fx": {
@@ -11247,6 +13503,27 @@
     0.0
    ]
   },
+  "elements": [
+   "e_exterior",
+   "e_interior",
+   "e_door_left",
+   "e_door_right",
+   "e_mirror_left",
+   "e_mirror_right",
+   "e_wiper_frontleft",
+   "e_wiper_frontright",
+   "e_wing_right",
+   "e_wing_left",
+   "e_door_frontleft",
+   "e_door_frontright"
+  ],
+  "examples": [
+   "bmw_1seriestii_stock.model",
+   "nissan_350znismo_stock.model",
+   "audi_s3_stock.model",
+   "ford_bronco_offroad.model",
+   "lotus_exigecup260_stock.model"
+  ],
   "folder": "models/vehicles",
   "models": 17,
   "parts": 37,
@@ -11334,75 +13611,58 @@
     "type": 11,
     "usage": 9
    }
+  ],
+  "where": [
+   [
+    "vehicles",
+    17
+   ]
   ]
  },
  "veh_Shadow.fx": {
-  "defaults": {
-   "g_vMtlParameters": [
-    0.09,
-    0.6,
-    1.0,
-    1.0,
-    0.71,
-    0.047,
-    0.047,
-    0.0
-   ]
-  },
+  "defaults": {},
+  "elements": [
+   "defaultelement"
+  ],
+  "examples": [
+   "hummer_h2_rat.model",
+   "acschnitzer_acs1coupe_stock.model",
+   "chevrolet_camaro_stock.model",
+   "chevrolet_camaross_stock_rymer.model",
+   "bmw_1seriestii_race_natalya.model"
+  ],
   "folder": "models/vehicles",
   "models": 80,
   "parts": 81,
   "passes": [
    {
-    "effect": "veh_Paint_a_b_c.fx",
-    "inputs": [
-     {
-      "count": 1,
-      "name": "g_DentTexture",
-      "type": "texture"
-     },
-     {
-      "count": 1,
-      "name": "g_ScratchTexture",
-      "type": "texture"
-     }
-    ]
+    "effect": "veh_Shadow.fx",
+    "inputs": []
    }
   ],
   "shadow": false,
   "skinned": false,
   "textures": {
-   "g_BumpTexture": [
-    "chevrolet_camaro_1",
-    "bump",
-    "nismo_bump"
-   ],
    "g_DentTexture": [
-    "paintdent",
-    "DefaultColour"
-   ],
-   "g_MeshTexture": [
-    "corvette_zr1_interior",
-    "carbonfibre",
-    "chevrolet_camaro_rhymer_liv",
-    "natalya_livery",
-    "gt500_alpha"
+    "paintdent"
    ],
    "g_ScratchTexture": [
-    "DefaultColour",
-    "chevrolet_camaro_scratches",
-    "opelastraextreme_scratch",
-    "nismo_scratch",
-    "bmw_ac_scratch"
+    "ccxr_rgb_scratch"
    ]
   },
-  "variants": 13,
+  "variants": 3,
   "vertex": [
    {
     "index": 0,
     "type": 6,
     "usage": 0
    }
+  ],
+  "where": [
+   [
+    "vehicles",
+    80
+   ]
   ]
  },
  "veh_paint.fx": {
@@ -11418,6 +13678,19 @@
     0.0
    ]
   },
+  "elements": [
+   "e_bumper_front",
+   "e_bumper_back",
+   "e_boot",
+   "e_bonnet"
+  ],
+  "examples": [
+   "volkswagen_beetle_offroad.model",
+   "renault_meganesportr26_stock_shannon.model",
+   "renault_meganesportr26_stock.model",
+   "nissan_skyliner34ztune_stock_harumi.model",
+   "nissan_skyliner34ztune_stock_ayumi.model"
+  ],
   "folder": "models/vehicles",
   "models": 5,
   "parts": 6,
@@ -11538,10 +13811,33 @@
     "type": 11,
     "usage": 9
    }
+  ],
+  "where": [
+   [
+    "vehicles",
+    5
+   ]
   ]
  },
  "veh_paint_b.fx": {
   "defaults": {},
+  "elements": [
+   "e_bonnet",
+   "e_bumper_front",
+   "e_bumper_back",
+   "e_wing_right",
+   "e_wing_left",
+   "e_boot",
+   "e_wing_frontleft",
+   "e_wing_frontright"
+  ],
+  "examples": [
+   "vauxhall_monarovxr_legend_iv.model",
+   "dodge_viperacr_legend_iii.model",
+   "opel_astraextreme_stock_shannon.model",
+   "dodge_challenger_tuner.model",
+   "ford_gt_stock.model"
+  ],
   "folder": "models/vehicles",
   "models": 42,
   "parts": 154,
@@ -11644,10 +13940,37 @@
     "type": 11,
     "usage": 9
    }
+  ],
+  "where": [
+   [
+    "vehicles",
+    42
+   ]
   ]
  },
  "veh_paint_b_c.fx": {
   "defaults": {},
+  "elements": [
+   "e_exterior",
+   "e_boot",
+   "e_door_right",
+   "e_door_left",
+   "e_mirror_right",
+   "e_mirror_left",
+   "e_wing_frontleft",
+   "e_wing_frontright",
+   "e_door_frontright",
+   "e_door_frontleft",
+   "e_bumper_back",
+   "defaultelement"
+  ],
+  "examples": [
+   "chevrolet_camaro_rat.model",
+   "nissan_350znismo_stock.model",
+   "nissan_skyliner34ztune_stock_harumi.model",
+   "volkswagen_beetle_rat.model",
+   "nissan_skyliner34ztune_stock_ayumi.model"
+  ],
   "folder": "models/vehicles",
   "models": 43,
   "parts": 208,
@@ -11745,6 +14068,12 @@
     "type": 11,
     "usage": 9
    }
+  ],
+  "where": [
+   [
+    "vehicles",
+    43
+   ]
   ]
  },
  "veh_paint_c.fx": {
@@ -11760,6 +14089,19 @@
     0.0
    ]
   },
+  "elements": [
+   "e_exterior",
+   "e_boot",
+   "e_door_right",
+   "e_door_left"
+  ],
+  "examples": [
+   "volkswagen_beetle_offroad.model",
+   "nissan_skyliner34ztune_stock_harumi.model",
+   "nissan_skyliner34ztune_stock_ayumi.model",
+   "chevrolet_camaross_stock_rymer.model",
+   "nissan_350znismo_stock.model"
+  ],
   "folder": "models/vehicles",
   "models": 6,
   "parts": 9,
@@ -11877,6 +14219,12 @@
     "type": 11,
     "usage": 9
    }
+  ],
+  "where": [
+   [
+    "vehicles",
+    6
+   ]
   ]
  }
 }

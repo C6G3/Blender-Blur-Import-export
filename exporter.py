@@ -18,14 +18,28 @@ normals; after Clear Custom Split Normals, Blender's own normals are written.
 Detail levels: a part's level n comes from the "LOD<n>" mesh if it was
 imported, else from the next more detailed level that is there (so editing
 only the LOD0 mesh draws the edit at every distance). Levels the part didn't
-use stay unused.
+use stay unused. Parts that draw exactly as before keep their bytes.
+
+Placement: meshes are measured against where the file places their element
+("blur_matrix" on the element empties), so moving, turning or scaling a part
+or its empty moves the part's vertices.
+
+Materials: for each part, the material in its slot (most detailed level) must
+use the part's own effect; its number inputs and texture slots are written
+into the part's material values. A texture slot can take any image the model
+holds, or a new picture: a .dds is stored as it is, other pictures are
+compressed to DXT1/DXT5 with mipmaps, and added to the model's texture table.
 """
 
-import numpy as np
-from mathutils import kdtree
+import re
+import struct
 
-from . import importer
-from .blur import chunks, parts, scene
+import bpy
+import numpy as np
+from mathutils import Matrix, kdtree
+
+from . import importer, materials
+from .blur import chunks, dds, parts, scene, textures
 
 
 class ExportError(Exception):
@@ -53,11 +67,16 @@ def _world(obj):
 
 
 def _element_space(obj, root, empties):
-    """Matrix from the object's local space into its Blur element's space."""
+    """Matrix from the object's local space into its Blur element's space, as the file places
+    that element: moving or turning an element's empty in Blender moves its part."""
     element = obj.get("blur_element", -1)
     empty = empties.get(element)
-    ref = empty if empty is not None else root
-    return _world(ref).inverted_safe() @ _world(obj)
+    if empty is not None and "blur_matrix" in empty:
+        m = list(empty["blur_matrix"])
+        ref = _world(root) @ Matrix([m[i:i + 4] for i in range(0, 16, 4)])
+    else:
+        ref = _world(empty if empty is not None else root)
+    return ref.inverted_safe() @ _world(obj)
 
 
 def _nearest(points, targets):
@@ -200,28 +219,60 @@ def _encode_slot(sd, part, mesh, slot, name):
             parts.encode(rows, e, uv[corners])
     e = parts.find(els, parts.COLOR)
     if e is not None and mesh.color is not None:
-        parts.encode(rows, e, mesh.color[corners])
+        colour = mesh.color[corners]
+        # Blender's byte colours round: within 1.5/255 of the old colour keeps the old bytes
+        repainted = np.abs(colour - parts.decode(rows, e, 4)).max(axis=1) > 1.5 / 255
+        _encode_where(rows, repainted, e, colour)
     verts, numbers = _unique_rows(rows)
     if len(verts) > 0xFFFF:
         raise ExportError(f"{name}: {len(verts)} vertices in one part, at most 65535 fit — split it")
     return verts, numbers.reshape(-1, 3)[:, [0, 2, 1]]   # back to Blur's corner order (axes mirrored)
 
 
+
+
+def _signature(rows, tris):
+    """One level's triangles as a sorted list of their corners' bytes (each triangle rotated
+    to start at its smallest corner, so the winding counts)."""
+    if tris is None or not len(tris):
+        return []
+    out = []
+    for a, b, c in np.asarray(tris).tolist():
+        t = (rows[a].tobytes(), rows[b].tobytes(), rows[c].tobytes())
+        out.append(min(t, t[1:] + t[:1], t[2:] + t[:2]))
+    return sorted(out)
+
+
+def _unchanged(sd, part, vertices, have):
+    """True if the levels in Blender (`have`: level -> triangles) draw the part exactly as the
+    file does. Levels that weren't imported then keep the file's own too."""
+    old = sd.rows(part.vb)[part.base:part.base + part.span]
+    for level, tris in have.items():
+        if level < len(part.lods) and                 _signature(vertices, tris) != _signature(old, sd.triangles(part, level)):
+            return False
+    return True
+
+
 def export_model(context, root, source, out_path):
-    """Writes `source` with the edits under `root` to `out_path`; returns notes for the user."""
+    """Writes `source` with the edits under `root` to `out_path`; returns (summary, notes)."""
     with open(source, "rb") as fh:
         data = fh.read()
     sd = importer.SceneData(data)
     by_key = {p.key: p for p in sd.parts}
     objects = _descendants(root)
     empties = {o["blur_element"]: o for o in objects if o.type == "EMPTY" and "blur_element" in o}
+    for obj in objects:
+        if obj.type == "MESH" and obj.mode == "EDIT":
+            obj.update_from_editmode()          # edits still in Edit Mode
     depsgraph = context.evaluated_depsgraph_get()
 
     pieces = {}            # key -> lod -> [(rows, triangles or None)]
+    slot_material = {}     # key -> (material, where, level) from the most detailed level seen
+    names = {}             # key -> object name, for the report
     notes = []
     for obj in objects:
         if obj.type != "MESH" or "blur_parts" not in obj:
-            if obj.type == "MESH":
+            if obj.type == "MESH" and "blur_collision" not in obj:
                 notes.append(f"{obj.name}: not from the imported model, skipped (new parts aren't supported yet)")
             continue
         keys = str(obj["blur_parts"]).split(";")
@@ -238,6 +289,10 @@ def export_model(context, root, source, out_path):
                 continue
             name = f"{obj.name}, slot {slot + 1}"
             pieces.setdefault(key, {}).setdefault(lod, []).append(_encode_slot(sd, part, mesh, slot, name))
+            mat = obj.material_slots[slot].material if slot < len(obj.material_slots) else None
+            if key not in slot_material or lod < slot_material[key][2]:
+                slot_material[key] = (mat, name, lod)
+            names.setdefault(key, re.sub(r"( LOD\d+)?(\.\d+)?$", "", obj.name))
 
     edits = {}
     for key, levels in pieces.items():
@@ -264,7 +319,10 @@ def export_model(context, root, source, out_path):
         vertices = np.concatenate(rows) if rows else np.zeros((0, stride), np.uint8)
         if len(vertices) > 0xFFFF:
             raise ExportError(f"part {key}: {len(vertices)} vertices over its detail levels, at most 65535 fit")
-        edits[key] = parts.Edit(vertices, lods)
+        if not _unchanged(sd, part, vertices, have):
+            edits[key] = parts.Edit(vertices, lods)   # parts drawn as before keep their bytes
+
+    changed_sets, added = _apply_materials(sd, by_key, slot_material, root.get("blur_model", ""), notes)
 
     try:
         parts.rebuild(sd.scene, edits)
@@ -273,5 +331,147 @@ def export_model(context, root, source, out_path):
         raise ExportError(str(e)) from e
     with open(out_path, "wb") as fh:
         fh.write(out)
-    return len(edits), notes
+    changed = sorted({names.get(k, k) for k in edits})
+    shown = ", ".join(changed[:6]) + ("…" if len(changed) > 6 else "")
+    summary = (f"geometry of {len(edits)} part(s) changed" + (f" ({shown})" if changed else "")
+               + f"; {changed_sets} material(s) changed; {added} new texture(s)")
+    return summary, notes
 
+
+# ---- materials -------------------------------------------------------------------------------------
+
+_INT = {0: "<b", 1: "<B", 2: "<h", 3: "<H", 4: "<i", 5: "<I"}
+
+
+def _values_table(rl):
+    return rl["values"] if "values" in rl else rl["materials"]["values"]
+
+
+def _texture_entry(source):
+    """"k:3" / "p:5:0" -> the render list texture table's (package, index) pair."""
+    bits = source.split(":")
+    if bits[0] == "k":
+        return [0xFFFFFFFF, int(bits[1])]
+    return [int(bits[1]), int(bits[2])]
+
+
+def _picture(img):
+    """(format, width, height, mips, pixels) to store for an image: a .dds as it is, any other
+    picture compressed to DXT1 (DXT5 if it has transparency) with a full mip chain."""
+    raw = None
+    if img.packed_file is not None:
+        raw = bytes(img.packed_file.data)
+    elif img.filepath:
+        try:
+            with open(bpy.path.abspath(img.filepath), "rb") as fh:
+                raw = fh.read()
+        except OSError:
+            raw = None
+    if raw and raw[:4] == b"DDS ":
+        got = dds.read(raw)
+        if got is not None:
+            return got
+    w, h = img.size
+    if not w or not h:
+        raise ExportError(f"image {img.name} has no pixels (is its file missing?)")
+    pw, ph = 1 << (w - 1).bit_length(), 1 << (h - 1).bit_length()
+    src = img
+    if (pw, ph) != (w, h):              # Blur's textures are powers of two
+        src = img.copy()
+        src.scale(pw, ph)
+    px = np.empty(pw * ph * 4, np.float32)
+    src.pixels.foreach_get(px)
+    if src is not img:
+        bpy.data.images.remove(src)
+    rgba = np.clip(np.rint(px.reshape(ph, pw, 4)[::-1] * 255), 0, 255).astype(np.uint8)   # top row first
+    code, mips, data = textures.compress(rgba, bool((rgba[..., 3] < 250).any()))
+    return code, pw, ph, mips, data
+
+
+def _apply_materials(sd, by_key, slot_material, model_path, notes):
+    """Writes the Blender materials' numbers and textures into the parts' material values.
+    Returns (value sets changed, textures added)."""
+    written = {}           # (render list, value set) -> material name
+    new_textures = {}      # image name -> keyed texture number
+    changed = 0
+    for key, (mat, where, _lod) in sorted(slot_material.items()):
+        part = by_key[key]
+        if mat is None:
+            continue
+        table = _values_table(part.rl)
+        if part.values >= len(table["sets"]):
+            continue
+        vs = table["sets"][part.values]
+        mt = part.rl["materials"]["types"][vs["type"]]
+        if not mt["effect"]:
+            continue                       # shadow hulls and other unnamed entries
+        effect = materials.material_effect(mat)
+        node = materials.group_node(mat)
+        if not effect or node is None:
+            notes.append(f"{where}: {mat.name} isn't a Blur material, the part keeps its own")
+            continue
+        if effect.lower() != mt["effect"].lower():
+            notes.append(f"{where}: {mat.name} uses {effect} but the part is drawn with {mt['effect']}; "
+                         "changing a part's effect isn't supported yet, it keeps its own")
+            continue
+        slot_id = (id(part.rl), part.values)
+        if slot_id in written:
+            if written[slot_id] != mat.name:
+                notes.append(f"{where}: shares its material values with a part using {written[slot_id]}, "
+                             f"so {written[slot_id]}'s were written")
+            continue
+        written[slot_id] = mat.name
+        if not mt["size"]:
+            continue
+        values, i, dirty = list(vs["values"]), 0, False
+        for el in mt["elements"]:
+            sockets = materials.number_sockets(el["name"], el["count"])
+            for c in range(el["count"]):
+                old = new = values[i]
+                if el["type"] == 6 and sockets[c] in node.inputs:
+                    new = struct.pack("<f", float(node.inputs[sockets[c]].default_value))
+                    if struct.unpack("<f", new)[0] == struct.unpack("<f", old)[0]:
+                        new = old
+                elif el["type"] in _INT and sockets[c] in node.inputs:
+                    try:
+                        new = struct.pack(_INT[el["type"]], int(node.inputs[sockets[c]].default_value))
+                    except struct.error:
+                        notes.append(f"{where}: {sockets[c]} is out of range, kept")
+                elif el["type"] == 7 and c == 0:
+                    new = _texture_value(sd, part, mat, el["name"], old, model_path, new_textures, where, notes)
+                if new != old:
+                    values[i] = new
+                    dirty = True
+                i += 1
+        if dirty:
+            vs["values"] = values
+            changed += 1
+    return changed, len(new_textures)
+
+
+def _texture_value(sd, part, mat, input_name, old, model_path, new_textures, where, notes):
+    """The TEXTURE_INDEX bytes for the image in one of a material's texture slots."""
+    tex = mat.node_tree.nodes.get(input_name)
+    img = tex.image if tex is not None and tex.type == "TEX_IMAGE" else None
+    if img is None:
+        return old
+    items = part.rl["textures"]["items"]
+    current = struct.unpack("<I", old)[0]
+    if img.get("blur_source") and img.get("blur_model_path", model_path) == model_path:
+        entry = _texture_entry(str(img["blur_source"]))
+    else:
+        if img.name not in new_textures:
+            colour = materials.texture_role(input_name) in ("color", "emission")
+            code, w, h, mips, pixels = _picture(img)
+            if code not in dds.FORMATS:
+                raise ExportError(f"{where}: {img.name} is in a format Blur can't use")
+            new_textures[img.name] = textures.add_keyed(sd.scene, img.name, code, w, h, mips, pixels, colour)
+            notes.append(f"{img.name}: added to the model as {dds.name(code)}, {w}x{h}, {mips} mip levels")
+        entry = [0xFFFFFFFF, new_textures[img.name]]
+    if current < len(items) and list(items[current]) == entry:
+        return old
+    for i, e in enumerate(items):
+        if list(e) == entry:
+            return struct.pack("<I", i)
+    items.append(entry)
+    return struct.pack("<I", len(items) - 1)

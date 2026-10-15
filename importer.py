@@ -23,15 +23,17 @@ exporter puts edited meshes back. Materials and textures come from
 blur.model.
 """
 
+import colorsys
 import os
 import tempfile
 
+import bmesh
 import bpy
 import numpy as np
 from mathutils import Matrix
 
 from . import materials
-from .blur import chunks, dds, parts, scene
+from .blur import chunks, collision, dds, parts, scene
 from .blur import model as blurmodel
 
 
@@ -241,6 +243,19 @@ def build_mesh(sd, name, items, mats):
     return mesh, [p.key for p in keys]
 
 
+def texture_sources(scene_dict, model):
+    """Where each of model.textures is stored: "k:<n>" (n-th keyed texture) or "p:<package>:<n>"
+    (streamed), as the render lists' texture tables name them; [] if the two readers disagree."""
+    out = [f"k:{i}" for i in range(len(scene_dict["scene"]["keyed"]))]
+    for pi, p in enumerate(scene_dict["packages"]):
+        out += [f"p:{pi}:{j}" for j in range(len(p["levels"][0]["textures"]))]
+    names = [t["name"] for t in scene_dict["scene"]["keyed"]]
+    names += [t.get("name", "") for p in scene_dict["packages"] for t in p["levels"][0]["textures"]]
+    if len(out) != len(model.textures) or any(a and a != t.name for a, t in zip(names, model.textures)):
+        return []
+    return out
+
+
 def part_materials(model, sd, group_materials):
     """part key -> Blender material, via the model.Group drawing the same range."""
     by_range = {}
@@ -263,7 +278,138 @@ def part_materials(model, sd, group_materials):
     return out
 
 
-def import_model(context, path, all_lods=False, shadows=True):
+# ---- collision -----------------------------------------------------------------------------
+
+def _placement(rotation, position):
+    """Blender matrix of a Blur placement (p' = p * R + position, Direct3D axes)."""
+    r, t = rotation, position
+    m = Matrix(((r[0], r[3], r[6], t[0]), (r[1], r[4], r[7], t[1]), (r[2], r[5], r[8], t[2]), (0, 0, 0, 1)))
+    return SWAP @ m @ SWAP
+
+
+def _surface_material(name):
+    """A plain viewport material per collision surface (Tarmac, Metal, Glass...)."""
+    full = f"Blur collision: {name}"
+    mat = bpy.data.materials.get(full)
+    if mat is None:
+        mat = bpy.data.materials.new(full)
+        h = (hash(name) % 1000) / 1000.0
+        mat.diffuse_color = (*colorsys.hsv_to_rgb(h, 0.6, 0.9), 0.6)
+        mat["blur_surface"] = name
+    return mat
+
+
+def _shape_mesh(shape, name):
+    """A mesh for one collision shape, in its own space (Blender axes)."""
+    t = shape["type"]
+    bm = bmesh.new()
+    if "vertices" in shape:
+        verts = [bm.verts.new((v[0], v[2], v[1])) for v in shape["vertices"]]
+        bm.verts.ensure_lookup_table()
+        surfaces = shape.get("surfaces") or [shape.get("material", 0)] * len(shape["triangles"])
+        names = []
+        for (a, b, c), surf in zip(shape["triangles"], surfaces):
+            if len({a, b, c}) < 3 or max(a, b, c) >= len(verts):
+                continue
+            try:
+                f = bm.faces.new((verts[a], verts[c], verts[b]))   # mirrored axes: reverse the corners
+            except ValueError:
+                continue                                          # the same triangle twice
+            label = collision.surface_name(surf)
+            if label not in names:
+                names.append(label)
+            f.material_index = names.index(label)
+    else:
+        names = [collision.surface_name(shape.get("material", 0))]
+        if t == 2:
+            hx, hy, hz = shape["half"]
+            bmesh.ops.create_cube(bm, size=2.0)
+            bmesh.ops.scale(bm, vec=(hx, hz, hy), verts=bm.verts)
+        elif t == 4:
+            bmesh.ops.create_uvsphere(bm, u_segments=16, v_segments=8, radius=max(shape["radius"], 1e-4))
+        elif t in (5, 6, 15):
+            h, rad = max(shape["height"], 1e-4), max(shape["radius"], 1e-4)
+            if t == 15:
+                bmesh.ops.create_cone(bm, cap_ends=True, segments=16, radius1=rad, radius2=0.0, depth=h)
+            else:
+                bmesh.ops.create_cone(bm, cap_ends=True, segments=16, radius1=rad, radius2=rad, depth=h)
+            if t == 5:   # capsule: round the ends
+                for z in (h / 2, -h / 2):
+                    ret = bmesh.ops.create_uvsphere(bm, u_segments=16, v_segments=8, radius=rad)
+                    bmesh.ops.translate(bm, vec=(0, 0, z), verts=ret["verts"])
+        else:
+            bm.free()
+            return None
+    mesh = bpy.data.meshes.new(name)
+    bm.to_mesh(mesh)
+    bm.free()
+    for label in names:
+        mesh.materials.append(_surface_material(label))
+    return mesh
+
+
+def import_collision(data, model, model_name, parent_coll, root):
+    """The model's Coll chunk as objects in a "<model> Collision" collection. Returns the
+    collection (None if the model has none) and notes."""
+    path = chunks.find_path(chunks.parse(data), "Coll")
+    if not path:
+        return None, []
+    c = path[-1]
+    try:
+        objects = collision.read(data, c.payload_offset, c.offset + c.size)
+    except collision.CollisionError as e:
+        return None, [f"collision not read: {e}"]
+    if not objects:
+        return None, []
+    coll = bpy.data.collections.new(f"{model_name} Collision")
+    parent_coll.children.link(coll)
+    by_tag = {e.tag: e.name for e in model.elements if e.tag not in (0, 0xFFFFFFFF)}
+    templates = {}
+
+    def label(shape):
+        el = by_tag.get(shape["handle"])
+        kind = collision.TYPE_NAMES.get(shape["type"], f"type {shape['type']}")
+        return f"COL {el} {kind}" if el else f"COL {kind}"
+
+    def add(shape, matrix, parent):
+        mesh = _shape_mesh(shape, label(shape))
+        obj = bpy.data.objects.new(label(shape), mesh)
+        obj["blur_collision"] = collision.TYPE_NAMES.get(shape["type"], str(shape["type"]))
+        obj["blur_handle"] = f"{shape['handle']:#010x}"
+        coll.objects.link(obj)
+        obj.parent = parent
+        obj.matrix_parent_inverse.identity()
+        obj.matrix_basis = matrix
+        if mesh is None:
+            obj.empty_display_type = "PLAIN_AXES"
+            obj.empty_display_size = 0.1
+        else:
+            obj.display_type = "SOLID"
+            obj.show_wire = True
+        return obj
+
+    for o in objects:
+        if o["type"] == 11:
+            templates[o["handle"]] = o
+    for o in objects:
+        # a top-level object's space starts at its centre of mass; a body's shapes are placed
+        # in it (checked: props then line up with their visible geometry to the millimetre)
+        m = _placement(o["rotation"], [a + b for a, b in zip(o["position"], o["centre"])])
+        if o["type"] == 10:
+            src = templates.get(o["instance_of"])
+            if src is None:
+                continue
+            o = dict(src, handle=o["handle"], rotation=o["rotation"], position=o["position"])
+        if o["type"] == 7:
+            body = add(o, m, root)
+            for child in o["shapes"]:
+                add(child, _placement(child["rotation"], child["position"]), body)
+        else:
+            add(o, m, root)
+    return coll, []
+
+
+def import_model(context, path, all_lods=False, shadows=True, collisions=True):
     with open(path, "rb") as fh:
         data = fh.read()
     model = blurmodel.read(data)
@@ -296,9 +442,16 @@ def import_model(context, path, all_lods=False, shadows=True):
         obj.parent = empties[e.parent] if has_parent else root
         world = element_matrix(e)
         obj.matrix_basis = (element_matrix(model.elements[e.parent]).inverted_safe() @ world) if has_parent else world
+        # the placement in the file (relative to the root): the exporter measures meshes against
+        # it, so moving an element's empty moves that part's vertices
+        obj["blur_matrix"] = [x for row in world for x in row]
 
     images = load_textures(model, model_name, os.path.join(tempfile.gettempdir(), "blur_model_tools"))
     sd = SceneData(data)
+    for img, source in zip(images, texture_sources(sd.scene, model)):
+        if img is not None and source:
+            img["blur_source"] = source      # which stored texture this is (for the exporter)
+            img["blur_model_path"] = path
     mats = part_materials(model, sd, make_materials(model, images, model_name))
 
     lod_count = max((len(p.lods) for p in sd.parts), default=1)
@@ -348,6 +501,11 @@ def import_model(context, path, all_lods=False, shadows=True):
     for lod, c in lod_colls.items():
         if lod:
             _exclude(context, c)
+    if collisions:
+        coll_coll, notes = import_collision(data, model, model_name, coll, root)
+        model.notes.extend(notes)
+        if coll_coll is not None:
+            _exclude(context, coll_coll)
     return model, made
 
 

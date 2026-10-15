@@ -213,6 +213,8 @@ def setup_material(mat, effect, images=None, values=None):
         tree.links.new(tex.outputs["Alpha"], node.inputs[input_name + " Alpha"])
         if texture_role(input_name) == "color" and active is None:
             active = tex
+    if active is None:
+        active = _preview_node(tree, effect)
     # Solid view and Workbench show the active image node: make it the colour texture
     tree.nodes.active = active or node
     for input_name, numbers in (values or {}).items():
@@ -225,6 +227,53 @@ def setup_material(mat, effect, images=None, values=None):
     if hasattr(mat, "surface_render_method"):
         mat.surface_render_method = "BLENDED" if blended else "DITHERED"
     return node
+
+
+PREVIEW_NODE = "Preview Colour"
+
+
+def _preview_colour(effect):
+    low = effect.lower()
+    if low.startswith(("veh_paint", "veh_shadow")):
+        return (0.25, 0.3, 0.45, 1.0)       # the game picks the car's paint colour
+    if low.startswith("veh_glass"):
+        return (0.05, 0.06, 0.07, 1.0)
+    return (0.6, 0.6, 0.6, 1.0)
+
+
+def _preview_node(tree, effect):
+    """Effects without a colour texture (paint: Blur picks the colour; untextured parts):
+    a plain-colour image node, not connected, so Solid view / Workbench show that colour
+    instead of a damage or scratch map. Preview only: it isn't exported."""
+    name = f"Blur preview: {effect.rsplit('.', 1)[0]}"
+    img = bpy.data.images.get(name)
+    if img is None:
+        img = bpy.data.images.new(name, 8, 8)
+        img.generated_color = _preview_colour(effect)
+    tex = tree.nodes.new("ShaderNodeTexImage")
+    tex.name = tex.label = PREVIEW_NODE
+    tex.image = img
+    tex.location = (-420, 560)
+    return tex
+
+
+def preview_image(mat):
+    """The plain preview colour image of a material, or None."""
+    node = mat.node_tree.nodes.get(PREVIEW_NODE) if getattr(mat, "node_tree", None) else None
+    return node.image if node is not None else None
+
+
+def assign_image(mat, input_name, img):
+    """Puts `img` in the material's texture slot `input_name` (its Image Texture node)."""
+    tex = mat.node_tree.nodes.get(input_name)
+    if tex is None or tex.type != "TEX_IMAGE":
+        return False
+    tex.image = img
+    if texture_role(input_name) != "color":
+        img.colorspace_settings.name = "Non-Color"
+    else:
+        mat.node_tree.nodes.active = tex
+    return True
 
 
 def group_node(mat):
