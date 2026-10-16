@@ -27,6 +27,8 @@ letter removes the same inputs and vertex data in every family). Descriptions of
 
 - [How an effect name is built](#how-an-effect-name-is-built)
 - [Inputs](#inputs)
+- [How lights work](#how-lights-work)
+- [How damage works](#how-damage-works)
 - [Vehicle effects](#vehicle-effects)
 - [World and prop effects](#world-and-prop-effects)
 - [Character effects](#character-effects)
@@ -46,7 +48,7 @@ combination; models use the ones in [Every effect](#every-effect).
 |---|---|---|
 | `a` | the part's colour texture | `g_MeshTexture` (the part gets a plain colour) |
 | `b` | the bump (normal) map | `g_BumpTexture` |
-| `c` | damage control points: the part doesn't bend with the car's damage volume | vertex texture coordinates 4 (control point numbers) |
+| `c` | damage control points: the part doesn't follow the car's control points (whole sections bending, see [How damage works](#how-damage-works)) | vertex texture coordinates 4 (two control point numbers and a blend weight) |
 | `d` | (glass) the dent / crack normal map | `g_DentTexture` |
 | `f` | scratches | `g_ScratchTexture` |
 | `g` | (neon) the damaged texture | `g_DamageTexture` |
@@ -78,8 +80,8 @@ many slots):
 | `g_DentTexture` | Damage normal map faded in as the part is hit: `paintdent` on paint, `smashedglass_nrm` (cracks) on glass |
 | `g_ScratchTexture` | Scratch mask: where damage scrapes the paint off to the undercoat / scuff colour; `smashedglass` (the shattered pattern) on glass. `DefaultColour` = no scratches |
 | `g_DamageTexture` | Neon: the texture shown once the part is damaged |
-| `g_sOffTexture`, `g_sOnTexture` | Lights: the lamp unlit and lit (the game switches them for headlights, brake lights, indicators) |
-| `g_sOffTextureDamage`, `g_sOnTextureDamage` | the same once the lamp is broken |
+| `g_sOffTexture`, `g_sOnTexture` | Lights: the lamp unlit and lit — usually one texture holding both, see [How lights work](#how-lights-work) |
+| `g_sOffTextureDamage`, `g_sOnTextureDamage` | the same once the lamp is smashed |
 | `g_tAlbedo` | World / character colour texture (`*_diff`, `*_skin`) |
 | `g_tMaterial` | Material map (`*_ipr0`): shine / reflection mask; `DefaultColour` = plain |
 | `g_tNormal` | World normal map |
@@ -115,6 +117,66 @@ bones (`g_mPalette`) and animation (`g_fAnimatedNeonX`).
 **Passes.** Most car effects draw in three passes: the main one (the inputs above), an
 empty one, and a lighting pass with the data inputs. Blender shows the main pass; the
 exporter keeps the others as they are.
+
+## How lights work
+
+Read from the compiled `veh_Light_c_h` shader and the game's lamp parts.
+
+- **One texture holds every lamp several times**, like a sprite sheet: **off**, **on** (glowing)
+  and **smashed**. On the Viper (`dodge_viper_lights`) the copies sit side by side (headlights,
+  fog lights, indicators) or one above the other (rear lights). All four texture slots
+  usually point at this one texture.
+- **Each vertex carries four positions in it:**
+
+  | Vertex data | Picture | UV map in Blender |
+  |---|---|---|
+  | UV, first pair | off | `UVMap` |
+  | UV, second pair | on | `UV On / Dents` |
+  | UV 2, first pair | smashed, off | `UVMap.001` |
+  | UV 2, second pair | smashed, on | `UV Smashed On` |
+
+- **Nothing slides at run time.** The shader reads the off and the on picture together and
+  mixes them: colour = off + (on − off) × amount, where amount = the on picture's alpha × a
+  number the game sets for each lamp as it draws it (`g_vRenderColour`, 4th value): 0 off,
+  1 fully on, in between dimmer. The on picture's alpha marks what glows.
+- The smashed pair is mixed the same way; the game then fades from intact to smashed with
+  `g_vDamageSettings`.
+- A lit lamp ignores the scene's lighting (it shows at full brightness); an unlit one is
+  shaded like any other part.
+- **Which lamp lights up is decided by its element's name**: `e_HeadLight_…`,
+  `e_RearAndBrakeLight_…`, `e_BrakeLight_…`, `e_ReverseLight_…`, `e_SignalLight_…`,
+  `e_FogLight_…`. Blur.exe holds these names and states such as `BrakeLightsOn`,
+  `ReverseLightsOn` and `LeftIndicatorOn` (how it maps one to the other isn't traced yet).
+  Keep the names when you edit; a new lamp needs one of them and the `veh_Light` effect.
+- In Blender, move a lamp's `UV On / Dents` together with its `UVMap`, or the glow lands in
+  the wrong place.
+
+## How damage works
+
+Read from the compiled car shaders (`veh_Paint_a_b_c`, `veh_Default_b_f`…). The game bends a
+car as it draws it, in the vertex shader; the model holds what each vertex needs:
+
+1. **Control points** (vertex data *damage control points*; letter `c` removes it). The game
+   moves 18 points around the car (`g_vControlPoints`). Each vertex names two of them and a
+   blend weight (3rd byte ÷ 254) and moves by that blend of the two points' movement, so
+   whole sections bend together. On the Viper the front bumper follows points 0–2 and the
+   bonnet 6–8.
+2. **How hard each spot was hit.** A top-down damage map of the car
+   (`DamageInfoTextureSampler`, looked up at the vertex's place across the car) holds the
+   amount.
+3. **Crumple offsets** (vertex data *damage offsets*; letter `h` removes them): where the
+   vertex goes, and how its normal turns, when its spot is fully damaged. The vertex moves
+   that far times the amount from step 2 — the model's own pre-made crashed shape.
+4. **Dents.** A 3D damage volume (`DamageVolumeTextureSampler3d`) pushes the vertex further,
+   scaled by `g_vCodeDamageScale`. Parts without crumple offsets get this too (lamps, for
+   example).
+5. **Surface.** Paint and glass fade in the dent normal map (`g_DentTexture`, placed by the
+   second pair of UV — `UV On / Dents` in Blender) and the scratch mask (`g_ScratchTexture`)
+   as their spot gets damaged; lamps switch to their smashed picture; neon parts to
+   `g_DamageTexture`.
+
+The Blender add-on keeps each vertex's control points and crumple offsets from the original
+model; they can't be edited in Blender yet.
 """
 
 FAMILIES = [
@@ -127,8 +189,8 @@ FAMILIES = [
         ("veh_Alloy", "Wheel rims (and some metal trim): shiny metal, no damage data."),
         ("veh_Glass", "Windows and lamp covers. The colour texture's alpha gives tint and opaque areas; on "
                       "damage the crack normal map and shattered pattern appear."),
-        ("veh_Light", "Head, tail, brake, reverse and indicator lamps: separate unlit / lit textures the game "
-                      "switches, and broken versions."),
+        ("veh_Light", "Head, tail, brake, reverse and indicator lamps: one texture holds each lamp off, on and "
+                      "smashed, and the game cross-fades between them (see [How lights work](#how-lights-work))."),
         ("veh_Neon", "Self-lit parts, mainly licence plates (`cali_…`, `uk_…` plate textures)."),
         ("veh_Alpha", "Transparent or cut-out details: decals, stickers, mesh grilles."),
         ("veh_Shadow", "The shadow hull: a simple closed mesh (positions only) the game draws the car's shadow "
