@@ -187,13 +187,18 @@ class _Mesh:
             nrm = nrm / np.where(length > 0, length, 1.0)
             self.pos = pos[:, [0, 2, 1]].astype(np.float32)        # Blender z-up -> Blur y-up
             self.nrm = nrm[:, [0, 2, 1]].astype(np.float32)
-            self.uvs = []
-            for layer in list(me.uv_layers)[:2]:
+            def read_uv(layer):
                 uv = np.empty(nl * 2, np.float32)
                 layer.data.foreach_get("uv", uv)
                 uv = uv.reshape(nl, 2)
                 uv[:, 1] = 1.0 - uv[:, 1]
-                self.uvs.append(uv)
+                return uv
+
+            # sets 1 and 2: the first two maps that aren't a "second pair" map (by name)
+            second_names = set(importer.SECOND_UV.values())
+            self.uvs = [read_uv(layer) for layer in me.uv_layers if layer.name not in second_names][:2]
+            self.second_uvs = {i: read_uv(me.uv_layers[name]) for i, name in importer.SECOND_UV.items()
+                               if name in me.uv_layers}
             self.custom_normals = me.has_custom_normals
             self.vertex_id = None
             attr = me.attributes.get(importer.VERTEX_ID)
@@ -269,6 +274,14 @@ def _encode_slot(sd, part, mesh, slot, name, own=True):
         e = parts.find(els, parts.TEXCOORD, i)
         if e is not None and e.type in (parts.HALF2, parts.HALF4, parts.FLOAT3, parts.FLOAT4):
             parts.encode(rows, e, uv[corners])
+    for i, uv in mesh.second_uvs.items():           # 3rd/4th numbers ("UV On / Dents"...)
+        e = parts.find(els, parts.TEXCOORD, i)
+        if e is not None and e.type in (parts.HALF4, parts.FLOAT4):
+            values = parts.decode(rows, e, 4)
+            # only where moved: unused or odd values (NaN) keep their exact bytes
+            moved = np.abs(values[:, 2:4] - uv[corners]).max(axis=1) > 1e-5
+            values[:, 2:4] = uv[corners]
+            _encode_where(rows, moved, e, values)
     e = parts.find(els, parts.COLOR)
     if e is not None and mesh.color is not None:
         colour = mesh.color[corners]

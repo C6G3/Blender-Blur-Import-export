@@ -3,8 +3,8 @@
 File > Import > Blur Model (.model) brings in a model with its part hierarchy,
 materials (Blur effects as node groups) and the textures stored in it.
 File > Export > Blur Model (.model) writes it back with the meshes' edits.
-Material Properties > Blur Material picks a Blur effect for any material, like
-Sollumz's shader presets, and wires up its texture slots.
+Material Properties > Blur Material picks a Blur effect for any material and
+wires up its texture slots.
 """
 
 import os

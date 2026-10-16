@@ -12,6 +12,16 @@ The format knowledge comes from [26Viewer](https://github.com/C6G3/26Viewer)
   - Every part, placed by the model's own hierarchy (`e_exterior` › `e_door_left` ›
     `e_mirror_left` …) as empties you can move like the game does.
   - Normals, UVs (both sets) and vertex colours.
+  - **Extra UV maps** where the model uses them: a texture coordinate set can hold a
+    second position, and its meaning depends on the effect.
+    - **UV On / Dents** — lights (`veh_Light`): where the *on* picture is (`UVMap` is the
+      *off* one); paint and glass: where the dent and scratch maps go.
+    - **UV Smashed On** — lights: the smashed-and-on picture (`UVMap.001` is smashed-off).
+
+    A light's texture holds each light three times — off, on (glowing) and smashed — and
+    the game cross-fades from the off to the on picture when the light is switched on.
+    Move a light's *UV On / Dents* together with its `UVMap`, or the glow appears in the
+    wrong place. Deleting one of these maps keeps the model's own values.
   - The textures stored in the model, packed into the .blend with their original
     compression (DXT1/3/5…), named like in the game.
   - One material per Blur material, using the game's effect (see below).
@@ -19,7 +29,7 @@ The format knowledge comes from [26Viewer](https://github.com/C6G3/26Viewer)
     **collision** (hidden *Collision* collection: meshes, hulls, boxes, spheres,
     cylinders, capsules; each triangle's surface — Tarmac, Metal, Glass… — is its
     material).
-- **Blur materials (like Sollumz shaders).** In *Material Properties ▸ Blur Material*,
+- **Blur materials.** In *Material Properties ▸ Blur Material*,
   click **Choose Blur Effect…** and pick one of the game's 106 effects (`veh_Paint_a`,
   `veh_Glass_c_h`, `veh_Default_b_f`, `default_NL_NV`, `MeshEffect`…) — every one is
   explained in **[BLUR_MATERIALS.md](BLUR_MATERIALS.md)**: what the name letters mean,

@@ -185,7 +185,21 @@ class SceneData:
         if lod >= len(part.lods) or not part.lods[lod][1]:
             return np.zeros((0, 3), np.int64)
         start, count = part.lods[lod][:2]
-        return parts.strip_triangles(self.indices(part.ib)[start:start + count])
+        return parts.triangles(self.indices(part.ib)[start:start + count], part.primitive)
+
+
+# A texture coordinate slot can hold four numbers; the second pair means something else per
+# effect (veh_Light: the "on" picture, and in set 2 the smashed-and-on one; veh_Paint and
+# veh_Glass: where the dent and scratch maps go). Shown as their own UV maps.
+SECOND_UV = {0: "UV On / Dents", 1: "UV Smashed On"}
+
+
+def second_pair(rows, elements, index):
+    """The 3rd and 4th numbers of texture coordinate set `index`, or None if it has two."""
+    e = parts.find(elements, parts.TEXCOORD, index)
+    if e is None or e.type not in (parts.HALF4, parts.FLOAT4):
+        return None
+    return parts.decode(rows, e, 4)[:, 2:4]
 
 
 def attribute(rows, elements, usage, index, components):
@@ -215,6 +229,7 @@ def build_mesh(sd, name, items, mats):
     """A mesh of `items` [(part, lod)], all in one element's space, one material slot per part.
     Returns (mesh, part keys in slot order) or (None, [])."""
     verts, norms, uv0, uv1, cols, faces, face_mat, keys, ids = [], [], [], [], [], [], [], [], []
+    second = {i: [] for i in SECOND_UV}
     total = 0
     for p, lod in items:
         tri = sd.triangles(p, lod)
@@ -231,6 +246,8 @@ def build_mesh(sd, name, items, mats):
         norms.append(nrm[:, [0, 2, 1]] if nrm is not None else np.zeros((len(used), 3), np.float32))
         uv0.append(attribute(rows, els, parts.TEXCOORD, 0, 2))
         uv1.append(attribute(rows, els, parts.TEXCOORD, 1, 2))
+        for i in SECOND_UV:
+            second[i].append(second_pair(rows, els, i))
         cols.append(attribute(rows, els, parts.COLOR, 0, 4))
         faces.append(remap[:, [0, 2, 1]] + total)   # mirrored axes: reverse the corner order
         ids.append(used)
@@ -260,7 +277,11 @@ def build_mesh(sd, name, items, mats):
     if lengths.any():
         n = n / np.where(lengths[:, None] > 0, lengths[:, None], 1.0)
         mesh.normals_split_custom_set_from_vertices([tuple(x) for x in n])
-    for layer_name, layer in (("UVMap", uv0), ("UVMap.001", uv1)):
+    layers = [("UVMap", uv0), ("UVMap.001", uv1)]
+    # the second pairs only where some part uses them (not all zero)
+    layers += [(SECOND_UV[i], second[i]) for i in SECOND_UV
+               if any(a is not None and np.abs(a).max() > 0 for a in second[i])]
+    for layer_name, layer in layers:
         if all(a is None for a in layer) and layer_name != "UVMap":
             continue
         data = np.concatenate([a if a is not None else np.zeros((len(vv), 2), np.float32)

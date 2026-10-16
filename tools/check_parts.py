@@ -23,9 +23,9 @@ def drawn(s, p, lod):
     """(vertex rows per triangle corner) of part p at level lod, as a sorted array of bytes."""
     start, count, lo, n = p.lods[lod]
     if not count:
-        return b""
+        return []   # nothing drawn (an unused level, or only degenerate triangles: same thing)
     ib = np.frombuffer(parts.index_buffer(s, p.ib)["blob"]["data"], np.uint16)
-    tris = parts.strip_triangles(ib[start:start + count])
+    tris = parts.triangles(ib[start:start + count], p.primitive)
     raw = parts.rows(parts.vertex_buffer(s, p.vb))
     corners = raw[tris + p.base]                       # (t, 3, stride)
     # a triangle as its corners' bytes, rotated to start at the smallest corner
@@ -40,7 +40,7 @@ def edit_of(s, p):
     lods = []
     ib = np.frombuffer(parts.index_buffer(s, p.ib)["blob"]["data"], np.uint16)
     for start, count, lo, n in p.lods:
-        lods.append(parts.strip_triangles(ib[start:start + count]) if count else None)
+        lods.append(parts.triangles(ib[start:start + count], p.primitive) if count else None)
     return parts.Edit(raw[p.base:p.base + span].copy(), lods)
 
 

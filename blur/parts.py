@@ -5,15 +5,18 @@ of a render list (RenderListNode_Common "static" or "geometry"): one material
 on one element, with a draw range per level of detail. Checked over every
 model in the game:
 
-    record w      [material, ?, ?, index buffer slot, element | flags << 16]
-                  material = number in the scene's effect list; the slot is a
-                  position in the render list's `ib` list -> (package, buffer)
+    record w      [material, ?, primitive, index buffer slot, element | flags << 16]
+                  material = number in the scene's effect list; primitive = how
+                  the indices are drawn: 0 triangle list, 1 triangle strip,
+                  2 points (Blur.exe FUN_006e5310 turns it into the Direct3D
+                  type); the slot is a position in the render list's `ib` list
+                  -> (package, buffer)
     streams       one per pass: w [vertex buffer slot, ?, byte offset, ?] and a
                   MaterialIndex (value set, process type). Pass 0's slot is a
                   position in the render list's `vb` list -> (package, buffer);
                   its byte offset / stride is the part's first vertex ("base")
     ranges        per level of detail: start, count (in the index buffer; a
-                  triangle strip, triangles joined by repeated indices), min
+                  strip, triangles joined by repeated indices, or a list), min
                   index and vertex count (exactly the indices used, counted
                   from the base). Unused levels: count 0, min 0x7FFFFFFF, 0
     bounds_a[i]   the box around static part i's vertices (+ draw distances)
@@ -30,6 +33,7 @@ from dataclasses import dataclass, field
 import numpy as np
 
 NULL = 0xFFFFFFFF
+LIST, STRIP, POINTS = 0, 1, 2   # geometry record w[2]
 EMPTY_MIN = 0x7FFFFFFF
 
 FLOAT3, FLOAT4, HALF2, HALF4, UBYTE4, UBYTE4N = 6, 7, 8, 9, 10, 11
@@ -65,6 +69,7 @@ class Part:
     vb: tuple                # (package, vertex buffer), or None (no vertex buffer)
     base: int                # first vertex in the vertex buffer
     lods: list = field(default_factory=list)   # [start, count, min, vertex count] per level
+    primitive: int = STRIP   # how its indices are drawn (record w[2])
 
     @property
     def values(self):
@@ -120,7 +125,7 @@ def parts(scene):
                 stride = vertex_buffer(scene, vb)["stride"] if vb else 0
                 out.append(Part(f"{r}.{kind}.{i}", rl, kind, i, g, pi, w[0], w[4] & 0xFFFF, w[4] >> 16,
                                 ib, vb, st[2] // stride if stride else 0,
-                                [list(x["r"]) for x in g["ranges"]]))
+                                [list(x["r"]) for x in g["ranges"]], w[2]))
     return out
 
 
@@ -186,7 +191,28 @@ def encode(raw, e, values):
         raise PartsError(f"vertex element type {e.type} can't be written")
 
 
-# ---- triangle strips -----------------------------------------------------------------------------
+# ---- triangle strips and lists -------------------------------------------------------------------
+
+def triangles(indices, primitive):
+    """Triangles (a, b, c) drawn by `indices` as the geometry record's primitive says: a strip
+    (most parts) or a plain list (about 2,700 parts, e.g. the Viper's reversing lights). It
+    can't be told from the indices: short strips look like lists. Points draw none."""
+    if primitive == STRIP:
+        return strip_triangles(indices)
+    if primitive != LIST:
+        return np.zeros((0, 3), np.int64)
+    s = np.asarray(indices, np.int64)
+    tri = s[:len(s) // 3 * 3].reshape(-1, 3)
+    keep = (tri[:, 0] != tri[:, 1]) & (tri[:, 1] != tri[:, 2]) & (tri[:, 0] != tri[:, 2])
+    return tri[keep]
+
+
+def make_indices(triangles, primitive):
+    """Indices drawing `triangles` the way a part of this primitive is drawn."""
+    if primitive == LIST:
+        return np.asarray(triangles, np.int64).reshape(-1).tolist()
+    return make_strip(triangles)
+
 
 def strip_triangles(indices):
     """Triangles (a, b, c) of a triangle strip; degenerate ones (the joins) dropped."""
@@ -300,7 +326,7 @@ def rebuild(scene, edits):
                         ranges.append([at, 0, EMPTY_MIN, 0])
                         continue
                     tris = np.asarray(tris, np.int64)
-                    strip = make_strip(tris)
+                    strip = make_indices(tris, p.primitive)   # keeps the record's primitive right
                     lo, hi = int(tris.min()), int(tris.max())
                     out.append(np.asarray(strip, np.uint16))
                     ranges.append([at, len(strip), lo, hi - lo + 1])
@@ -460,7 +486,7 @@ def add_part(scene, template, element, vertices, lods):
             r["r"] = [at, 0, EMPTY_MIN, 0]
             continue
         tris = np.asarray(tris, np.int64)
-        strip = make_strip(tris)
+        strip = make_indices(tris, template.primitive)   # the copied record keeps its primitive
         lo, hi = int(tris.min()), int(tris.max())
         r["r"] = [at, len(strip), lo, hi - lo + 1]
         strips.append(np.asarray(strip, np.uint16))

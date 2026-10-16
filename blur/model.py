@@ -101,6 +101,7 @@ class Group:
     stream_offset: int = 0
     element: int = -1
     material: int = 0
+    primitive: int = 1      # 0 triangle list, 1 triangle strip, 2 points (geometry record w[2])
     values: int = -1        # its material's value set
     pass_values: list = field(default_factory=list)
     highest_index: int = 0
@@ -426,6 +427,7 @@ def _build_groups(s, ibs, candidates):
             first = lods[0].at
             if first >= 0x54 and s.is_ra(first - 0x54, 1):
                 g.material = s.u32(first - 0x50)
+                g.primitive = s.u32(first - 0x48)
                 g.element = s.u32(first - 0x40) & 0xFFFF
             for lod in lods:
                 g.highest_index = max(g.highest_index, max(ib[lod.start:lod.start + lod.count]))
@@ -826,7 +828,7 @@ def read(data):
 
 def triangles(model, group, lod):
     """The triangles of `group` at level of detail `lod` as (a, b, c) vertex numbers within
-    its vertex buffer (the strip unstitched; degenerate triangles dropped)."""
+    its vertex buffer (a strip unstitched or a list; degenerate triangles dropped)."""
     if lod >= len(group.lods):
         return []
     draw = group.lods[lod]
@@ -834,7 +836,15 @@ def triangles(model, group, lod):
     sl = ib[draw.start:draw.start + draw.count]
     base = group.base_vertex
     out = []
-    for i in range(len(sl) - 2):            # always a triangle strip (primitive type 5 in every model)
+    if group.primitive == 0:                # a plain list
+        for i in range(0, len(sl) - 2, 3):
+            a, b, c = sl[i], sl[i + 1], sl[i + 2]
+            if a != b and b != c and a != c:
+                out.append((base + a, base + b, base + c))
+        return out
+    if group.primitive != 1:                # points: nothing to draw
+        return out
+    for i in range(len(sl) - 2):            # a triangle strip
         a, b, c = sl[i], sl[i + 1], sl[i + 2]
         if a == b or b == c or a == c:
             continue
